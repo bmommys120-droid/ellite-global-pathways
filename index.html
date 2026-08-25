@@ -8,9 +8,12 @@
     <meta property="og:title" content="Elite Global Pathways Limited" />
     <meta property="og:description" content="Your Dreams. Our Pathway. Your Global Future. Connecting African students to global education." />
     <meta property="og:type" content="website" />
+    <meta property="og:image" content="https://eliteglobalpathways.com/og-image.jpg" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="Elite Global Pathways Limited" />
     <meta name="twitter:description" content="Your Dreams. Our Pathway. Your Global Future." />
+    <meta name="twitter:image" content="https://eliteglobalpathways.com/twitter-image.jpg" />
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌍</text></svg>" />
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
     <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
@@ -18,6 +21,24 @@
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": "Elite Global Pathways Limited",
+        "url": "https://eliteglobalpathways.com",
+        "logo": "https://eliteglobalpathways.com/logo.jpg",
+        "contactPoint": {
+            "@type": "ContactPoint",
+            "telephone": "+256779989906",
+            "contactType": "customer service",
+            "areaServed": ["UG", "IN", "MM"],
+            "availableLanguage": ["English"]
+        }
+    }
+    </script>
     <style>
         :root {
             --navy: #071A2F;
@@ -26,9 +47,11 @@
             --sky-2: #0EA5E9;
             --cyan: #22D3EE;
             --yellow: #FACC15;
-            --green: #22C55E;
+            --gold: #FFD700;
             --red: #EF4444;
+            --red-light: #F87171;
             --white: #FFFFFF;
+            --green: #22C55E;
         }
         * { margin: 0; padding: 0; box-sizing: border-box; }
         html { scroll-behavior: auto; }
@@ -49,16 +72,6 @@
             -webkit-backdrop-filter: blur(16px);
             border: 1px solid rgba(255,255,255,0.1);
         }
-        .hero-video-container { will-change: transform; transform-style: preserve-3d; }
-        .programme-horizontal {
-            scroll-snap-type: x mandatory;
-            -webkit-overflow-scrolling: touch;
-        }
-        .programme-horizontal > * { scroll-snap-align: start; }
-        .ring-progress circle { transition: stroke-dashoffset 1.2s cubic-bezier(0.22,1,0.36,1); }
-        .custom-cursor { mix-blend-mode: difference; pointer-events: none; }
-
-        /* Scroll-triggered morphing */
         .morph-section {
             opacity: 0;
             transform: scale(0.95) translateY(40px);
@@ -73,85 +86,293 @@
             transform: scale(1) translateY(0);
             filter: blur(0);
         }
-        .morph-section.morph-out {
-            opacity: 0;
-            transform: scale(1.05) translateY(-40px);
-            filter: blur(8px);
-        }
-
-        /* Reduced motion */
         @media (prefers-reduced-motion: reduce) {
-            .morph-section {
-                opacity: 1;
-                transform: none;
-                filter: none;
-                transition: none;
-            }
-            .reveal { opacity: 1; transform: none; transition: none; }
-            *,
-            *::before,
-            *::after {
-                animation-duration: 0.01ms !important;
-                animation-iteration-count: 1 !important;
-                transition-duration: 0.01ms !important;
-                scroll-behavior: auto !important;
-            }
+            .morph-section { opacity: 1; transform: none; filter: none; transition: none; }
+            * { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
         }
-        :focus-visible { outline: 2px solid var(--sky); outline-offset: 4px; }
+        :focus-visible { outline: 3px solid var(--sky); outline-offset: 4px; }
+        .loading-spinner { animation: spin 1s linear infinite; }
+        @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+        .section-padding { padding: 7rem 0; }
+        @media (max-width: 768px) { .section-padding { padding: 5rem 0; } }
 
-        /* Additional design improvements */
-        .section-padding { padding: 6rem 0; }
-        @media (max-width: 768px) { .section-padding { padding: 4rem 0; } }
-        .gradient-text {
-            background: linear-gradient(135deg, var(--sky), var(--cyan));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+        .card-premium {
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.4s cubic-bezier(0.22,1,0.36,1), box-shadow 0.4s cubic-bezier(0.22,1,0.36,1), border-color 0.4s;
+            background: rgba(255,255,255,0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.1);
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            cursor: pointer;
+            text-align: left;
+            color: inherit;
         }
-        .card-hover {
-            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+        .card-premium::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at 50% 50%, rgba(250,204,21,0.15) 0%, transparent 60%);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            pointer-events: none;
         }
-        .card-hover:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 20px 40px -10px rgba(0,0,0,0.3);
-            border-color: var(--sky);
+        .card-premium:hover::before { opacity: 1; }
+        .card-premium:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 25px 50px -10px rgba(0,0,0,0.6), 0 0 0 1px var(--yellow), 0 0 30px rgba(250,204,21,0.3);
+            border-color: var(--yellow);
+        }
+
+        .input-gold {
+            border: 1px solid var(--yellow) !important;
+            background-color: var(--navy-2) !important;
+            color: var(--white) !important;
+        }
+        .select-gold {
+            border: 1px solid var(--yellow) !important;
+            background-color: var(--navy-2) !important;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23FFFFFF' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E") !important;
+            background-repeat: no-repeat !important;
+            background-position: right 1rem center !important;
+            background-size: 1.2em !important;
+            color: var(--white) !important;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+        }
+        .select-gold option { background: var(--navy-2); color: var(--white); }
+        .stars { color: var(--yellow); letter-spacing: 2px; }
+        .grid-equal > * { display: flex; }
+
+        .btn-waterfill {
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+            transition: color 0.4s ease;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+        }
+        .btn-waterfill::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 0;
+            background: linear-gradient(135deg, var(--red), var(--red-light));
+            transition: height 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+            z-index: -1;
+        }
+        .btn-waterfill:hover::before { height: 100%; }
+        .btn-waterfill:hover { color: var(--white) !important; }
+
+        .flag-img {
+            width: 60px;
+            height: 40px;
+            object-fit: cover;
+            border-radius: 4px;
+            margin: 0 auto 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+        }
+
+        .whatsapp-float {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 1000;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: #25D366;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 15px rgba(37,211,102,0.4);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .whatsapp-float:hover {
+            transform: scale(1.1);
+            box-shadow: 0 8px 25px rgba(37,211,102,0.6);
+        }
+        .whatsapp-float svg {
+            fill: white;
+            width: 32px;
+            height: 32px;
+        }
+
+        .hero-video {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 0;
+        }
+        .hero-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to bottom, rgba(7,26,47,0.7), rgba(11,39,69,0.7));
+            z-index: 1;
+        }
+
+        .splash-screen {
+            position: fixed;
+            inset: 0;
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #000;
+        }
+        .splash-video {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.7;
+        }
+        .splash-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            padding: 20px;
+        }
+        .splash-logo {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin: 0 auto 20px;
+            border: 3px solid var(--yellow);
+            box-shadow: 0 0 30px rgba(250,204,21,0.5);
+        }
+        .splash-tagline {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--white);
+            margin-top: 10px;
+            letter-spacing: 0.05em;
+        }
+        .skip-link {
+            position: absolute;
+            top: -40px;
+            left: 0;
+            background: var(--yellow);
+            color: var(--navy);
+            padding: 8px 16px;
+            z-index: 10000;
+            transition: top 0.3s;
+        }
+        .skip-link:focus { top: 0; }
+
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: 2000;
+            background: rgba(0,0,0,0.7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .modal-content {
+            background: var(--navy-2);
+            border: 1px solid var(--yellow);
+            border-radius: 16px;
+            padding: 2rem;
+            max-width: 600px;
+            width: 100%;
+            max-height: 80vh;
+            overflow-y: auto;
+            position: relative;
+        }
+        .modal-close {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: none;
+            border: none;
+            color: var(--white);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        .modal-close:hover { color: var(--yellow); }
+
+        .error-boundary-fallback {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: var(--navy);
+            color: var(--white);
+            text-align: center;
+            padding: 2rem;
         }
     </style>
 </head>
 <body>
     <div id="root"></div>
     <script type="text/babel">
-        const { useState, useEffect, useRef, useCallback } = React;
+        const { useState, useEffect, useRef, useContext, createContext, useCallback, useMemo } = React;
         const { createClient } = supabase;
 
-        // Supabase configuration
         const supabaseUrl = 'https://vznxhjmsshouygmkqtte.supabase.co';
+        const supabasePublishableKey = 'sb_publishable_fIzOcCb1L33uUWOVvl6sRw_3noign_j';
         const supabaseAnonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZ6bnhoam1zc2hvdXlnbWtxdHRlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODc1ODY2NzYsImV4cCI6MjEwMzE2MjY3Nn0.hMhITeSaH1A3mglzFZa9FD88AfXRKRt1pDAWpyjDst0';
-        const supabaseClient = createClient(supabaseUrl, supabaseAnonKey);
+        let supabaseClient;
+        try {
+            supabaseClient = createClient(supabaseUrl, supabasePublishableKey || supabaseAnonKey);
+        } catch (err) {
+            console.error('Supabase init failed:', err);
+            supabaseClient = null;
+        }
 
-        // Pre-approved media URLs
-        const MEDIA = {
-            heroVideo: 'https://i.imgur.com/WtDk7Xx.mp4',
-            secondaryVideo: 'https://i.imgur.com/33OkPkO.mp4',
-            logo: 'https://i.imgur.com/eLB9sZC.jpeg',
-            programmeImages: [
-                'https://i.imgur.com/bH3qRXv.jpeg',
-                'https://i.imgur.com/VpZHDM0.jpeg',
-                'https://i.imgur.com/HzMLeKE.jpeg',
-                'https://i.imgur.com/67Bsvha.jpeg',
-                'https://i.imgur.com/qIZWL1V.jpeg',
-                'https://i.imgur.com/twWM9fk.jpeg',
-                'https://i.imgur.com/gsPdU4w.jpeg',
-                'https://i.imgur.com/CDYZEpm.jpeg',
-                'https://i.imgur.com/SaxOcJD.jpeg',
-                'https://i.imgur.com/XXLsjG1.jpeg',
-                'https://i.imgur.com/PdgGaJ7.jpeg',
-                'https://i.imgur.com/ZhmYKcW.jpeg',
-                'https://i.imgur.com/rDnJLE4.jpeg'
-            ]
+        const STORAGE_BUCKET = 'elite-media';
+        const STORAGE_BASE = supabaseClient ? supabaseClient.storage.from(STORAGE_BUCKET).getPublicUrl('').data.publicUrl : '';
+
+        function resolveStorageUrl(path) {
+            if (!path) return null;
+            try {
+                const { data } = supabaseClient.storage.from(STORAGE_BUCKET).getPublicUrl(path);
+                return data.publicUrl;
+            } catch (err) {
+                console.warn('Error generating storage URL:', err);
+                return null;
+            }
+        }
+
+        function getMediaPublicUrl(asset) {
+            if (!asset) return null;
+            if (asset.storage_path) {
+                const url = resolveStorageUrl(asset.storage_path);
+                if (url) return url;
+            }
+            if (asset.public_url && asset.public_url.startsWith('http')) {
+                return asset.public_url;
+            }
+            return null;
+        }
+
+        const defaultMedia = {
+            logo: 'https://eliteglobalpathways.com/elite-logo.jpg',
+            heroVideo: 'https://eliteglobalpathways.com/hero-homepage.mp4',
+            splashVideo: 'https://eliteglobalpathways.com/splash.mp4',
+            programmeImages: {},
+            destinationImages: {}
         };
 
-        // Hook for reduced motion
+        const ScrollContext = createContext(null);
+        const useScrollTo = () => useContext(ScrollContext);
+
         function useReducedMotion() {
             const [reduced, setReduced] = useState(false);
             useEffect(() => {
@@ -164,8 +385,66 @@
             return reduced;
         }
 
-        // Morphing wrapper using IntersectionObserver
-        function MorphSection({ children, className = '' }) {
+        function ErrorBoundary({ children }) {
+            const [hasError, setHasError] = useState(false);
+            useEffect(() => {
+                const handler = (event) => {
+                    if (event.error) {
+                        console.error('Global error:', event.error);
+                        setHasError(true);
+                    }
+                };
+                window.addEventListener('error', handler);
+                window.addEventListener('unhandledrejection', (e) => {
+                    if (e.reason) {
+                        console.error('Unhandled rejection:', e.reason);
+                        setHasError(true);
+                    }
+                });
+                return () => {
+                    window.removeEventListener('error', handler);
+                    window.removeEventListener('unhandledrejection', handler);
+                };
+            }, []);
+            if (hasError) {
+                return (
+                    <div className="error-boundary-fallback" role="alert">
+                        <h1 className="text-3xl font-bold mb-4">Something went wrong.</h1>
+                        <p className="text-white/70 mb-8">The website is still available.</p>
+                        <button
+                            onClick={() => { setHasError(false); window.location.reload(); }}
+                            className="btn-waterfill rounded-full px-8 py-3 text-base font-semibold text-white bg-transparent border border-red"
+                        >
+                            Reload Website
+                        </button>
+                    </div>
+                );
+            }
+            return children;
+        }
+
+        function useAsyncData(fetcher, deps = []) {
+            const [data, setData] = useState(null);
+            const [loading, setLoading] = useState(true);
+            const [error, setError] = useState(null);
+            useEffect(() => {
+                let isMounted = true;
+                setLoading(true);
+                setError(null);
+                fetcher().then(result => { if (isMounted) setData(result); }).catch(err => {
+                    if (isMounted) { console.error('Async data error:', err); setError(err); }
+                }).finally(() => { if (isMounted) setLoading(false); });
+                return () => { isMounted = false; };
+            }, deps);
+            const retry = useCallback(() => {
+                setLoading(true);
+                setError(null);
+                fetcher().then(result => setData(result)).catch(err => { console.error('Retry error:', err); setError(err); }).finally(() => setLoading(false));
+            }, [fetcher]);
+            return { data, loading, error, retry };
+        }
+
+        function MorphSection({ children, className = '', style }) {
             const ref = useRef(null);
             const [visible, setVisible] = useState(false);
             const reduced = useReducedMotion();
@@ -178,8 +457,6 @@
                         if (entry.isIntersecting) {
                             setVisible(true);
                             obs.unobserve(entry.target);
-                        } else {
-                            setVisible(false);
                         }
                     });
                 }, { threshold: 0.2, rootMargin: '0px 0px -50px 0px' });
@@ -187,22 +464,16 @@
                 return () => obs.disconnect();
             }, [reduced]);
             return (
-                <div ref={ref} className={`morph-section ${visible ? 'visible' : ''} ${className}`}>
+                <div ref={ref} style={style} className={`morph-section ${visible ? 'visible' : ''} ${className}`}>
                     {children}
                 </div>
             );
         }
 
-        // Simple Reveal as before but using morph-section class
         function Reveal({ children, delay = 0, className = '' }) {
-            return (
-                <MorphSection className={className} style={{ transitionDelay: `${delay}s` }}>
-                    {children}
-                </MorphSection>
-            );
+            return <MorphSection className={className} style={{ transitionDelay: `${delay}s` }}>{children}</MorphSection>;
         }
 
-        // SectionHeading
         function SectionHeading({ eyebrow, title, subtitle, align = 'center', className = '' }) {
             return (
                 <div className={`max-w-4xl ${align === 'center' ? 'mx-auto text-center' : ''} ${className}`}>
@@ -213,145 +484,203 @@
             );
         }
 
-        // MagneticButton
-        function MagneticButton({ children, className = '', onClick }) {
-            const [pos, setPos] = useState({ x: 0, y: 0 });
-            const reduced = useReducedMotion();
-            const handleMouseMove = (e) => {
-                if (reduced) return;
-                const rect = e.currentTarget.getBoundingClientRect();
-                const x = (e.clientX - rect.left - rect.width / 2) * 0.25;
-                const y = (e.clientY - rect.top - rect.height / 2) * 0.25;
-                setPos({ x, y });
-            };
-            const reset = () => setPos({ x: 0, y: 0 });
+        function WaterfillButton({ children, className = '', onClick, href, type = 'button', ariaLabel }) {
+            const content = <span className="relative z-10">{children}</span>;
+            if (href) {
+                return (
+                    <a href={href} className={`btn-waterfill inline-block ${className}`} onClick={onClick} aria-label={ariaLabel}>
+                        {content}
+                    </a>
+                );
+            }
             return (
-                <button
-                    className={`transition-transform duration-150 ${className}`}
-                    style={{ transform: `translate(${pos.x}px, ${pos.y}px)` }}
-                    onMouseMove={handleMouseMove}
-                    onMouseLeave={reset}
-                    onClick={onClick}
-                    onTouchStart={(e) => e.preventDefault()}
-                >
-                    {children}
+                <button type={type} className={`btn-waterfill inline-block ${className}`} onClick={onClick} aria-label={ariaLabel}>
+                    {content}
                 </button>
             );
         }
 
-        // Preloader
-        function Preloader() {
-            const [loading, setLoading] = useState(true);
+        function SmoothScroll({ children }) {
+            const reduced = useReducedMotion();
+            const lenisRef = useRef(null);
+            const [scrollTo, setScrollTo] = useState(null);
+            useEffect(() => {
+                if (reduced) {
+                    setScrollTo(() => (target) => {
+                        const el = document.querySelector(target);
+                        if (el) {
+                            const headerOffset = 80;
+                            const elementPosition = el.getBoundingClientRect().top;
+                            const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+                            window.scrollTo({ top: offsetPosition, behavior: 'auto' });
+                        }
+                    });
+                    return;
+                }
+                let lenis = null;
+                let ticker = null;
+                try {
+                    if (typeof Lenis !== 'undefined') {
+                        lenis = new Lenis({ duration: 1.2, easing: t => Math.min(1, 1.001 - Math.pow(2, -10*t)), smoothWheel: true, touchMultiplier: 1.5 });
+                        lenisRef.current = lenis;
+                        lenis.on('scroll', () => {
+                            if (typeof ScrollTrigger !== 'undefined') ScrollTrigger.update();
+                        });
+                        ticker = (time) => { lenis.raf(time * 1000); };
+                        if (typeof gsap !== 'undefined') {
+                            gsap.ticker.add(ticker);
+                            gsap.ticker.lagSmoothing(0);
+                        }
+                    }
+                } catch (err) {
+                    console.warn('Lenis initialization failed:', err);
+                }
+                const scrollToFn = (target) => {
+                    const el = document.querySelector(target);
+                    if (!el) return;
+                    const headerOffset = 80;
+                    const elementPosition = el.getBoundingClientRect().top;
+                    const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+                    if (lenis) {
+                        lenis.scrollTo(offsetPosition, { duration: 1.2 });
+                    } else if (typeof window !== 'undefined' && 'scrollTo' in window) {
+                        window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
+                    } else {
+                        window.scrollTo(0, offsetPosition);
+                    }
+                };
+                setScrollTo(() => scrollToFn);
+                return () => {
+                    if (ticker && typeof gsap !== 'undefined') {
+                        gsap.ticker.remove(ticker);
+                    }
+                    if (lenis) lenis.destroy();
+                };
+            }, [reduced]);
+            const effectiveScrollTo = scrollTo || ((target) => {
+                const el = document.querySelector(target);
+                if (el) {
+                    const headerOffset = 80;
+                    const elementPosition = el.getBoundingClientRect().top;
+                    const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+                    window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
+                }
+            });
+            return (
+                <ScrollContext.Provider value={effectiveScrollTo}>
+                    {children}
+                </ScrollContext.Provider>
+            );
+        }
+
+        function SplashScreen({ onComplete }) {
+            const [show, setShow] = useState(true);
             const reduced = useReducedMotion();
             useEffect(() => {
-                if (reduced) { setLoading(false); return; }
-                const timer = setTimeout(() => setLoading(false), 1500);
+                if (reduced) { setShow(false); onComplete(); return; }
+                const timer = setTimeout(() => {
+                    setShow(false);
+                    onComplete();
+                }, 4000);
                 return () => clearTimeout(timer);
-            }, [reduced]);
-            if (!loading) return null;
+            }, [reduced, onComplete]);
+            if (!show) return null;
             return (
-                <div className="fixed inset-0 z-[200] flex items-center justify-center bg-navy transition-opacity duration-500" style={{ opacity: loading ? 1 : 0 }}>
-                    <div className="relative">
-                        <div className="h-20 w-20 rounded-full border-4 border-sky/30 border-t-sky animate-spin" style={{ animationDuration: '1s' }}></div>
-                        <div className="absolute inset-0 flex items-center justify-center"><img src={MEDIA.logo} alt="Elite Global Pathways" className="h-10 w-10 object-contain rounded-full" /></div>
+                <div className="splash-screen" role="presentation" aria-hidden="true">
+                    <video className="splash-video" autoPlay muted loop playsInline preload="auto" poster="">
+                        <source src={defaultMedia.splashVideo} type="video/mp4" />
+                        Your browser does not support the video tag.
+                    </video>
+                    <div className="splash-content">
+                        <img src={defaultMedia.logo} alt="Elite Global Pathways" className="splash-logo" />
+                        <p className="splash-tagline">Your Dreams. Our Pathway. Your Global Future.</p>
                     </div>
                 </div>
             );
         }
 
-        // CustomCursor
-        function CustomCursor() {
-            const [isTouch, setIsTouch] = useState(false);
-            const [over, setOver] = useState(false);
-            const cursorRef = useRef(null);
-            const dotRef = useRef(null);
-            const reduced = useReducedMotion();
-            useEffect(() => {
-                const touch = window.matchMedia('(hover: none), (pointer: coarse)').matches;
-                setIsTouch(touch);
-                if (touch || reduced) return;
-                const move = (e) => {
-                    if (cursorRef.current) { cursorRef.current.style.left = e.clientX + 'px'; cursorRef.current.style.top = e.clientY + 'px'; }
-                    if (dotRef.current) { dotRef.current.style.left = e.clientX + 'px'; dotRef.current.style.top = e.clientY + 'px'; }
-                    const target = e.target;
-                    const interactive = target.closest('a, button, [role="button"], input, textarea, select, label');
-                    setOver(!!interactive);
-                };
-                window.addEventListener('mousemove', move);
-                return () => window.removeEventListener('mousemove', move);
-            }, [reduced]);
-            if (isTouch || reduced) return null;
-            return (
-                <>
-                    <div ref={cursorRef} className="custom-cursor fixed w-8 h-8 rounded-full border border-white/30 pointer-events-none z-[300]" style={{ transform: 'translate(-50%, -50%)', transition: 'width 0.3s, height 0.3s, border-color 0.3s', width: over ? '48px' : '32px', height: over ? '48px' : '32px', borderColor: over ? 'var(--red)' : 'rgba(255,255,255,0.3)' }}></div>
-                    <div ref={dotRef} className="custom-cursor fixed w-3 h-3 bg-sky rounded-full pointer-events-none z-[301]" style={{ transform: 'translate(-50%, -50%)' }}></div>
-                </>
-            );
-        }
-
-        // SmoothScroll using Lenis
-        function SmoothScroll({ children }) {
-            const reduced = useReducedMotion();
-            useEffect(() => {
-                if (reduced) return;
-                const lenis = new Lenis({ duration: 1.2, easing: t => Math.min(1, 1.001 - Math.pow(2, -10*t)), smoothWheel: true, touchMultiplier: 1.5 });
-                const raf = (time) => { lenis.raf(time); requestAnimationFrame(raf); };
-                requestAnimationFrame(raf);
-                return () => lenis.destroy();
-            }, [reduced]);
-            return <div>{children}</div>;
-        }
-
-        // Navbar
         function Navbar() {
             const [scrolled, setScrolled] = useState(false);
             const [mobileOpen, setMobileOpen] = useState(false);
-            const [settings, setSettings] = useState({});
+            const scrollTo = useScrollTo();
+            const menuRef = useRef(null);
+            const buttonRef = useRef(null);
             useEffect(() => {
                 const onScroll = () => setScrolled(window.scrollY > 50);
                 window.addEventListener('scroll', onScroll);
                 return () => window.removeEventListener('scroll', onScroll);
             }, []);
             useEffect(() => {
-                supabaseClient.from('site_settings').select('key, value').then(({ data }) => {
-                    if (data) setSettings(Object.fromEntries(data.map(d => [d.key, d.value])));
-                });
-            }, []);
+                const handleClickOutside = (e) => {
+                    if (mobileOpen && menuRef.current && !menuRef.current.contains(e.target) && !buttonRef.current?.contains(e.target)) {
+                        setMobileOpen(false);
+                    }
+                };
+                const handleEscape = (e) => { if (e.key === 'Escape') setMobileOpen(false); };
+                document.addEventListener('mousedown', handleClickOutside);
+                document.addEventListener('keydown', handleEscape);
+                return () => {
+                    document.removeEventListener('mousedown', handleClickOutside);
+                    document.removeEventListener('keydown', handleEscape);
+                };
+            }, [mobileOpen]);
             const links = [
-                { label: 'Destinations', href: '#destinations' },
+                { label: 'Home', href: '#home' },
                 { label: 'Programmes', href: '#programmes' },
-                { label: 'Student Support', href: '#support' },
+                { label: 'Destinations', href: '#destinations' },
+                { label: 'Support', href: '#support' },
                 { label: 'How It Works', href: '#how-it-works' },
-                { label: 'Contact', href: '#contact' },
+                { label: 'FAQ', href: '#faq' }
             ];
+            const handleNavClick = (e, href) => {
+                e.preventDefault();
+                scrollTo(href);
+                setMobileOpen(false);
+                if (window.history) {
+                    window.history.pushState(null, '', href);
+                }
+            };
             return (
-                <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${scrolled ? 'glass py-3' : 'bg-transparent py-6'}`}>
+                <header className={`navbar-layer fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${scrolled ? 'glass py-3' : 'bg-transparent py-6'}`}>
+                    <a href="#main-content" className="skip-link">Skip to main content</a>
                     <div className="mx-auto max-w-7xl flex items-center justify-between px-6 lg:px-8">
-                        <a href="#" className="flex items-center gap-3">
-                            <img src={MEDIA.logo} alt="Elite Global Pathways" className="h-10 w-10 rounded-full object-cover" />
-                            <span className="text-lg font-bold text-white">Elite Global Pathways</span>
+                        <a href="#home" className="flex items-center gap-3" onClick={(e) => handleNavClick(e, '#home')} aria-label="Go to home">
+                            <img src={defaultMedia.logo} alt="Elite Global Pathways" className="h-10 w-10 rounded-full object-cover" />
+                            <span className="text-lg font-bold text-white hidden sm:block">Elite Global Pathways</span>
                         </a>
-                        <nav className="hidden lg:flex items-center gap-8">
+                        <nav className="hidden lg:flex items-center gap-6" aria-label="Main navigation">
                             {links.map(link => (
-                                <a key={link.href} href={link.href} className="text-sm font-medium text-white/80 hover:text-sky transition-colors">{link.label}</a>
+                                <a key={link.href} href={link.href} onClick={(e) => handleNavClick(e, link.href)} className="text-sm font-medium text-white/80 hover:text-sky transition-colors cursor-pointer">
+                                    {link.label}
+                                </a>
                             ))}
-                            <a href="#apply" className="rounded-full bg-gradient-to-r from-sky to-cyan px-6 py-2.5 text-sm font-semibold text-navy hover:scale-105 transition-transform">Apply Now</a>
+                            <WaterfillButton href="#apply" onClick={(e) => handleNavClick(e, '#apply')} className="rounded-full px-6 py-2.5 text-sm font-semibold text-white bg-transparent border border-red" ariaLabel="Apply Now">Apply Now</WaterfillButton>
                         </nav>
-                        <button className="lg:hidden text-white" onClick={() => setMobileOpen(!mobileOpen)} aria-label="Toggle menu">
+                        <button
+                            ref={buttonRef}
+                            className="lg:hidden text-white text-2xl focus:outline-none focus:ring-2 focus:ring-sky rounded-md p-1"
+                            onClick={() => setMobileOpen(!mobileOpen)}
+                            aria-label={mobileOpen ? 'Close menu' : 'Open menu'}
+                            aria-expanded={mobileOpen}
+                        >
                             {mobileOpen ? '✕' : '☰'}
                         </button>
                     </div>
                     {mobileOpen && (
-                        <div className="lg:hidden glass mt-4 mx-4 rounded-2xl p-6">
-                            <nav className="flex flex-col gap-5">
+                        <div ref={menuRef} className="lg:hidden glass mt-4 mx-4 rounded-2xl p-6" role="dialog" aria-label="Mobile navigation">
+                            <nav className="flex flex-col gap-4">
                                 {links.map(link => (
-                                    <a key={link.href} href={link.href} onClick={() => setMobileOpen(false)} className="text-lg font-medium text-white/90 hover:text-sky">{link.label}</a>
+                                    <a key={link.href} href={link.href} onClick={(e) => handleNavClick(e, link.href)} className="text-lg font-medium text-white/90 hover:text-sky">
+                                        {link.label}
+                                    </a>
                                 ))}
-                                <a href="#apply" onClick={() => setMobileOpen(false)} className="text-lg font-medium text-yellow">Apply Now</a>
-                                <div className="text-sm text-white/70">Email: eliteglobalpathwaysltd2025@gmail.com</div>
-                                <div className="text-sm text-white/70">WhatsApp India: +91 73593 20928</div>
-                                <div className="text-sm text-white/70">WhatsApp Uganda: +256 779 989906</div>
-                                <div className="text-sm text-white/70">WhatsApp Myanmar: +95 3787 5184</div>
+                                <WaterfillButton href="#apply" onClick={(e) => handleNavClick(e, '#apply')} className="rounded-full px-6 py-2.5 text-sm font-semibold text-white bg-transparent border border-red" ariaLabel="Apply Now">Apply Now</WaterfillButton>
+                                <div className="text-sm text-white/70 pt-4 border-t border-white/10">
+                                    <p>Email: eliteglobalpathwaysltd2025@gmail.com</p>
+                                    <p>WhatsApp India: +91 73593 20928</p>
+                                    <p>WhatsApp Uganda: +256 779 989906</p>
+                                    <p>WhatsApp Myanmar: +95 3787 5184</p>
+                                </div>
                             </nav>
                         </div>
                     )}
@@ -359,173 +688,353 @@
             );
         }
 
-        // Hero with scroll-controlled video (scrubbing)
-        function Hero() {
-            const videoRef = useRef(null);
-            const containerRef = useRef(null);
+        function ParallaxHero() {
+            const heroRef = useRef(null);
             const reduced = useReducedMotion();
-            const [videoSrc] = useState(MEDIA.heroVideo);
-            const [scrollProgress, setScrollProgress] = useState(0);
+            const scrollTo = useScrollTo();
+            const [videoError, setVideoError] = useState(false);
+            const [heroContent, setHeroContent] = useState({
+                title: 'Your Future Starts Here',
+                subtitle: 'Study abroad. Access opportunity. Build your future.',
+                motto: 'Your Dreams. Our Pathway. Your Global Future.'
+            });
 
-            // Handle scroll-driven video playback
             useEffect(() => {
-                if (reduced) return;
-                const handleScroll = () => {
-                    const hero = document.getElementById('hero');
-                    if (!hero) return;
-                    const rect = hero.getBoundingClientRect();
-                    const total = window.innerHeight;
-                    const scrolled = Math.max(0, Math.min(1, -rect.top / total));
-                    setScrollProgress(scrolled);
-                    if (videoRef.current) {
-                        videoRef.current.currentTime = scrolled * (videoRef.current.duration || 10);
-                    }
+                if (!supabaseClient) return;
+                const loadSettings = async () => {
+                    try {
+                        const { data, error } = await supabaseClient.from('site_settings').select('key,value').in('key', ['hero_title','hero_subtitle','motto','hero_video_url','logo_url']);
+                        if (error) throw error;
+                        const map = {};
+                        data.forEach(s => { map[s.key] = s.value; });
+                        setHeroContent(prev => ({
+                            ...prev,
+                            title: map.hero_title || prev.title,
+                            subtitle: map.hero_subtitle || prev.subtitle,
+                            motto: map.motto || prev.motto
+                        }));
+                    } catch (err) { console.warn('Failed to load hero settings:', err); }
                 };
-                window.addEventListener('scroll', handleScroll, { passive: true });
-                return () => window.removeEventListener('scroll', handleScroll);
-            }, [reduced]);
-
-            useEffect(() => {
-                const video = videoRef.current;
-                if (video) {
-                    video.addEventListener('loadedmetadata', () => {
-                        video.currentTime = 0;
-                    });
-                }
+                loadSettings();
             }, []);
 
             useEffect(() => {
                 if (reduced) return;
-                const handleMouse = (e) => {
-                    if (!containerRef.current) return;
-                    const { innerWidth, innerHeight } = window;
-                    const mx = (e.clientX / innerWidth) * 2 - 1;
-                    const my = (e.clientY / innerHeight) * 2 - 1;
-                    const el = containerRef.current;
-                    el.style.transform = `perspective(1000px) rotateX(${my * -3}deg) rotateY(${mx * 5}deg) translateX(${mx * 12}px) translateY(${my * 8}px) scale(${1.05 + Math.abs(mx) * 0.03})`;
-                };
-                window.addEventListener('mousemove', handleMouse);
-                return () => window.removeEventListener('mousemove', handleMouse);
+                let ctx = null;
+                try {
+                    if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
+                        gsap.registerPlugin(ScrollTrigger);
+                        ctx = gsap.context(() => {
+                            gsap.to('.layer-foreground', { yPercent: 60, scale: 1.2, ease: 'none', scrollTrigger: { trigger: heroRef.current, start: 'top top', end: 'bottom top', scrub: true } });
+                            gsap.to('.layer-typography', { yPercent: 30, opacity: 0, ease: 'none', scrollTrigger: { trigger: heroRef.current, start: 'top top', end: 'bottom top', scrub: true } });
+                            gsap.to('.floating-shape', { yPercent: -30, ease: 'none', scrollTrigger: { trigger: heroRef.current, start: 'top top', end: 'bottom top', scrub: true } });
+                        }, heroRef);
+                    }
+                } catch (err) { console.warn('GSAP animation init failed:', err); }
+                return () => { if (ctx) ctx.revert(); };
             }, [reduced]);
 
+            const heroVideoUrl = defaultMedia.heroVideo;
+
             return (
-                <section id="hero" className="relative h-screen overflow-hidden bg-navy">
-                    <div ref={containerRef} className="hero-video-container absolute inset-0 transition-transform duration-200 ease-out">
-                        {videoSrc ? (
-                            <video
-                                ref={videoRef}
-                                className="h-full w-full object-cover"
-                                src={videoSrc}
-                                muted
-                                playsInline
-                                preload="metadata"
-                                style={{ pointerEvents: 'none' }}
-                            />
-                        ) : (
-                            <div className="h-full w-full bg-gradient-to-br from-navy to-sky/30"></div>
-                        )}
-                        <div className="absolute inset-0 bg-gradient-to-br from-navy/90 via-navy/70 to-sky/30"></div>
-                        <div className="absolute inset-0" style={{ background: 'radial-gradient(circle at center, transparent 0%, rgba(7,26,47,0.6) 100%)' }}></div>
-                    </div>
-                    <div className="relative z-10 flex h-full flex-col items-center justify-center px-6 text-center">
-                        <Reveal delay={0.2}><img src={MEDIA.logo} alt="Elite Global Pathways" className="mx-auto h-16 w-16 md:h-20 md:w-20 rounded-full object-cover mb-6" /></Reveal>
-                        <Reveal delay={0.4}><p className="mb-4 text-sm font-semibold uppercase tracking-[0.4em] text-sky">Elite Global Pathways</p></Reveal>
-                        <Reveal delay={0.6}><h1 className="max-w-5xl text-5xl md:text-7xl lg:text-8xl font-bold leading-tight text-white">Your Future Starts Here</h1></Reveal>
-                        <Reveal delay={0.8}><p className="mt-6 text-xl md:text-2xl font-medium text-sky-100/90">Study abroad. Access opportunity. Build your future.</p></Reveal>
-                        <Reveal delay={1.0} className="mt-10 flex flex-wrap items-center justify-center gap-4">
-                            <MagneticButton className="rounded-full bg-gradient-to-r from-sky to-cyan px-8 py-4 text-base font-semibold text-navy shadow-lg hover:shadow-sky/30 transition-shadow" onClick={() => window.location.hash = '#apply'}>Apply Now</MagneticButton>
-                            <MagneticButton className="glass rounded-full px-8 py-4 text-base font-semibold text-white hover:bg-white/10 transition-colors" onClick={() => window.location.hash = '#programmes'}>Explore Programmes</MagneticButton>
-                        </Reveal>
-                    </div>
-                    <div className="absolute bottom-8 left-1/2 -translate-x-1/2 text-white/60 animate-bounce">
-                        <div className="flex flex-col items-center gap-2">
-                            <span className="text-xs font-medium tracking-widest">SCROLL TO EXPLORE</span>
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M12 5v14M19 12l-7 7-7-7"/></svg>
+                <section id="home" ref={heroRef} className="relative h-screen overflow-hidden bg-navy" aria-label="Hero">
+                    {!videoError ? (
+                        <video className="hero-video" autoPlay muted loop playsInline preload="metadata" poster="" onError={() => setVideoError(true)}>
+                            <source src={heroVideoUrl} type="video/mp4" />
+                            Your browser does not support the video tag.
+                        </video>
+                    ) : (
+                        <div className="hero-video" style={{ background: 'linear-gradient(135deg, #071A2F 0%, #0B2745 50%, #071A2F 100%)' }}></div>
+                    )}
+                    <div className="hero-overlay"></div>
+                    <div className="absolute inset-0 layer-foreground" style={{ background: 'radial-gradient(circle at 70% 80%, rgba(34,211,238,0.2) 0%, transparent 50%)', zIndex: 2, pointerEvents: 'none' }}></div>
+                    <div className="absolute inset-0 flex items-center justify-center layer-typography z-10" style={{ pointerEvents: 'none' }}>
+                        <div className="text-center px-6" style={{ pointerEvents: 'auto' }}>
+                            <Reveal delay={0.2}><p className="text-sm font-semibold uppercase tracking-[0.4em] text-sky mb-2">Elite Global Pathways</p></Reveal>
+                            <Reveal delay={0.3}><p className="text-lg md:text-xl text-white/90 italic">{heroContent.motto}</p></Reveal>
+                            <Reveal delay={0.5}><h1 className="text-5xl md:text-7xl lg:text-8xl font-bold text-white mt-6">{heroContent.title}</h1></Reveal>
+                            <Reveal delay={0.7}><p className="mt-6 text-xl md:text-2xl text-sky-100/90">{heroContent.subtitle}</p></Reveal>
+                            <Reveal delay={0.9} className="mt-10 flex flex-wrap items-center justify-center gap-4">
+                                <WaterfillButton href="#apply" onClick={(e) => { e.preventDefault(); scrollTo('#apply'); }} className="rounded-full px-8 py-4 text-base font-semibold text-white bg-transparent border border-red" ariaLabel="Apply Now">Apply Now</WaterfillButton>
+                                <WaterfillButton href="#programmes" onClick={(e) => { e.preventDefault(); scrollTo('#programmes'); }} className="rounded-full px-8 py-4 text-base font-semibold text-white bg-transparent border border-red" ariaLabel="Explore Our Programmes">Explore Our Programmes</WaterfillButton>
+                            </Reveal>
                         </div>
                     </div>
+                    <div className="absolute rounded-full filter blur-2xl opacity-30 floating-shape" style={{ width: 300, height: 300, background: 'rgba(56,189,248,0.15)', top: '-5%', left: '-5%', zIndex: 3, pointerEvents: 'none' }}></div>
+                    <div className="absolute rounded-full filter blur-2xl opacity-30 floating-shape" style={{ width: 200, height: 200, background: 'rgba(34,211,238,0.1)', bottom: '-10%', right: '-5%', zIndex: 3, pointerEvents: 'none' }}></div>
+                    <div className="absolute rounded-full filter blur-2xl opacity-30 floating-shape" style={{ width: 400, height: 400, background: 'rgba(7,26,47,0.3)', border: '2px solid rgba(255,255,255,0.05)', top: '30%', left: '60%', zIndex: 3, pointerEvents: 'none' }}></div>
                 </section>
             );
         }
 
-        // Destinations section with route-line motif
+        // Data fetching functions (centralized)
+        async function fetchSiteSettings() {
+            if (!supabaseClient) return null;
+            const { data, error } = await supabaseClient.from('site_settings').select('*');
+            if (error) throw error;
+            return data;
+        }
+        async function fetchSections() {
+            if (!supabaseClient) return null;
+            const { data, error } = await supabaseClient.from('sections').select('*').eq('is_published', true);
+            if (error) throw error;
+            return data;
+        }
+        async function fetchProgrammes() {
+            if (!supabaseClient) return null;
+            const { data, error } = await supabaseClient.from('programmes').select('*').eq('is_published', true).order('order_index');
+            if (error) throw error;
+            return data;
+        }
+        async function fetchDestinations() {
+            if (!supabaseClient) return null;
+            const { data, error } = await supabaseClient.from('destinations').select('*').eq('is_published', true).order('order_index');
+            if (error) throw error;
+            return data;
+        }
+        async function fetchProcessSteps() {
+            if (!supabaseClient) return null;
+            const { data, error } = await supabaseClient.from('process_steps').select('*').eq('is_published', true).order('order_index');
+            if (error) throw error;
+            return data;
+        }
+        async function fetchSupportServices() {
+            if (!supabaseClient) return null;
+            const { data, error } = await supabaseClient.from('support_services').select('*').eq('is_published', true).order('order_index');
+            if (error) throw error;
+            return data;
+        }
+        async function fetchWhyChooseUs() {
+            if (!supabaseClient) return null;
+            const { data, error } = await supabaseClient.from('why_choose_us').select('*').eq('is_published', true).order('order_index');
+            if (error) throw error;
+            return data;
+        }
+        async function fetchFaqs() {
+            if (!supabaseClient) return null;
+            const { data, error } = await supabaseClient.from('faqs').select('*').eq('is_published', true).order('order_index');
+            if (error) throw error;
+            return data;
+        }
+        async function fetchTestimonials() {
+            if (!supabaseClient) return null;
+            const { data, error } = await supabaseClient.from('testimonials').select('*').eq('is_published', true).order('order_index');
+            if (error) throw error;
+            return data;
+        }
+        async function fetchMediaAssets() {
+            if (!supabaseClient) return null;
+            const { data, error } = await supabaseClient.from('media_assets').select('*').eq('is_active', true);
+            if (error) throw error;
+            return data;
+        }
+
         function Destinations() {
-            const destinations = ['India', 'United Kingdom', 'Canada', 'United States', 'Australia', 'New Zealand', 'Europe', 'Other approved destinations'];
+            const { data: destinations, loading, error, retry } = useAsyncData(async () => {
+                if (!supabaseClient) return [];
+                try {
+                    const data = await fetchDestinations();
+                    if (!data || data.length === 0) return [];
+                    // attempt to map images from storage or fallback
+                    const media = await fetchMediaAssets();
+                    const mediaMap = {};
+                    if (media) {
+                        media.forEach(m => {
+                            if (m.storage_path) {
+                                mediaMap[m.name] = m;
+                            }
+                        });
+                    }
+                    return data.map(dest => {
+                        let imageUrl = null;
+                        if (dest.image_url && dest.image_url.startsWith('http')) {
+                            imageUrl = dest.image_url;
+                        } else if (dest.name) {
+                            const key = dest.name.toLowerCase().replace(/\s+/g, '-');
+                            // try to find matching media asset by name pattern
+                            const match = media.find(m => m.name.toLowerCase().includes(key) || (m.storage_path && m.storage_path.toLowerCase().includes(key)));
+                            if (match) {
+                                imageUrl = getMediaPublicUrl(match);
+                            }
+                        }
+                        return { ...dest, imageUrl: imageUrl || null };
+                    });
+                } catch (err) {
+                    console.warn('Destinations fetch failed:', err);
+                    return [];
+                }
+            }, []);
+            if (loading) return <MorphSection id="destinations" className="section-padding bg-navy"><div className="mx-auto max-w-6xl px-6 text-center"><p className="text-white/70">Loading destinations...</p></div></MorphSection>;
+            if (error && (!destinations || destinations.length === 0)) return <MorphSection id="destinations" className="section-padding bg-navy"><div className="mx-auto max-w-6xl px-6 text-center"><p className="text-white/70">Destinations temporarily unavailable. Please try again.</p><button onClick={retry} className="btn-waterfill rounded-full px-6 py-2 mt-4 text-sm font-semibold text-white bg-transparent border border-red">Retry</button></div></MorphSection>;
+            const list = destinations || [];
             return (
-                <MorphSection id="destinations" className="section-padding bg-white">
+                <MorphSection id="destinations" className="section-padding bg-navy">
                     <div className="mx-auto max-w-6xl px-6 text-center">
                         <SectionHeading eyebrow="DESTINATIONS" title="Where Will Your Journey Take You?" subtitle="Explore potential study destinations, subject to programme availability and admission requirements." />
-                        <div className="mt-16 flex flex-wrap justify-center gap-4">
-                            {destinations.map((d, i) => (
-                                <Reveal key={i} delay={i * 0.07}>
-                                    <div className="rounded-2xl border border-navy/10 bg-navy/5 px-8 py-6 text-lg font-semibold text-navy transition-all hover:bg-navy hover:text-white hover:border-sky hover:scale-105 cursor-default">
-                                        {d}
+                        <div className="mt-16 grid gap-6 sm:grid-cols-2 lg:grid-cols-4 grid-equal">
+                            {list.map((d, i) => (
+                                <Reveal key={d.id} delay={i * 0.07} className="h-full">
+                                    <div className="card-premium rounded-2xl p-6 text-center h-full w-full">
+                                        {d.imageUrl ? (
+                                            <img src={d.imageUrl} alt={`${d.name} destination`} className="flag-img" loading="lazy" onError={(e) => { e.target.style.display = 'none'; }} />
+                                        ) : (
+                                            <div className="flag-img" style={{ background: 'var(--navy-2)' }}></div>
+                                        )}
+                                        <h3 className="text-xl font-semibold text-white">{d.name}</h3>
+                                        {d.description && <p className="mt-2 text-sm text-white/60 line-clamp-2">{d.description}</p>}
                                     </div>
                                 </Reveal>
                             ))}
                         </div>
-                        <Reveal delay={0.5}><p className="mt-10 text-sm text-navy/60">Programme availability varies by destination. We help you explore options that match your profile.</p></Reveal>
+                        <Reveal delay={0.5}><p className="mt-8 text-sm text-white/60">Programme availability varies by destination. We help you explore options that match your profile.</p></Reveal>
                     </div>
                 </MorphSection>
             );
         }
 
-        // Programmes section using provided images
         function Programmes() {
-            const programmes = [
-                { title: 'Engineering & Technology', image: MEDIA.programmeImages[0], desc: 'Aerospace, Biomedical, B.Tech, Engineering Diplomas', colour: 'var(--sky)' },
-                { title: 'Health & Medical Sciences', image: MEDIA.programmeImages[1], desc: 'Pharmacy, Public Health, Nutrition & Dietetics', colour: 'var(--green)' },
-                { title: 'Business & Management', image: MEDIA.programmeImages[2], desc: 'BBA, Management, Entrepreneurship', colour: 'var(--yellow)' },
-                { title: 'Law & Public Administration', image: MEDIA.programmeImages[3], desc: 'Law, M.A. Public Administration', colour: 'var(--red)' },
-                { title: 'Social Sciences', image: MEDIA.programmeImages[4], desc: 'Social Work, Humanities', colour: 'var(--cyan)' },
-                { title: 'Arts & Design', image: MEDIA.programmeImages[5], desc: 'Fashion Design, Creative Arts', colour: 'var(--yellow)' },
-                { title: 'Humanities', image: MEDIA.programmeImages[6], desc: 'Literature, Philosophy, Cultural Studies', colour: 'var(--sky)' },
-                { title: 'Diplomas & Certificates', image: MEDIA.programmeImages[7], desc: 'Short programmes and diplomas', colour: 'var(--green)' },
-            ];
+            const [selectedProgramme, setSelectedProgramme] = useState(null);
+            const { data: programmes, loading, error, retry } = useAsyncData(async () => {
+                if (!supabaseClient) return [];
+                try {
+                    const data = await fetchProgrammes();
+                    if (!data || data.length === 0) return [];
+                    const media = await fetchMediaAssets();
+                    const mediaMap = {};
+                    if (media) {
+                        media.forEach(m => {
+                            if (m.storage_path) {
+                                mediaMap[m.name] = m;
+                            }
+                        });
+                    }
+                    return data.map(prog => {
+                        let imageUrl = prog.image_url;
+                        if (imageUrl && !imageUrl.startsWith('http')) {
+                            imageUrl = resolveStorageUrl(imageUrl) || imageUrl;
+                        } else if (imageUrl && imageUrl.includes('imgur.com')) {
+                            // try to find matching Supabase asset by name
+                            const match = media.find(m => m.name.toLowerCase().includes(prog.title.toLowerCase()));
+                            if (match) {
+                                imageUrl = getMediaPublicUrl(match);
+                            }
+                        }
+                        return { ...prog, imageUrl: imageUrl || null };
+                    });
+                } catch (err) {
+                    console.warn('Programmes fetch failed:', err);
+                    return [];
+                }
+            }, []);
+            const scrollTo = useScrollTo();
+            if (loading) return <MorphSection id="programmes" className="section-padding bg-navy-2"><div className="mx-auto max-w-7xl px-6 lg:px-8 text-center"><p className="text-white/70">Loading programmes...</p></div></MorphSection>;
+            if (error && (!programmes || programmes.length === 0)) return <MorphSection id="programmes" className="section-padding bg-navy-2"><div className="mx-auto max-w-7xl px-6 lg:px-8 text-center"><p className="text-white/70">Programmes temporarily unavailable. Please try again.</p><button onClick={retry} className="btn-waterfill rounded-full px-6 py-2 mt-4 text-sm font-semibold text-white bg-transparent border border-red">Retry</button></div></MorphSection>;
+            const list = programmes || [];
             return (
                 <MorphSection id="programmes" className="section-padding bg-navy-2">
                     <div className="mx-auto max-w-7xl px-6 lg:px-8">
-                        <SectionHeading eyebrow="PROGRAMMES" title="Explore Academic Programmes" subtitle="A curated catalogue of programmes across multiple disciplines." />
-                        <div className="mt-16 grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
-                            {programmes.map((p, i) => (
-                                <Reveal key={i} delay={i * 0.1}>
-                                    <div className="group relative overflow-hidden rounded-2xl shadow-xl card-hover">
-                                        <div className="h-64 overflow-hidden">
-                                            <img src={p.image} alt={p.title} className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110" loading="lazy" />
+                        <SectionHeading eyebrow="PROGRAMMES" title="Explore Academic Programmes" subtitle="A curated catalogue of programmes across multiple disciplines. Click any card for details." />
+                        <div className="mt-16 grid gap-6 sm:grid-cols-2 lg:grid-cols-4 grid-equal">
+                            {list.map((p, i) => (
+                                <Reveal key={p.id} delay={i * 0.1} className="h-full">
+                                    <button
+                                        onClick={() => setSelectedProgramme(p)}
+                                        className="card-premium rounded-2xl p-6 h-full w-full text-left cursor-pointer focus:outline-none focus:ring-2 focus:ring-yellow"
+                                        aria-label={`View details for ${p.title}`}
+                                    >
+                                        <div className="flex items-center gap-3 mb-4">
+                                            <div className="h-4 w-4 rounded-full flex-shrink-0" style={{ backgroundColor: p.colour || 'var(--sky)' }}></div>
+                                            <h3 className="text-xl font-bold text-white">{p.title}</h3>
                                         </div>
-                                        <div className="absolute inset-0 bg-gradient-to-t from-navy via-navy/60 to-transparent p-6 flex flex-col justify-end">
-                                            <h3 className="text-2xl font-bold text-white">{p.title}</h3>
-                                            <p className="mt-2 text-sm text-white/80">{p.desc}</p>
-                                            <div className="mt-3 h-1 w-12 rounded-full" style={{ backgroundColor: p.colour }}></div>
+                                        {p.category && <p className="text-xs uppercase tracking-wider text-sky mb-2">{p.category}</p>}
+                                        <p className="text-sm text-white/80 leading-relaxed">{p.description || p.pathway_description || 'Click to view programme details.'}</p>
+                                        <div className="mt-auto pt-4 flex items-center justify-between">
+                                            <div className="h-1.5 w-12 rounded-full" style={{ backgroundColor: p.colour || 'var(--sky)' }}></div>
+                                            <span className="text-xs text-white/50">View Details →</span>
                                         </div>
-                                        <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-r from-sky/0 to-sky/0 group-hover:from-sky/10 group-hover:to-red/10 transition-all duration-500 pointer-events-none"></div>
-                                    </div>
+                                    </button>
                                 </Reveal>
                             ))}
                         </div>
+                        {list.length === 0 && (
+                            <div className="text-center mt-10"><p className="text-white/70">No programmes currently available. Please check back soon.</p></div>
+                        )}
                     </div>
+                    {selectedProgramme && (
+                        <div className="modal-overlay" role="dialog" aria-modal="true" aria-label={`${selectedProgramme.title} details`}>
+                            <div className="modal-content">
+                                <button className="modal-close" onClick={() => setSelectedProgramme(null)} aria-label="Close programme details">✕</button>
+                                <h3 className="text-2xl font-bold text-white mb-2">{selectedProgramme.title}</h3>
+                                {selectedProgramme.category && <p className="text-sm uppercase tracking-wider text-sky mb-4">{selectedProgramme.category}</p>}
+                                {selectedProgramme.level && <p className="text-sm text-white/70 mb-2"><strong>Level:</strong> {selectedProgramme.level}</p>}
+                                {selectedProgramme.description && <p className="text-white/80 mt-4 leading-relaxed">{selectedProgramme.description}</p>}
+                                {selectedProgramme.pathway_description && (
+                                    <div className="mt-4">
+                                        <h4 className="text-lg font-semibold text-white mb-2">Pathway Description</h4>
+                                        <p className="text-white/70 leading-relaxed">{selectedProgramme.pathway_description}</p>
+                                    </div>
+                                )}
+                                {selectedProgramme.academic_direction && (
+                                    <div className="mt-4">
+                                        <h4 className="text-lg font-semibold text-white mb-2">Academic Direction</h4>
+                                        <p className="text-white/70 leading-relaxed">{selectedProgramme.academic_direction}</p>
+                                    </div>
+                                )}
+                                {selectedProgramme.next_steps && (
+                                    <div className="mt-4">
+                                        <h4 className="text-lg font-semibold text-white mb-2">Next Steps</h4>
+                                        <p className="text-white/70 leading-relaxed">{selectedProgramme.next_steps}</p>
+                                    </div>
+                                )}
+                                {selectedProgramme.imageUrl && (
+                                    <img src={selectedProgramme.imageUrl} alt={selectedProgramme.title} className="mt-4 w-full h-48 object-cover rounded-lg" loading="lazy" onError={(e) => { e.target.style.display = 'none'; }} />
+                                )}
+                                <div className="mt-6">
+                                    <WaterfillButton
+                                        href="#apply"
+                                        onClick={(e) => { e.preventDefault(); setSelectedProgramme(null); scrollTo('#apply'); }}
+                                        className="rounded-full px-8 py-3 text-base font-semibold text-white bg-transparent border border-red w-full text-center"
+                                        ariaLabel="Apply for this programme"
+                                    >
+                                        Apply for This Programme
+                                    </WaterfillButton>
+                                </div>
+                            </div>
+                        </div>
+                    )}
                 </MorphSection>
             );
         }
 
-        // Student Support section
         function Support() {
-            const supports = [
-                { icon: '🎓', title: 'Initial Consultation', desc: 'We assess your academic background, interests, and goals to map a personalised pathway.' },
-                { icon: '🗺️', title: 'Pathway Exploration', desc: 'Discover suitable programmes, destinations, and scholarship opportunities based on your profile.' },
-                { icon: '📄', title: 'Application & Document Preparation', desc: 'Guidance through application forms, documents, and deadlines.' },
-                { icon: '✈️', title: 'Pre-Departure Readiness', desc: 'Practical preparation for your journey, including accommodation and travel tips.' },
+            const { data: services, loading, error, retry } = useAsyncData(async () => {
+                if (!supabaseClient) return [];
+                try {
+                    return await fetchSupportServices() || [];
+                } catch (err) {
+                    console.warn('Support services fetch failed:', err);
+                    return [];
+                }
+            }, []);
+            const defaultServices = [
+                { id: 'consultation', icon: '🎓', title: 'Initial Consultation', description: 'We assess your academic background, interests, and goals to map a personalised pathway.' },
+                { id: 'exploration', icon: '🗺️', title: 'Pathway Exploration', description: 'Discover suitable programmes, destinations, and scholarship opportunities based on your profile.' },
+                { id: 'documents', icon: '📄', title: 'Application & Document Preparation', description: 'Guidance through application forms, documents, and deadlines.' },
+                { id: 'pre-departure', icon: '✈️', title: 'Pre-Departure Readiness', description: 'Practical preparation for your journey, including accommodation and travel tips.' }
             ];
+            const displayServices = (services && services.length > 0) ? services : defaultServices;
+            if (loading) return <MorphSection id="support" className="section-padding bg-navy"><div className="mx-auto max-w-7xl px-6 lg:px-8 text-center"><p className="text-white/70">Loading support services...</p></div></MorphSection>;
             return (
-                <MorphSection id="support" className="section-padding bg-white">
+                <MorphSection id="support" className="section-padding bg-navy">
                     <div className="mx-auto max-w-7xl px-6 lg:px-8">
                         <SectionHeading eyebrow="STUDENT SUPPORT" title="Support Every Step of the Way" subtitle="From first consultation to pre-departure readiness." />
-                        <div className="mt-16 grid gap-8 md:grid-cols-2 lg:grid-cols-4">
-                            {supports.map((s, i) => (
-                                <Reveal key={i} delay={i * 0.1}>
-                                    <div className="text-center group p-6 rounded-2xl bg-navy/5 hover:bg-navy/10 transition-colors">
-                                        <div className="mx-auto h-20 w-20 rounded-full bg-gradient-to-br from-sky/20 to-cyan/20 flex items-center justify-center text-4xl group-hover:scale-110 transition-transform">{s.icon}</div>
-                                        <h3 className="mt-4 text-xl font-semibold text-navy">{s.title}</h3>
-                                        <p className="mt-3 text-navy/70">{s.desc}</p>
+                        <div className="mt-16 grid gap-6 md:grid-cols-2 lg:grid-cols-4 grid-equal">
+                            {displayServices.map((s, i) => (
+                                <Reveal key={s.id} delay={i * 0.1} className="h-full">
+                                    <div className="card-premium rounded-2xl p-6 text-center h-full w-full">
+                                        <div className="mx-auto h-20 w-20 rounded-full bg-gradient-to-br from-sky/20 to-cyan/20 flex items-center justify-center text-4xl mb-4">{s.icon || '🎓'}</div>
+                                        <h3 className="text-lg font-semibold text-white">{s.title}</h3>
+                                        <p className="mt-3 text-white/70 text-sm leading-relaxed">{s.description || s.desc || ''}</p>
                                     </div>
                                 </Reveal>
                             ))}
@@ -535,32 +1044,44 @@
             );
         }
 
-        // How It Works (Journey)
         function HowItWorks() {
-            const steps = [
-                { num: '01', title: 'Contact Us', desc: 'Reach out via enquiry form, email, or WhatsApp.' },
-                { num: '02', title: 'Student Assessment', desc: 'We evaluate your academic profile and preferences.' },
-                { num: '03', title: 'Explore Options', desc: 'We present suitable programmes and destinations.' },
-                { num: '04', title: 'Document Preparation', desc: 'Guidance on required documents.' },
-                { num: '05', title: 'Application', desc: 'Submission with follow-up.' },
-                { num: '06', title: 'Admission & Scholarship', desc: 'Receive offers and explore funding.' },
-                { num: '07', title: 'Pre-Departure', desc: 'Prepare for your journey.' },
-                { num: '08', title: 'Begin Your Journey', desc: 'Arrive and start your global education.' },
+            const { data: steps, loading, error, retry } = useAsyncData(async () => {
+                if (!supabaseClient) return [];
+                try {
+                    return await fetchProcessSteps() || [];
+                } catch (err) {
+                    console.warn('Process steps fetch failed:', err);
+                    return [];
+                }
+            }, []);
+            const defaultSteps = [
+                { id: '01', step_number: 1, title: 'Contact Us', description: 'Reach out via enquiry form, email, or WhatsApp.' },
+                { id: '02', step_number: 2, title: 'Student Assessment', description: 'We evaluate your academic profile and preferences.' },
+                { id: '03', step_number: 3, title: 'Explore Options', description: 'We present suitable programmes and destinations.' },
+                { id: '04', step_number: 4, title: 'Document Preparation', description: 'Guidance on required documents.' },
+                { id: '05', step_number: 5, title: 'Application', description: 'Submission with follow-up.' },
+                { id: '06', step_number: 6, title: 'Admission & Scholarship', description: 'Receive offers and explore funding.' },
+                { id: '07', step_number: 7, title: 'Pre-Departure', description: 'Prepare for your journey.' },
+                { id: '08', step_number: 8, title: 'Begin Your Journey', description: 'Arrive and start your global education.' }
             ];
+            const displaySteps = (steps && steps.length > 0) ? steps : defaultSteps;
+            if (loading) return <MorphSection id="how-it-works" className="section-padding bg-navy-2"><div className="mx-auto max-w-5xl px-6 lg:px-8 text-center"><p className="text-white/70">Loading process steps...</p></div></MorphSection>;
             return (
-                <MorphSection id="how-it-works" className="section-padding bg-navy">
-                    <div className="mx-auto max-w-5xl px-6">
-                        <SectionHeading eyebrow="HOW IT WORKS" title="Your Journey, Step by Step" subtitle="Eight clear steps to your global education future." />
+                <MorphSection id="how-it-works" className="section-padding bg-navy-2">
+                    <div className="mx-auto max-w-5xl px-6 lg:px-8">
+                        <SectionHeading eyebrow="HOW IT WORKS" title="Your Journey, Step by Step" subtitle="Clear steps to your global education future." />
                         <div className="mt-16 relative">
                             <div className="absolute left-8 top-0 bottom-0 w-px bg-white/10"></div>
-                            <div className="space-y-12">
-                                {steps.map((s, i) => (
-                                    <Reveal key={i} delay={i * 0.05}>
-                                        <div className="flex gap-8 items-start">
-                                            <div className="relative z-10 flex h-16 w-16 flex-shrink-0 items-center justify-center rounded-full border-2 border-sky bg-sky/10 text-xl font-bold text-sky">{s.num}</div>
-                                            <div className="pt-2">
+                            <div className="space-y-10">
+                                {displaySteps.map((s, i) => (
+                                    <Reveal key={s.id} delay={i * 0.05}>
+                                        <div className="flex gap-6 items-start">
+                                            <div className="relative z-10 flex h-16 w-16 flex-shrink-0 items-center justify-center rounded-full border-2 border-sky bg-sky/10 text-xl font-bold text-sky">
+                                                {String(s.step_number || i + 1).padStart(2, '0')}
+                                            </div>
+                                            <div className="pt-1">
                                                 <h3 className="text-xl font-bold text-white">{s.title}</h3>
-                                                <p className="mt-2 text-white/70">{s.desc}</p>
+                                                <p className="mt-2 text-white/70 text-sm leading-relaxed">{s.description || s.desc || ''}</p>
                                             </div>
                                         </div>
                                     </Reveal>
@@ -573,25 +1094,35 @@
             );
         }
 
-        // Partners / Why Choose Us (simplified)
         function WhyChooseUs() {
-            const points = [
-                { icon: '🌍', title: 'African-Focused', desc: 'We understand the unique needs of African students.' },
-                { icon: '💰', title: 'Affordable Opportunities', desc: 'Explore tuition-reduction and scholarship options.' },
-                { icon: '🔒', title: 'Transparent & Trustworthy', desc: 'We provide honest information, no false guarantees.' },
-                { icon: '🤝', title: 'End-to-End Guidance', desc: 'From first call to arrival, we are with you.' },
+            const { data: points, loading, error, retry } = useAsyncData(async () => {
+                if (!supabaseClient) return [];
+                try {
+                    return await fetchWhyChooseUs() || [];
+                } catch (err) {
+                    console.warn('Why choose us fetch failed:', err);
+                    return [];
+                }
+            }, []);
+            const defaultPoints = [
+                { id: 'african', icon: '🌍', title: 'African-Focused', description: 'We understand the unique needs of African students.' },
+                { id: 'affordable', icon: '💰', title: 'Affordable Opportunities', description: 'Explore tuition-reduction and scholarship options.' },
+                { id: 'transparent', icon: '🔒', title: 'Transparent & Trustworthy', description: 'We provide honest information, no false guarantees.' },
+                { id: 'guidance', icon: '🤝', title: 'End-to-End Guidance', description: 'From first call to arrival, we are with you.' }
             ];
+            const displayPoints = (points && points.length > 0) ? points : defaultPoints;
+            if (loading) return <MorphSection className="section-padding bg-navy"><div className="mx-auto max-w-6xl px-6 lg:px-8 text-center"><p className="text-white/70">Loading...</p></div></MorphSection>;
             return (
-                <MorphSection className="section-padding bg-navy-2">
-                    <div className="mx-auto max-w-6xl px-6">
+                <MorphSection className="section-padding bg-navy">
+                    <div className="mx-auto max-w-6xl px-6 lg:px-8">
                         <SectionHeading eyebrow="WHY CHOOSE US" title="A Partner You Can Trust" subtitle="We provide honest, transparent guidance for African students." />
-                        <div className="mt-16 grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
-                            {points.map((p, i) => (
-                                <Reveal key={i} delay={i * 0.1}>
-                                    <div className="text-center p-6 rounded-2xl bg-white/5 hover:bg-white/10 transition-colors">
-                                        <div className="text-4xl mb-4">{p.icon}</div>
+                        <div className="mt-16 grid gap-6 sm:grid-cols-2 lg:grid-cols-4 grid-equal">
+                            {displayPoints.map((p, i) => (
+                                <Reveal key={p.id} delay={i * 0.1} className="h-full">
+                                    <div className="card-premium rounded-2xl p-6 text-center h-full w-full">
+                                        <div className="text-4xl mb-4">{p.icon || '⭐'}</div>
                                         <h3 className="text-lg font-semibold text-white">{p.title}</h3>
-                                        <p className="mt-2 text-sm text-white/70">{p.desc}</p>
+                                        <p className="mt-2 text-sm text-white/70 leading-relaxed">{p.description || p.desc || ''}</p>
                                     </div>
                                 </Reveal>
                             ))}
@@ -601,35 +1132,50 @@
             );
         }
 
-        // FAQ
         function FAQ() {
-            const [faqs, setFaqs] = useState([]);
             const [openId, setOpenId] = useState(null);
-            useEffect(() => {
-                supabaseClient.from('faqs').select('*').eq('is_published', true).order('order_index').then(({ data }) => setFaqs(data || []));
+            const { data: faqs, loading, error, retry } = useAsyncData(async () => {
+                if (!supabaseClient) return [];
+                try {
+                    return await fetchFaqs() || [];
+                } catch (err) {
+                    console.warn('FAQ fetch failed:', err);
+                    return [];
+                }
             }, []);
             const defaultFaqs = [
                 { id: '1', question: 'Do you guarantee scholarships?', answer: 'No. Scholarship awards are not guaranteed. Eligibility and final decisions are determined by the relevant institution or scholarship provider. We guide you through available opportunities and help you prepare strong applications.' },
                 { id: '2', question: 'Is the half scholarship available to everyone?', answer: 'No. The approximate 50% tuition support is subject to eligibility, academic performance, programme requirements, university admission, availability, and deadlines.' },
                 { id: '3', question: 'Does a 50% scholarship mean I pay nothing?', answer: 'No. A 50% tuition support typically reduces tuition fees by approximately half. You are still responsible for remaining tuition, accommodation, living expenses, travel, and other costs.' },
                 { id: '4', question: 'Do you help with university applications?', answer: 'Yes. We assist with application preparation, document guidance, and follow-up with the university where applicable.' },
-                { id: '5', question: 'Do you provide visa services?', answer: 'We provide general pre-departure guidance and information. Official visa applications must be handled through the relevant embassy or authorised visa service.' },
+                { id: '5', question: 'Do you provide visa services?', answer: 'We provide general pre-departure guidance and information. Official visa applications must be handled through the relevant embassy or authorised visa service.' }
             ];
-            const displayFaqs = faqs.length > 0 ? faqs : defaultFaqs;
+            const displayFaqs = (faqs && faqs.length > 0) ? faqs : defaultFaqs;
+            if (loading) return <MorphSection id="faq" className="section-padding bg-navy"><div className="mx-auto max-w-3xl px-6 lg:px-8 text-center"><p className="text-white/70">Loading FAQs...</p></div></MorphSection>;
+            if (error && displayFaqs.length === 0) return <MorphSection id="faq" className="section-padding bg-navy"><div className="mx-auto max-w-3xl px-6 lg:px-8 text-center"><p className="text-white/70">FAQs temporarily unavailable. Please try again.</p><button onClick={retry} className="btn-waterfill rounded-full px-6 py-2 mt-4 text-sm font-semibold text-white bg-transparent border border-red">Retry</button></div></MorphSection>;
             return (
-                <MorphSection id="faq" className="section-padding bg-white">
-                    <div className="mx-auto max-w-3xl px-6">
+                <MorphSection id="faq" className="section-padding bg-navy">
+                    <div className="mx-auto max-w-3xl px-6 lg:px-8">
                         <SectionHeading eyebrow="FAQ" title="Frequently Asked Questions" />
                         <div className="mt-12 space-y-4">
                             {displayFaqs.map(faq => {
                                 const isOpen = openId === faq.id;
                                 return (
-                                    <div key={faq.id} className="border border-navy/10 rounded-2xl overflow-hidden">
-                                        <button className="flex w-full items-center justify-between gap-4 p-6 text-left text-navy hover:bg-navy/5 transition-colors" onClick={() => setOpenId(isOpen ? null : faq.id)} aria-expanded={isOpen}>
+                                    <div key={faq.id} className="border border-yellow/20 rounded-2xl overflow-hidden">
+                                        <button
+                                            className="flex w-full items-center justify-between gap-4 p-6 text-left text-white hover:bg-white/5 transition-colors"
+                                            onClick={() => setOpenId(isOpen ? null : faq.id)}
+                                            aria-expanded={isOpen}
+                                            aria-controls={`faq-answer-${faq.id}`}
+                                        >
                                             <span className="text-lg font-semibold">{faq.question}</span>
-                                            <span className="text-2xl">{isOpen ? '−' : '+'}</span>
+                                            <span className="text-2xl" aria-hidden="true">{isOpen ? '−' : '+'}</span>
                                         </button>
-                                        {isOpen && <div className="px-6 pb-6 text-navy/70">{faq.answer}</div>}
+                                        {isOpen && (
+                                            <div id={`faq-answer-${faq.id}`} className="px-6 pb-6 text-white/70 leading-relaxed">
+                                                {faq.answer}
+                                            </div>
+                                        )}
                                     </div>
                                 );
                             })}
@@ -639,116 +1185,217 @@
             );
         }
 
-        // Contact / Application Form
+        function Testimonials() {
+            const { data: testimonials, loading, error, retry } = useAsyncData(async () => {
+                if (!supabaseClient) return [];
+                try {
+                    return await fetchTestimonials() || [];
+                } catch (err) {
+                    console.warn('Testimonials fetch failed:', err);
+                    return [];
+                }
+            }, []);
+            if (loading) return <MorphSection className="section-padding bg-navy-2"><div className="mx-auto max-w-6xl px-6 lg:px-8 text-center"><p className="text-white/70">Loading testimonials...</p></div></MorphSection>;
+            if (testimonials && testimonials.length > 0) {
+                return (
+                    <MorphSection className="section-padding bg-navy-2">
+                        <div className="mx-auto max-w-6xl px-6 lg:px-8">
+                            <SectionHeading eyebrow="TESTIMONIALS" title="What Our Students Say" />
+                            <div className="mt-16 grid gap-6 md:grid-cols-2 lg:grid-cols-3 grid-equal">
+                                {testimonials.map((t, i) => (
+                                    <Reveal key={t.id} delay={i * 0.1} className="h-full">
+                                        <div className="card-premium rounded-2xl p-6 h-full w-full">
+                                            {t.image_url && (
+                                                <img src={t.image_url} alt={`${t.name || 'Student'} photo`} className="w-16 h-16 rounded-full object-cover mb-4" loading="lazy" onError={(e) => { e.target.style.display = 'none'; }} />
+                                            )}
+                                            <p className="text-white/80 italic leading-relaxed">"{t.quote || t.testimonial}"</p>
+                                            {t.name && <p className="mt-4 font-semibold text-white">{t.name}</p>}
+                                            {t.destination && <p className="text-sm text-sky">{t.destination}</p>}
+                                        </div>
+                                    </Reveal>
+                                ))}
+                            </div>
+                        </div>
+                    </MorphSection>
+                );
+            }
+            return null;
+        }
+
         function ContactForm() {
-            const [form, setForm] = useState({ full_name: '', email: '', phone: '', academic_level: '', preferred_destination: '', preferred_programme: '', message: '', consent: false });
+            const [form, setForm] = useState({
+                full_name: '', email: '', phone: '', country: '',
+                academic_level: '', preferred_destination: '', preferred_programme: '',
+                message: '', consent: false
+            });
             const [submitting, setSubmitting] = useState(false);
             const [success, setSuccess] = useState(false);
             const [error, setError] = useState('');
+            const [reference, setReference] = useState('');
+            const [fieldErrors, setFieldErrors] = useState({});
+            const successRef = useRef(null);
             const levels = ['Secondary School Graduate', 'Diploma/Certificate Holder', 'Undergraduate Graduate', 'Postgraduate Student', 'Working Professional'];
             const destinations = ['India', 'United Kingdom', 'Canada', 'United States', 'Australia', 'New Zealand', 'Europe', 'Not sure'];
             const programmes = ['Engineering & Technology', 'Health & Medical Sciences', 'Business & Management', 'Law & Public Administration', 'Social Sciences', 'Arts & Design', 'Humanities', 'Diploma/Certificate'];
+
+            useEffect(() => { if (success && successRef.current) { successRef.current.focus(); } }, [success]);
+
             const handleChange = (e) => {
                 const { name, value, type, checked } = e.target;
                 setForm(prev => ({ ...prev, [name]: type === 'checkbox' ? checked : value }));
+                if (fieldErrors[name]) { setFieldErrors(prev => ({ ...prev, [name]: null })); }
+            };
+            const validateEmail = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+            const validate = () => {
+                const errors = {};
+                if (!form.full_name.trim()) errors.full_name = 'Full name is required';
+                if (!form.email.trim()) errors.email = 'Email is required';
+                else if (!validateEmail(form.email)) errors.email = 'Please enter a valid email address';
+                if (!form.consent) errors.consent = 'Please provide consent to submit your enquiry';
+                return errors;
+            };
+            const generateReference = () => {
+                const timestamp = Date.now().toString(36).toUpperCase();
+                const random = Math.random().toString(36).substring(2, 6).toUpperCase();
+                return `EGP-${timestamp}-${random}`;
             };
             const handleSubmit = async (e) => {
                 e.preventDefault();
-                if (!form.full_name || !form.email || !form.consent) {
-                    setError('Please fill in all required fields and provide consent.');
-                    return;
-                }
-                setSubmitting(true); setError('');
+                setError('');
+                const errors = validate();
+                if (Object.keys(errors).length > 0) { setFieldErrors(errors); return; }
+                setSubmitting(true);
                 try {
-                    const { error: submitError } = await supabaseClient.from('enquiries').insert({ ...form, status: 'new', source: 'website' });
-                    if (submitError) { setError('Something went wrong. Please try again later.'); return; }
+                    if (!supabaseClient) throw new Error('Supabase not initialized');
+                    const ref = generateReference();
+                    const { error: submitError } = await supabaseClient
+                        .from('enquiries')
+                        .insert([{ ...form, status: 'new', source: 'website', reference: ref }]);
+                    if (submitError) {
+                        console.error('Submission error:', submitError);
+                        setError('We couldn\'t submit your application right now. Your information has not been lost. Please try again.');
+                        return;
+                    }
+                    setReference(ref);
                     setSuccess(true);
-                    setForm({ full_name: '', email: '', phone: '', academic_level: '', preferred_destination: '', preferred_programme: '', message: '', consent: false });
-                } catch { setError('Something went wrong. Please try again later.'); }
-                finally { setSubmitting(false); }
+                    setForm({
+                        full_name: '', email: '', phone: '', country: '',
+                        academic_level: '', preferred_destination: '', preferred_programme: '',
+                        message: '', consent: false
+                    });
+                } catch (err) {
+                    console.error('Unexpected error:', err);
+                    setError('Network error. Please check your connection and try again.');
+                } finally {
+                    setSubmitting(false);
+                }
             };
+            const resetForm = () => { setSuccess(false); setReference(''); setError(''); setFieldErrors({}); };
+
             return (
-                <MorphSection id="contact" className="section-padding bg-gradient-to-b from-navy to-navy-2">
-                    <div className="mx-auto max-w-4xl px-6">
+                <MorphSection id="apply" className="section-padding bg-navy">
+                    <div className="mx-auto max-w-5xl px-6 lg:px-8">
                         <SectionHeading eyebrow="CONTACT & APPLICATION" title="Ready to Go Global?" subtitle="Tell us what you want to study and where you want to go." />
-                        <div className="mt-12 grid gap-8 md:grid-cols-3">
+                        <div className="mt-16 grid gap-8 md:grid-cols-3">
                             <div className="md:col-span-2">
                                 {success ? (
-                                    <div className="rounded-3xl border border-green/30 bg-green/10 p-12 text-center">
+                                    <div ref={successRef} tabIndex={-1} className="rounded-3xl border border-green/30 bg-green/10 p-12 text-center" role="alert" aria-live="polite">
                                         <div className="text-6xl mb-4">✅</div>
                                         <h3 className="text-2xl font-bold text-white">Application Received!</h3>
-                                        <p className="mt-2 text-white/70">Thank you for your enquiry. Our team will contact you soon.</p>
+                                        <p className="mt-2 text-white/70">Thank you for your enquiry.</p>
+                                        {reference && <p className="mt-4 text-lg font-semibold text-yellow">Reference: {reference}</p>}
+                                        <p className="mt-2 text-white/60">Our admissions guidance team will contact you soon.</p>
+                                        <div className="mt-8 flex flex-wrap gap-4 justify-center">
+                                            <button onClick={resetForm} className="btn-waterfill rounded-full px-6 py-3 text-sm font-semibold text-white bg-transparent border border-red">Submit Another Enquiry</button>
+                                            <a href="https://wa.me/256779989906" target="_blank" rel="noopener noreferrer" className="btn-waterfill rounded-full px-6 py-3 text-sm font-semibold text-white bg-transparent border border-green">WhatsApp Our Team</a>
+                                        </div>
                                     </div>
                                 ) : (
-                                    <form onSubmit={handleSubmit} className="space-y-6">
-                                        {error && <div className="rounded-xl border border-red-500/30 bg-red-500/10 p-4 text-red-200">{error}</div>}
+                                    <form onSubmit={handleSubmit} className="space-y-6" noValidate>
+                                        {error && (
+                                            <div className="rounded-xl border border-red-500/30 bg-red-500/10 p-4 text-red-200" role="alert">
+                                                {error}
+                                                <button onClick={() => setError('')} className="ml-2 underline">Dismiss</button>
+                                            </div>
+                                        )}
                                         <div className="grid gap-6 md:grid-cols-2">
                                             <div>
-                                                <label className="block text-sm font-medium text-white/80">Full Name *</label>
-                                                <input type="text" name="full_name" value={form.full_name} onChange={handleChange} required className="mt-2 w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-white placeholder-white/40 focus:border-sky focus:outline-none" placeholder="Your full name" />
+                                                <label htmlFor="full_name" className="block text-sm font-medium text-white/80 mb-2">Full Name *</label>
+                                                <input type="text" id="full_name" name="full_name" value={form.full_name} onChange={handleChange} required className="input-gold w-full rounded-xl px-5 py-3 text-white placeholder-white/40 focus:outline-none" placeholder="Your full name" aria-invalid={!!fieldErrors.full_name} />
+                                                {fieldErrors.full_name && <p className="mt-1 text-sm text-red-400">{fieldErrors.full_name}</p>}
                                             </div>
                                             <div>
-                                                <label className="block text-sm font-medium text-white/80">Email *</label>
-                                                <input type="email" name="email" value={form.email} onChange={handleChange} required className="mt-2 w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-white placeholder-white/40 focus:border-sky focus:outline-none" placeholder="you@example.com" />
+                                                <label htmlFor="email" className="block text-sm font-medium text-white/80 mb-2">Email *</label>
+                                                <input type="email" id="email" name="email" value={form.email} onChange={handleChange} required className="input-gold w-full rounded-xl px-5 py-3 text-white placeholder-white/40 focus:outline-none" placeholder="you@example.com" aria-invalid={!!fieldErrors.email} />
+                                                {fieldErrors.email && <p className="mt-1 text-sm text-red-400">{fieldErrors.email}</p>}
                                             </div>
                                             <div>
-                                                <label className="block text-sm font-medium text-white/80">Phone Number</label>
-                                                <input type="tel" name="phone" value={form.phone} onChange={handleChange} className="mt-2 w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-white placeholder-white/40 focus:border-sky focus:outline-none" placeholder="+256 700 000 000" />
+                                                <label htmlFor="phone" className="block text-sm font-medium text-white/80 mb-2">Phone Number</label>
+                                                <input type="tel" id="phone" name="phone" value={form.phone} onChange={handleChange} className="input-gold w-full rounded-xl px-5 py-3 text-white placeholder-white/40 focus:outline-none" placeholder="+256 700 000 000" />
                                             </div>
                                             <div>
-                                                <label className="block text-sm font-medium text-white/80">Academic Level</label>
-                                                <select name="academic_level" value={form.academic_level} onChange={handleChange} className="mt-2 w-full rounded-xl border border-white/10 bg-navy px-4 py-3 text-white focus:border-sky focus:outline-none">
-                                                    <option value="">Select level</option>
+                                                <label htmlFor="country" className="block text-sm font-medium text-white/80 mb-2">Country</label>
+                                                <input type="text" id="country" name="country" value={form.country} onChange={handleChange} className="input-gold w-full rounded-xl px-5 py-3 text-white placeholder-white/40 focus:outline-none" placeholder="Your country" />
+                                            </div>
+                                            <div>
+                                                <label htmlFor="academic_level" className="block text-sm font-medium text-white/80 mb-2">Academic Level</label>
+                                                <select id="academic_level" name="academic_level" value={form.academic_level} onChange={handleChange} className="select-gold w-full rounded-xl px-5 py-3 text-white focus:outline-none">
+                                                    <option value="" disabled>Select level</option>
                                                     {levels.map(l => <option key={l} value={l}>{l}</option>)}
                                                 </select>
                                             </div>
                                             <div>
-                                                <label className="block text-sm font-medium text-white/80">Preferred Destination</label>
-                                                <select name="preferred_destination" value={form.preferred_destination} onChange={handleChange} className="mt-2 w-full rounded-xl border border-white/10 bg-navy px-4 py-3 text-white focus:border-sky focus:outline-none">
-                                                    <option value="">Select destination</option>
+                                                <label htmlFor="preferred_destination" className="block text-sm font-medium text-white/80 mb-2">Preferred Destination</label>
+                                                <select id="preferred_destination" name="preferred_destination" value={form.preferred_destination} onChange={handleChange} className="select-gold w-full rounded-xl px-5 py-3 text-white focus:outline-none">
+                                                    <option value="" disabled>Select destination</option>
                                                     {destinations.map(d => <option key={d} value={d}>{d}</option>)}
                                                 </select>
                                             </div>
                                             <div>
-                                                <label className="block text-sm font-medium text-white/80">Preferred Programme</label>
-                                                <select name="preferred_programme" value={form.preferred_programme} onChange={handleChange} className="mt-2 w-full rounded-xl border border-white/10 bg-navy px-4 py-3 text-white focus:border-sky focus:outline-none">
-                                                    <option value="">Select programme</option>
+                                                <label htmlFor="preferred_programme" className="block text-sm font-medium text-white/80 mb-2">Preferred Programme</label>
+                                                <select id="preferred_programme" name="preferred_programme" value={form.preferred_programme} onChange={handleChange} className="select-gold w-full rounded-xl px-5 py-3 text-white focus:outline-none">
+                                                    <option value="" disabled>Select programme</option>
                                                     {programmes.map(p => <option key={p} value={p}>{p}</option>)}
                                                 </select>
                                             </div>
                                         </div>
                                         <div>
-                                            <label className="block text-sm font-medium text-white/80">Message</label>
-                                            <textarea name="message" rows={4} value={form.message} onChange={handleChange} className="mt-2 w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-white placeholder-white/40 focus:border-sky focus:outline-none" placeholder="Tell us more..."></textarea>
+                                            <label htmlFor="message" className="block text-sm font-medium text-white/80 mb-2">Message</label>
+                                            <textarea id="message" name="message" rows={4} value={form.message} onChange={handleChange} className="input-gold w-full rounded-xl px-5 py-3 text-white placeholder-white/40 focus:outline-none" placeholder="Tell us more..."></textarea>
                                         </div>
                                         <label className="flex items-start gap-3 text-sm text-white/80">
-                                            <input type="checkbox" name="consent" checked={form.consent} onChange={handleChange} className="mt-1 h-4 w-4 rounded border-white/20 bg-white/5 text-sky focus:ring-sky" />
+                                            <input type="checkbox" name="consent" checked={form.consent} onChange={handleChange} className="mt-1 h-5 w-5 rounded border-yellow bg-white/5 text-sky focus:ring-sky" aria-invalid={!!fieldErrors.consent} />
                                             <span>I consent to Elite Global Pathways processing my enquiry and understand that admission, scholarship, and visa outcomes are not guaranteed.</span>
                                         </label>
-                                        <button type="submit" disabled={submitting} className="flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-sky to-cyan px-8 py-4 text-lg font-semibold text-navy hover:scale-[1.02] transition-transform disabled:opacity-50 disabled:cursor-not-allowed">
-                                            {submitting ? 'Submitting...' : 'Submit Application'} <span>➤</span>
+                                        {fieldErrors.consent && <p className="text-sm text-red-400">{fieldErrors.consent}</p>}
+                                        <button type="submit" disabled={submitting} className="w-full rounded-xl px-8 py-3 text-lg font-semibold btn-waterfill bg-transparent border border-red text-white hover:shadow-lg hover:shadow-red/30 transition-shadow disabled:opacity-50 disabled:cursor-not-allowed" aria-label="Submit application">
+                                            {submitting ? (
+                                                <span className="flex items-center justify-center gap-2">
+                                                    <svg className="animate-spin h-5 w-5" viewBox="0 0 24 24">
+                                                        <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" strokeDasharray="60" strokeDashoffset="20" />
+                                                    </svg>
+                                                    Submitting...
+                                                </span>
+                                            ) : (
+                                                <>Submit Application <span className="ml-2">➤</span></>
+                                            )}
                                         </button>
                                     </form>
                                 )}
                             </div>
                             <div className="space-y-6">
-                                <div className="glass rounded-2xl p-6">
-                                    <h3 className="text-xl font-semibold text-white">Direct Contact</h3>
-                                    <ul className="mt-4 space-y-3 text-sm text-white/80">
+                                <div className="glass rounded-2xl p-6 border border-yellow/20">
+                                    <h3 className="text-xl font-semibold text-white mb-4">Direct Contact</h3>
+                                    <ul className="space-y-3 text-sm text-white/80">
                                         <li><a href="mailto:eliteglobalpathwaysltd2025@gmail.com" className="hover:text-sky">📧 eliteglobalpathwaysltd2025@gmail.com</a></li>
                                         <li><a href="https://wa.me/917359320928" className="hover:text-sky">💬 WhatsApp India: +91 73593 20928</a></li>
                                         <li><a href="https://wa.me/256779989906" className="hover:text-sky">💬 WhatsApp Uganda: +256 779 989906</a></li>
                                         <li><a href="https://wa.me/9537875184" className="hover:text-sky">💬 WhatsApp Myanmar: +95 3787 5184</a></li>
-                                        <li className="flex gap-3 mt-2">
-                                            <a href="#" className="text-sky hover:text-cyan">X</a>
-                                            <a href="#" className="text-sky hover:text-cyan">Instagram</a>
-                                            <a href="#" className="text-sky hover:text-cyan">TikTok</a>
-                                        </li>
                                     </ul>
                                 </div>
-                                <div className="glass rounded-2xl p-6">
-                                    <h3 className="text-xl font-semibold text-white">Important</h3>
-                                    <p className="mt-2 text-xs text-white/70">Elite Global Pathways does not guarantee admission, scholarship awards, or visa approval. All opportunities are subject to eligibility and institutional terms.</p>
+                                <div className="glass rounded-2xl p-6 border border-yellow/20">
+                                    <h3 className="text-xl font-semibold text-white mb-4">Important</h3>
+                                    <p className="text-sm text-white/70 leading-relaxed">Elite Global Pathways does not guarantee admission, scholarship awards, or visa approval. All opportunities are subject to eligibility and institutional terms.</p>
                                 </div>
                             </div>
                         </div>
@@ -757,23 +1404,25 @@
             );
         }
 
-        // Footer
         function Footer() {
+            const scrollTo = useScrollTo();
+            const [showPrivacy, setShowPrivacy] = useState(false);
+            const [showTerms, setShowTerms] = useState(false);
             return (
-                <footer className="bg-navy py-12 text-white/70 border-t border-white/10">
+                <footer className="bg-navy py-14 text-white/70 border-t border-yellow/20">
                     <div className="mx-auto max-w-7xl px-6 lg:px-8">
                         <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-4">
                             <div>
-                                <div className="flex items-center gap-3">
-                                    <img src={MEDIA.logo} alt="Elite Global Pathways" className="h-10 w-10 rounded-full object-cover" />
+                                <div className="flex items-center gap-3 mb-4">
+                                    <img src={defaultMedia.logo} alt="Elite Global Pathways" className="h-10 w-10 rounded-full object-cover" />
                                     <span className="text-lg font-bold text-white">Elite Global Pathways</span>
                                 </div>
-                                <p className="mt-4 text-sm">Connecting African Students to Global Education.</p>
+                                <p className="text-sm leading-relaxed">Connecting African Students to Global Education.</p>
                                 <p className="mt-2 italic text-sky">Your Dreams. Our Pathway. Your Global Future.</p>
                             </div>
                             <div>
-                                <h3 className="text-sm font-semibold uppercase tracking-wider text-white">Contact</h3>
-                                <ul className="mt-4 space-y-3 text-sm">
+                                <h3 className="text-sm font-semibold uppercase tracking-wider text-white mb-4">Contact</h3>
+                                <ul className="space-y-2 text-sm">
                                     <li><a href="mailto:eliteglobalpathwaysltd2025@gmail.com" className="hover:text-sky">eliteglobalpathwaysltd2025@gmail.com</a></li>
                                     <li>+91 73593 20928 (India)</li>
                                     <li>+256 779 989906 (Uganda)</li>
@@ -781,208 +1430,408 @@
                                 </ul>
                             </div>
                             <div>
-                                <h3 className="text-sm font-semibold uppercase tracking-wider text-white">Quick Links</h3>
-                                <ul className="mt-4 space-y-3 text-sm">
-                                    <li><a href="#destinations" className="hover:text-sky">Destinations</a></li>
-                                    <li><a href="#programmes" className="hover:text-sky">Programmes</a></li>
-                                    <li><a href="#support" className="hover:text-sky">Student Support</a></li>
-                                    <li><a href="#how-it-works" className="hover:text-sky">How It Works</a></li>
-                                    <li><a href="#contact" className="hover:text-sky">Contact</a></li>
+                                <h3 className="text-sm font-semibold uppercase tracking-wider text-white mb-4">Quick Links</h3>
+                                <ul className="space-y-2 text-sm">
+                                    <li><a href="#home" onClick={(e)=>{e.preventDefault(); scrollTo('#home');}} className="hover:text-sky cursor-pointer">Home</a></li>
+                                    <li><a href="#programmes" onClick={(e)=>{e.preventDefault(); scrollTo('#programmes');}} className="hover:text-sky cursor-pointer">Programmes</a></li>
+                                    <li><a href="#destinations" onClick={(e)=>{e.preventDefault(); scrollTo('#destinations');}} className="hover:text-sky cursor-pointer">Destinations</a></li>
+                                    <li><a href="#support" onClick={(e)=>{e.preventDefault(); scrollTo('#support');}} className="hover:text-sky cursor-pointer">Support</a></li>
+                                    <li><a href="#how-it-works" onClick={(e)=>{e.preventDefault(); scrollTo('#how-it-works');}} className="hover:text-sky cursor-pointer">How It Works</a></li>
+                                    <li><a href="#faq" onClick={(e)=>{e.preventDefault(); scrollTo('#faq');}} className="hover:text-sky cursor-pointer">FAQ</a></li>
+                                    <li><a href="#apply" onClick={(e)=>{e.preventDefault(); scrollTo('#apply');}} className="hover:text-sky cursor-pointer">Apply Now</a></li>
                                 </ul>
                             </div>
                             <div>
-                                <h3 className="text-sm font-semibold uppercase tracking-wider text-white">Legal</h3>
-                                <ul className="mt-4 space-y-3 text-sm">
-                                    <li><a href="#" className="hover:text-sky">Privacy Policy</a></li>
-                                    <li><a href="#" className="hover:text-sky">Terms & Conditions</a></li>
-                                    <li className="text-xs text-white/50">Elite Global Pathways does not guarantee admission, scholarship awards, or visa approval.</li>
+                                <h3 className="text-sm font-semibold uppercase tracking-wider text-white mb-4">Legal</h3>
+                                <ul className="space-y-2 text-sm">
+                                    <li><button onClick={() => setShowPrivacy(true)} className="hover:text-sky cursor-pointer">Privacy Policy</button></li>
+                                    <li><button onClick={() => setShowTerms(true)} className="hover:text-sky cursor-pointer">Terms & Conditions</button></li>
+                                    <li className="text-xs text-white/50 leading-relaxed">Elite Global Pathways does not guarantee admission, scholarship awards, or visa approval.</li>
                                 </ul>
                             </div>
                         </div>
-                        <div className="mt-8 border-t border-white/10 pt-6 text-center text-xs text-white/50">
+                        <div className="mt-8 border-t border-yellow/20 pt-6 text-center text-xs text-white/50">
                             © {new Date().getFullYear()} Elite Global Pathways Limited. All rights reserved.
                         </div>
                     </div>
+                    {showPrivacy && (
+                        <div className="modal-overlay" role="dialog" aria-modal="true" aria-label="Privacy Policy">
+                            <div className="modal-content">
+                                <button className="modal-close" onClick={() => setShowPrivacy(false)} aria-label="Close privacy policy">✕</button>
+                                <h3 className="text-2xl font-bold text-white mb-4">Privacy Policy</h3>
+                                <div className="text-white/70 space-y-3 text-sm">
+                                    <p>Elite Global Pathways Limited respects your privacy and is committed to protecting your personal information.</p>
+                                    <p>We collect information you provide through our enquiry forms, including your name, email, phone number, and academic preferences. This information is used solely for the purpose of responding to your enquiry and providing educational guidance.</p>
+                                    <p>We do not sell or share your personal information with third parties except as necessary to process your enquiry or as required by law.</p>
+                                    <p>You may request deletion of your personal information at any time by contacting us.</p>
+                                </div>
+                            </div>
+                        </div>
+                    )}
+                    {showTerms && (
+                        <div className="modal-overlay" role="dialog" aria-modal="true" aria-label="Terms and Conditions">
+                            <div className="modal-content">
+                                <button className="modal-close" onClick={() => setShowTerms(false)} aria-label="Close terms and conditions">✕</button>
+                                <h3 className="text-2xl font-bold text-white mb-4">Terms & Conditions</h3>
+                                <div className="text-white/70 space-y-3 text-sm">
+                                    <p>By using this website and submitting an enquiry, you agree to these terms and conditions.</p>
+                                    <p>Elite Global Pathways Limited provides educational guidance and application support services. We do not guarantee admission to any institution, scholarship awards, or visa approval.</p>
+                                    <p>All information provided on this website is for general informational purposes only and is subject to change without notice.</p>
+                                    <p>You are responsible for verifying all information with the relevant institution or authority before making any decisions.</p>
+                                </div>
+                            </div>
+                        </div>
+                    )}
                 </footer>
             );
         }
 
-        // Admin components
-        function AdminLogin() {
+        function WhatsAppFloat() {
+            return (
+                <a href="https://wa.me/256779989906" target="_blank" rel="noopener noreferrer" className="whatsapp-float" aria-label="Chat on WhatsApp">
+                    <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"><path d="M16.004 4C9.383 4 4 9.383 4 16.004c0 2.59.83 5.004 2.244 6.996L4 28l5.234-2.18A11.94 11.94 0 0 0 16.004 28c6.621 0 12.004-5.383 12.004-12.004C28.008 9.383 22.625 4 16.004 4zm0 2.4c5.305 0 9.604 4.3 9.604 9.604 0 5.305-4.3 9.604-9.604 9.604-2.121 0-4.076-.707-5.66-1.887l-.317-.191-3.777 1.57 1.57-3.777-.191-.317A9.57 9.57 0 0 1 6.4 16.004c0-5.305 4.3-9.604 9.604-9.604zm-3.9 4.79c-.16 0-.332.064-.507.28-.176.216-.664.65-.664 1.586 0 .937.683 1.842.777 1.969.094.128 1.304 2.155 3.293 2.934 1.647.646 1.982.516 2.34.484.357-.033 1.152-.47 1.314-.926.163-.456.163-.846.114-.926-.05-.08-.176-.127-.37-.223-.194-.095-1.152-.568-1.33-.632-.178-.065-.308-.095-.437.095-.13.19-.5.632-.613.761-.113.13-.226.145-.42.048-.194-.097-.82-.302-1.562-.963-.577-.514-.967-1.148-1.08-1.342-.113-.193-.012-.297.085-.393.087-.087.194-.227.291-.34.097-.114.13-.194.194-.323.065-.13.032-.242-.016-.339-.048-.097-.437-1.053-.6-1.441-.16-.38-.32-.329-.437-.334a7.7 7.7 0 0 0-.375-.007z"/></svg>
+                </a>
+            );
+        }
+
+        function AdminLogin({ onLogin }) {
             const [email, setEmail] = useState('');
             const [password, setPassword] = useState('');
             const [error, setError] = useState('');
-            const handleLogin = async (e) => {
+            const [loading, setLoading] = useState(false);
+            const handleSubmit = async (e) => {
                 e.preventDefault();
+                setLoading(true);
                 setError('');
-                const { data, error: loginError } = await supabaseClient.auth.signInWithPassword({ email, password });
-                if (loginError || data?.user?.app_metadata?.role !== 'admin') {
-                    setError('Invalid credentials or not admin');
-                    await supabaseClient.auth.signOut();
-                    return;
+                try {
+                    if (!supabaseClient) throw new Error('Supabase not initialized');
+                    const { data, error } = await supabaseClient.auth.signInWithPassword({ email, password });
+                    if (error) throw error;
+                    onLogin();
+                } catch (err) {
+                    console.error('Login error:', err);
+                    setError('Invalid credentials. Please try again.');
+                } finally {
+                    setLoading(false);
                 }
-                window.location.hash = '#/admin/dashboard';
             };
             return (
-                <div className="min-h-screen flex items-center justify-center bg-navy px-6">
-                    <form onSubmit={handleLogin} className="w-full max-w-md rounded-2xl border border-white/10 bg-white/5 p-8">
-                        <img src={MEDIA.logo} alt="Elite Global Pathways" className="mx-auto h-12 w-12 rounded-full mb-4" />
+                <div className="min-h-screen flex items-center justify-center bg-navy px-4">
+                    <div className="glass rounded-2xl p-8 w-full max-w-md">
                         <h1 className="text-2xl font-bold text-white mb-6">Admin Login</h1>
-                        {error && <p className="mb-4 text-red-400">{error}</p>}
-                        <input type="email" placeholder="Email" value={email} onChange={e => setEmail(e.target.value)} className="mb-4 w-full rounded-xl border border-white/10 bg-navy px-4 py-3 text-white" required />
-                        <input type="password" placeholder="Password" value={password} onChange={e => setPassword(e.target.value)} className="mb-6 w-full rounded-xl border border-white/10 bg-navy px-4 py-3 text-white" required />
-                        <button className="w-full rounded-xl bg-gradient-to-r from-sky to-cyan py-3 font-semibold text-navy">Sign In</button>
-                    </form>
+                        {error && <div className="mb-4 rounded-lg bg-red-500/20 p-3 text-red-200" role="alert">{error}</div>}
+                        <form onSubmit={handleSubmit} className="space-y-4">
+                            <div>
+                                <label htmlFor="admin_email" className="block text-sm text-white/80 mb-2">Email</label>
+                                <input type="email" id="admin_email" value={email} onChange={e => setEmail(e.target.value)} required className="input-gold w-full rounded-xl px-4 py-2" />
+                            </div>
+                            <div>
+                                <label htmlFor="admin_password" className="block text-sm text-white/80 mb-2">Password</label>
+                                <input type="password" id="admin_password" value={password} onChange={e => setPassword(e.target.value)} required className="input-gold w-full rounded-xl px-4 py-2" />
+                            </div>
+                            <button type="submit" disabled={loading} className="btn-waterfill w-full rounded-xl px-6 py-3 border border-red text-white font-semibold">
+                                {loading ? 'Logging in...' : 'Login'}
+                            </button>
+                        </form>
+                    </div>
                 </div>
             );
         }
 
-        function AdminDashboard() {
-            const [counts, setCounts] = useState({ programmes: 0, enquiries: 0, media: 0 });
+        function AdminDashboard({ onLogout }) {
+            const [counts, setCounts] = useState({ programmes: 0, destinations: 0, faqs: 0, leads: 0, testimonials: 0 });
+            const [loading, setLoading] = useState(true);
             useEffect(() => {
-                Promise.all([
-                    supabaseClient.from('programmes').select('id', { count: 'exact', head: true }),
-                    supabaseClient.from('enquiries').select('id', { count: 'exact', head: true }),
-                    supabaseClient.from('media_assets').select('id', { count: 'exact', head: true })
-                ]).then(([p, e, m]) => setCounts({ programmes: p.count || 0, enquiries: e.count || 0, media: m.count || 0 }));
+                const fetchCounts = async () => {
+                    try {
+                        if (!supabaseClient) return;
+                        const queries = [
+                            supabaseClient.from('programmes').select('id', { count: 'exact' }),
+                            supabaseClient.from('destinations').select('id', { count: 'exact' }),
+                            supabaseClient.from('faqs').select('id', { count: 'exact' }),
+                            supabaseClient.from('enquiries').select('id', { count: 'exact' }),
+                            supabaseClient.from('testimonials').select('id', { count: 'exact' })
+                        ];
+                        const results = await Promise.all(queries);
+                        setCounts({
+                            programmes: results[0].count || 0,
+                            destinations: results[1].count || 0,
+                            faqs: results[2].count || 0,
+                            leads: results[3].count || 0,
+                            testimonials: results[4].count || 0
+                        });
+                    } catch (err) {
+                        console.error('Error fetching counts:', err);
+                    } finally {
+                        setLoading(false);
+                    }
+                };
+                fetchCounts();
             }, []);
+            const stats = [
+                { label: 'Programmes', count: counts.programmes, icon: '📚' },
+                { label: 'Destinations', count: counts.destinations, icon: '🌍' },
+                { label: 'FAQs', count: counts.faqs, icon: '❓' },
+                { label: 'Leads', count: counts.leads, icon: '📋' },
+                { label: 'Testimonials', count: counts.testimonials, icon: '💬' }
+            ];
             return (
-                <div className="p-8">
-                    <h1 className="text-3xl font-bold">Dashboard</h1>
-                    <div className="mt-8 grid gap-6 md:grid-cols-3">
-                        <div className="rounded-2xl border border-white/10 bg-white/5 p-6"><p className="text-sm text-white/60">Programmes</p><p className="text-4xl font-bold text-sky">{counts.programmes}</p></div>
-                        <div className="rounded-2xl border border-white/10 bg-white/5 p-6"><p className="text-sm text-white/60">Enquiries</p><p className="text-4xl font-bold text-yellow">{counts.enquiries}</p></div>
-                        <div className="rounded-2xl border border-white/10 bg-white/5 p-6"><p className="text-sm text-white/60">Media Assets</p><p className="text-4xl font-bold text-green">{counts.media}</p></div>
+                <div className="p-8 bg-navy min-h-screen">
+                    <div className="flex justify-between items-center mb-8">
+                        <h1 className="text-3xl font-bold text-white">Admin Dashboard</h1>
+                        <button onClick={onLogout} className="px-4 py-2 bg-red-500/20 text-red-200 rounded-lg hover:bg-red-500/30">Logout</button>
                     </div>
-                </div>
-            );
-        }
-
-        function CMSPage() {
-            const [activeTab, setActiveTab] = useState('sections');
-            const [sections, setSections] = useState([]);
-            const [programmes, setProgrammes] = useState([]);
-            useEffect(() => {
-                if (activeTab === 'sections') {
-                    supabaseClient.from('sections').select('*').order('order_index').then(({ data }) => setSections(data || []));
-                } else {
-                    supabaseClient.from('programmes').select('*').order('order_index').then(({ data }) => setProgrammes(data || []));
-                }
-            }, [activeTab]);
-            const togglePublish = async (table, id, current, isPublishedColumn = 'is_published') => {
-                const { error } = await supabaseClient.from(table).update({ [isPublishedColumn]: !current }).eq('id', id);
-                if (!error) {
-                    if (table === 'sections') setSections(prev => prev.map(s => s.id === id ? { ...s, [isPublishedColumn]: !current } : s));
-                    else setProgrammes(prev => prev.map(p => p.id === id ? { ...p, [isPublishedColumn]: !current } : p));
-                }
-            };
-            return (
-                <div className="p-8">
-                    <h1 className="text-3xl font-bold mb-8">CMS</h1>
-                    <div className="mb-8 flex gap-4">
-                        <button onClick={() => setActiveTab('sections')} className={`rounded-full px-6 py-2 ${activeTab === 'sections' ? 'bg-sky text-navy' : 'bg-white/10'}`}>Sections</button>
-                        <button onClick={() => setActiveTab('programmes')} className={`rounded-full px-6 py-2 ${activeTab === 'programmes' ? 'bg-sky text-navy' : 'bg-white/10'}`}>Programmes</button>
-                    </div>
-                    {activeTab === 'sections' ? (
-                        <div className="space-y-4">
-                            {sections.map(s => (
-                                <div key={s.id} className="flex items-center justify-between rounded-xl border border-white/10 bg-white/5 p-4">
-                                    <div><p className="font-semibold">{s.title}</p><p className="text-sm text-white/60">Order: {s.order_index}</p></div>
-                                    <button onClick={() => togglePublish('sections', s.id, s.is_published)} className={`rounded-full px-4 py-2 text-sm ${s.is_published ? 'bg-green/20 text-green' : 'bg-red/20 text-red-400'}`}>{s.is_published ? 'Published' : 'Draft'}</button>
-                                </div>
-                            ))}
-                        </div>
+                    {loading ? (
+                        <p className="text-white/70">Loading dashboard...</p>
                     ) : (
-                        <div className="space-y-4">
-                            {programmes.map(p => (
-                                <div key={p.id} className="flex items-center justify-between rounded-xl border border-white/10 bg-white/5 p-4">
-                                    <div><p className="font-semibold">{p.title}</p><p className="text-sm text-white/60">{p.category}</p></div>
-                                    <button onClick={() => togglePublish('programmes', p.id, p.is_published)} className={`rounded-full px-4 py-2 text-sm ${p.is_published ? 'bg-green/20 text-green' : 'bg-red/20 text-red-400'}`}>{p.is_published ? 'Published' : 'Draft'}</button>
+                        <div className="grid gap-6 md:grid-cols-3 lg:grid-cols-5">
+                            {stats.map(stat => (
+                                <div key={stat.label} className="glass rounded-2xl p-6 text-center">
+                                    <div className="text-3xl mb-2">{stat.icon}</div>
+                                    <div className="text-3xl font-bold text-white">{stat.count}</div>
+                                    <div className="text-sm text-white/70 mt-1">{stat.label}</div>
                                 </div>
                             ))}
                         </div>
                     )}
-                </div>
-            );
-        }
-
-        function LeadsPage() {
-            const [leads, setLeads] = useState([]);
-            const [filter, setFilter] = useState('all');
-            useEffect(() => {
-                let query = supabaseClient.from('enquiries').select('*').order('created_at', { ascending: false });
-                if (filter !== 'all') query = query.eq('status', filter);
-                query.then(({ data }) => setLeads(data || []));
-            }, [filter]);
-            const updateStatus = async (id, status) => {
-                await supabaseClient.from('enquiries').update({ status }).eq('id', id);
-                setLeads(prev => prev.map(l => l.id === id ? { ...l, status } : l));
-            };
-            return (
-                <div className="p-8">
-                    <h1 className="text-3xl font-bold mb-8">Lead Management</h1>
-                    <div className="mb-6 flex gap-2">
-                        {['all','new','contacted','qualified','closed','spam'].map(s => (
-                            <button key={s} onClick={() => setFilter(s)} className={`rounded-full px-4 py-2 text-sm ${filter === s ? 'bg-sky text-navy' : 'bg-white/10'}`}>{s}</button>
-                        ))}
-                    </div>
-                    <div className="space-y-4">
-                        {leads.map(lead => (
-                            <div key={lead.id} className="rounded-xl border border-white/10 bg-white/5 p-4">
-                                <div className="flex flex-wrap items-center justify-between gap-4">
-                                    <div>
-                                        <p className="font-semibold">{lead.full_name}</p>
-                                        <p className="text-sm text-white/60">{lead.email} • {lead.phone || 'No phone'}</p>
-                                        <p className="text-sm text-white/60">{lead.country} • {lead.preferred_destination || 'N/A'} • {lead.preferred_programme || 'N/A'}</p>
-                                    </div>
-                                    <select value={lead.status} onChange={e => updateStatus(lead.id, e.target.value)} className="rounded-lg bg-navy px-3 py-1 text-sm border border-white/10">
-                                        <option value="new">new</option>
-                                        <option value="contacted">contacted</option>
-                                        <option value="qualified">qualified</option>
-                                        <option value="closed">closed</option>
-                                        <option value="spam">spam</option>
-                                    </select>
-                                </div>
-                                {lead.message && <p className="mt-2 text-sm text-white/70">{lead.message}</p>}
-                            </div>
-                        ))}
+                    <div className="mt-8">
+                        <h2 className="text-xl font-semibold text-white mb-4">Quick Actions</h2>
+                        <div className="flex flex-wrap gap-4">
+                            <a href="#/admin/programmes" className="btn-waterfill rounded-full px-6 py-2 text-sm font-semibold text-white bg-transparent border border-red">Manage Programmes</a>
+                            <a href="#/admin/leads" className="btn-waterfill rounded-full px-6 py-2 text-sm font-semibold text-white bg-transparent border border-red">View Leads</a>
+                            <a href="#/admin/settings" className="btn-waterfill rounded-full px-6 py-2 text-sm font-semibold text-white bg-transparent border border-red">Site Settings</a>
+                        </div>
                     </div>
                 </div>
             );
         }
 
-        function AdminLayout({ children }) {
-            const [authChecked, setAuthChecked] = useState(false);
-            const [isAdmin, setIsAdmin] = useState(false);
-            useEffect(() => {
-                supabaseClient.auth.getSession().then(({ data: { session } }) => {
-                    if (!session || session.user?.app_metadata?.role !== 'admin') {
-                        window.location.hash = '#/admin/login';
-                    } else {
-                        setIsAdmin(true);
-                    }
-                    setAuthChecked(true);
-                });
-            }, []);
-            if (!authChecked) return <div className="flex h-screen items-center justify-center bg-navy text-white">Loading...</div>;
-            if (!isAdmin) return null;
-            const signOut = async () => { await supabaseClient.auth.signOut(); window.location.hash = '#/'; };
+        function AdminSection({ title, children, onBack }) {
             return (
-                <div className="min-h-screen bg-navy text-white">
-                    <nav className="glass p-4 flex gap-6">
-                        <img src={MEDIA.logo} alt="Elite Global Pathways" className="h-8 w-8 rounded-full" />
-                        <a href="#/admin/dashboard" className="font-semibold text-sky">Dashboard</a>
-                        <a href="#/admin/cms" className="hover:text-sky">CMS</a>
-                        <a href="#/admin/leads" className="hover:text-sky">Leads</a>
-                        <button onClick={signOut} className="ml-auto text-red-400 hover:text-red-300">Sign Out</button>
-                    </nav>
+                <div className="p-8 bg-navy min-h-screen">
+                    <div className="flex items-center gap-4 mb-8">
+                        <button onClick={onBack} className="text-white/70 hover:text-white">← Back</button>
+                        <h1 className="text-3xl font-bold text-white">{title}</h1>
+                    </div>
                     {children}
                 </div>
             );
         }
 
+        function AdminProgrammes() {
+            const { data: programmes, loading, error, retry } = useAsyncData(async () => {
+                if (!supabaseClient) return [];
+                const { data, error } = await supabaseClient.from('programmes').select('*').order('order_index');
+                if (error) throw error;
+                return data || [];
+            }, []);
+            const [editing, setEditing] = useState(null);
+            const [showForm, setShowForm] = useState(false);
+            const [formData, setFormData] = useState({ title: '', category: '', level: '', description: '', is_published: true, order_index: 0 });
+            const handleSave = async () => {
+                try {
+                    if (!supabaseClient) return;
+                    if (editing) {
+                        await supabaseClient.from('programmes').update(formData).eq('id', editing.id);
+                    } else {
+                        await supabaseClient.from('programmes').insert([formData]);
+                    }
+                    setShowForm(false);
+                    setEditing(null);
+                    retry();
+                } catch (err) {
+                    console.error('Save error:', err);
+                }
+            };
+            const handleDelete = async (id) => {
+                if (window.confirm('Delete this programme?')) {
+                    if (!supabaseClient) return;
+                    await supabaseClient.from('programmes').delete().eq('id', id);
+                    retry();
+                }
+            };
+            if (loading) return <AdminSection title="Programmes" onBack={() => window.location.hash = '#/admin/dashboard'}><p className="text-white/70">Loading...</p></AdminSection>;
+            return (
+                <AdminSection title="Programmes" onBack={() => window.location.hash = '#/admin/dashboard'}>
+                    <button onClick={() => { setShowForm(true); setEditing(null); setFormData({ title: '', category: '', level: '', description: '', is_published: true, order_index: 0 }); }} className="btn-waterfill rounded-full px-6 py-2 text-sm font-semibold text-white bg-transparent border border-red mb-4">Add Programme</button>
+                    <div className="space-y-4">
+                        {(programmes || []).map(p => (
+                            <div key={p.id} className="glass rounded-2xl p-4 flex items-center justify-between">
+                                <div>
+                                    <h3 className="text-white font-semibold">{p.title}</h3>
+                                    <p className="text-sm text-white/60">{p.category} | {p.level}</p>
+                                </div>
+                                <div className="flex gap-2">
+                                    <button onClick={() => { setEditing(p); setFormData(p); setShowForm(true); }} className="text-sky hover:text-white">Edit</button>
+                                    <button onClick={() => handleDelete(p.id)} className="text-red-400 hover:text-red-200">Delete</button>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                    {showForm && (
+                        <div className="modal-overlay" role="dialog" aria-modal="true">
+                            <div className="modal-content">
+                                <button className="modal-close" onClick={() => setShowForm(false)}>✕</button>
+                                <h3 className="text-xl font-bold text-white mb-4">{editing ? 'Edit Programme' : 'Add Programme'}</h3>
+                                <div className="space-y-4">
+                                    <input type="text" placeholder="Title" value={formData.title} onChange={e => setFormData({...formData, title: e.target.value})} className="input-gold w-full rounded-xl px-4 py-2" />
+                                    <input type="text" placeholder="Category" value={formData.category || ''} onChange={e => setFormData({...formData, category: e.target.value})} className="input-gold w-full rounded-xl px-4 py-2" />
+                                    <input type="text" placeholder="Level" value={formData.level || ''} onChange={e => setFormData({...formData, level: e.target.value})} className="input-gold w-full rounded-xl px-4 py-2" />
+                                    <textarea placeholder="Description" value={formData.description || ''} onChange={e => setFormData({...formData, description: e.target.value})} className="input-gold w-full rounded-xl px-4 py-2" rows={4}></textarea>
+                                    <label className="flex items-center gap-2 text-white/80 text-sm">
+                                        <input type="checkbox" checked={formData.is_published} onChange={e => setFormData({...formData, is_published: e.target.checked})} />
+                                        Published
+                                    </label>
+                                    <input type="number" placeholder="Order Index" value={formData.order_index || 0} onChange={e => setFormData({...formData, order_index: parseInt(e.target.value) || 0})} className="input-gold w-full rounded-xl px-4 py-2" />
+                                    <button onClick={handleSave} className="btn-waterfill w-full rounded-xl px-6 py-2 border border-red text-white font-semibold">Save</button>
+                                </div>
+                            </div>
+                        </div>
+                    )}
+                </AdminSection>
+            );
+        }
+
+        function AdminLeads() {
+            const { data: leads, loading, error, retry } = useAsyncData(async () => {
+                if (!supabaseClient) return [];
+                const { data, error } = await supabaseClient.from('enquiries').select('*').order('created_at', { ascending: false });
+                if (error) throw error;
+                return data || [];
+            }, []);
+            if (loading) return <AdminSection title="Leads" onBack={() => window.location.hash = '#/admin/dashboard'}><p className="text-white/70">Loading...</p></AdminSection>;
+            return (
+                <AdminSection title="Leads" onBack={() => window.location.hash = '#/admin/dashboard'}>
+                    <div className="space-y-4">
+                        {(leads || []).map(lead => (
+                            <div key={lead.id} className="glass rounded-2xl p-4">
+                                <div className="flex justify-between items-start">
+                                    <div>
+                                        <h3 className="text-white font-semibold">{lead.full_name}</h3>
+                                        <p className="text-sm text-white/60">{lead.email} | {lead.phone || 'No phone'}</p>
+                                        <p className="text-sm text-white/60">{lead.preferred_destination || 'No destination'} | {lead.preferred_programme || 'No programme'}</p>
+                                        {lead.reference && <p className="text-xs text-yellow mt-1">Ref: {lead.reference}</p>}
+                                    </div>
+                                    <span className={`px-3 py-1 rounded-full text-xs ${lead.status === 'new' ? 'bg-blue-500/20 text-blue-200' : lead.status === 'contacted' ? 'bg-yellow-500/20 text-yellow-200' : 'bg-green-500/20 text-green-200'}`}>{lead.status || 'new'}</span>
+                                </div>
+                                {lead.message && <p className="mt-2 text-sm text-white/70">{lead.message}</p>}
+                            </div>
+                        ))}
+                        {(!leads || leads.length === 0) && <p className="text-white/70">No leads yet.</p>}
+                    </div>
+                </AdminSection>
+            );
+        }
+
+        function AdminSettings() {
+            const { data: settings, loading, error, retry } = useAsyncData(async () => {
+                if (!supabaseClient) return [];
+                const { data, error } = await supabaseClient.from('site_settings').select('*');
+                if (error) throw error;
+                return data || [];
+            }, []);
+            const [formData, setFormData] = useState({});
+            useEffect(() => {
+                if (settings) {
+                    const obj = {};
+                    settings.forEach(s => { obj[s.key] = s.value; });
+                    setFormData(obj);
+                }
+            }, [settings]);
+            const handleSave = async () => {
+                try {
+                    if (!supabaseClient) return;
+                    for (const [key, value] of Object.entries(formData)) {
+                        await supabaseClient.from('site_settings').upsert({ key, value }, { onConflict: 'key' });
+                    }
+                    alert('Settings saved!');
+                    retry();
+                } catch (err) {
+                    console.error('Save error:', err);
+                }
+            };
+            if (loading) return <AdminSection title="Settings" onBack={() => window.location.hash = '#/admin/dashboard'}><p className="text-white/70">Loading...</p></AdminSection>;
+            return (
+                <AdminSection title="Site Settings" onBack={() => window.location.hash = '#/admin/dashboard'}>
+                    <div className="space-y-4 max-w-lg">
+                        {Object.entries(formData).map(([key, value]) => (
+                            <div key={key}>
+                                <label className="block text-sm text-white/80 mb-1">{key}</label>
+                                <input type="text" value={value || ''} onChange={e => setFormData({...formData, [key]: e.target.value})} className="input-gold w-full rounded-xl px-4 py-2" />
+                            </div>
+                        ))}
+                        <button onClick={handleSave} className="btn-waterfill rounded-xl px-6 py-3 border border-red text-white font-semibold w-full">Save Settings</button>
+                    </div>
+                </AdminSection>
+            );
+        }
+
+        function AdminLayout() {
+            const [session, setSession] = useState(null);
+            const [route, setRoute] = useState(window.location.hash);
+            useEffect(() => {
+                const checkSession = async () => {
+                    try {
+                        if (!supabaseClient) return;
+                        const { data } = await supabaseClient.auth.getSession();
+                        setSession(data.session);
+                    } catch (err) {
+                        console.error('Session check error:', err);
+                        setSession(null);
+                    }
+                };
+                checkSession();
+                if (supabaseClient) {
+                    const { data: authListener } = supabaseClient.auth.onAuthStateChange((_event, session) => {
+                        setSession(session);
+                    });
+                    const hashHandler = () => setRoute(window.location.hash);
+                    window.addEventListener('hashchange', hashHandler);
+                    return () => {
+                        if (authListener?.subscription) authListener.subscription.unsubscribe();
+                        window.removeEventListener('hashchange', hashHandler);
+                    };
+                } else {
+                    const hashHandler = () => setRoute(window.location.hash);
+                    window.addEventListener('hashchange', hashHandler);
+                    return () => window.removeEventListener('hashchange', hashHandler);
+                }
+            }, []);
+            const handleLogout = async () => {
+                try {
+                    if (supabaseClient) await supabaseClient.auth.signOut();
+                } catch (err) {
+                    console.error('Logout error:', err);
+                }
+                setSession(null);
+                window.location.hash = '#/admin/login';
+            };
+            if (!session) {
+                return <AdminLogin onLogin={() => { if (supabaseClient) { supabaseClient.auth.getSession().then(({ data }) => { setSession(data.session); window.location.hash = '#/admin/dashboard'; }); } }} />;
+            }
+            const renderRoute = () => {
+                switch (route) {
+                    case '#/admin/dashboard': return <AdminDashboard onLogout={handleLogout} />;
+                    case '#/admin/programmes': return <AdminProgrammes />;
+                    case '#/admin/leads': return <AdminLeads />;
+                    case '#/admin/settings': return <AdminSettings />;
+                    case '#/admin/cms': return <AdminSection title="CMS" onBack={() => window.location.hash = '#/admin/dashboard'}><p className="text-white/70">CMS management coming soon.</p></AdminSection>;
+                    case '#/admin/media': return <AdminSection title="Media" onBack={() => window.location.hash = '#/admin/dashboard'}><p className="text-white/70">Media management coming soon.</p></AdminSection>;
+                    case '#/admin/destinations': return <AdminSection title="Destinations" onBack={() => window.location.hash = '#/admin/dashboard'}><p className="text-white/70">Destination management coming soon.</p></AdminSection>;
+                    case '#/admin/services': return <AdminSection title="Services" onBack={() => window.location.hash = '#/admin/dashboard'}><p className="text-white/70">Service management coming soon.</p></AdminSection>;
+                    case '#/admin/journey': return <AdminSection title="Journey Steps" onBack={() => window.location.hash = '#/admin/dashboard'}><p className="text-white/70">Journey management coming soon.</p></AdminSection>;
+                    case '#/admin/faqs': return <AdminSection title="FAQs" onBack={() => window.location.hash = '#/admin/dashboard'}><p className="text-white/70">FAQ management coming soon.</p></AdminSection>;
+                    case '#/admin/testimonials': return <AdminSection title="Testimonials" onBack={() => window.location.hash = '#/admin/dashboard'}><p className="text-white/70">Testimonial management coming soon.</p></AdminSection>;
+                    case '#/admin/login': return null;
+                    default: return <AdminDashboard onLogout={handleLogout} />;
+                }
+            };
+            return renderRoute();
+        }
+
         function App() {
             const [route, setRoute] = useState(window.location.hash);
+            const [splashDone, setSplashDone] = useState(false);
             useEffect(() => {
                 const handler = () => setRoute(window.location.hash);
                 window.addEventListener('hashchange', handler);
@@ -990,35 +1839,41 @@
             }, []);
             const isAdminRoute = route.startsWith('#/admin');
             return (
-                <SmoothScroll>
-                    <Preloader />
-                    <CustomCursor />
-                    {isAdminRoute ? (
-                        <AdminLayout>
-                            {route === '#/admin/dashboard' && <AdminDashboard />}
-                            {route === '#/admin/cms' && <CMSPage />}
-                            {route === '#/admin/leads' && <LeadsPage />}
-                            {route === '#/admin/login' && <AdminLogin />}
-                        </AdminLayout>
-                    ) : (
-                        <>
-                            <Navbar />
-                            <Hero />
-                            <Destinations />
-                            <Programmes />
-                            <Support />
-                            <HowItWorks />
-                            <WhyChooseUs />
-                            <FAQ />
-                            <ContactForm />
-                            <Footer />
-                        </>
-                    )}
-                </SmoothScroll>
+                <ErrorBoundary>
+                    <SmoothScroll>
+                        {!splashDone && !isAdminRoute && <SplashScreen onComplete={() => setSplashDone(true)} />}
+                        {isAdminRoute ? (
+                            <AdminLayout />
+                        ) : (
+                            <>
+                                <a href="#main-content" className="skip-link">Skip to main content</a>
+                                <Navbar />
+                                <main id="main-content">
+                                    <ParallaxHero />
+                                    <Destinations />
+                                    <Programmes />
+                                    <Support />
+                                    <HowItWorks />
+                                    <WhyChooseUs />
+                                    <Testimonials />
+                                    <FAQ />
+                                    <ContactForm />
+                                </main>
+                                <Footer />
+                                <WhatsAppFloat />
+                            </>
+                        )}
+                    </SmoothScroll>
+                </ErrorBoundary>
             );
         }
 
-        ReactDOM.render(<App />, document.getElementById('root'));
+        const rootElement = document.getElementById('root');
+        if (rootElement) {
+            ReactDOM.render(<App />, rootElement);
+        } else {
+            console.error('Root element not found');
+        }
     </script>
 </body>
 </html>
