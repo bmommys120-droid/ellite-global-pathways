@@ -1,0 +1,1024 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Elite Global Pathways Limited | Your Dreams. Our Pathway. Your Global Future.</title>
+    <meta name="description" content="Elite Global Pathways helps African students discover international education opportunities, scholarships, and pathways to study abroad." />
+    <meta property="og:title" content="Elite Global Pathways Limited" />
+    <meta property="og:description" content="Your Dreams. Our Pathway. Your Global Future. Connecting African students to global education." />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Elite Global Pathways Limited" />
+    <meta name="twitter:description" content="Your Dreams. Our Pathway. Your Global Future." />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+    <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
+    <style>
+        :root {
+            --navy: #071A2F;
+            --navy-2: #0B2745;
+            --sky: #38BDF8;
+            --sky-2: #0EA5E9;
+            --cyan: #22D3EE;
+            --yellow: #FACC15;
+            --green: #22C55E;
+            --red: #EF4444;
+            --white: #FFFFFF;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: auto; }
+        body {
+            background: var(--navy);
+            color: var(--white);
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Sora', sans-serif;
+            letter-spacing: -0.02em;
+        }
+        .glass {
+            background: rgba(255,255,255,0.06);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        .hero-video-container { will-change: transform; transform-style: preserve-3d; }
+        .programme-horizontal {
+            scroll-snap-type: x mandatory;
+            -webkit-overflow-scrolling: touch;
+        }
+        .programme-horizontal > * { scroll-snap-align: start; }
+        .ring-progress circle { transition: stroke-dashoffset 1.2s cubic-bezier(0.22,1,0.36,1); }
+        .custom-cursor { mix-blend-mode: difference; pointer-events: none; }
+
+        /* Scroll-triggered morphing */
+        .morph-section {
+            opacity: 0;
+            transform: scale(0.95) translateY(40px);
+            filter: blur(8px);
+            transition: opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1),
+                        transform 0.8s cubic-bezier(0.22, 1, 0.36, 1),
+                        filter 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+            will-change: opacity, transform, filter;
+        }
+        .morph-section.visible {
+            opacity: 1;
+            transform: scale(1) translateY(0);
+            filter: blur(0);
+        }
+        .morph-section.morph-out {
+            opacity: 0;
+            transform: scale(1.05) translateY(-40px);
+            filter: blur(8px);
+        }
+
+        /* Reduced motion */
+        @media (prefers-reduced-motion: reduce) {
+            .morph-section {
+                opacity: 1;
+                transform: none;
+                filter: none;
+                transition: none;
+            }
+            .reveal { opacity: 1; transform: none; transition: none; }
+            *,
+            *::before,
+            *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+                scroll-behavior: auto !important;
+            }
+        }
+        :focus-visible { outline: 2px solid var(--sky); outline-offset: 4px; }
+
+        /* Additional design improvements */
+        .section-padding { padding: 6rem 0; }
+        @media (max-width: 768px) { .section-padding { padding: 4rem 0; } }
+        .gradient-text {
+            background: linear-gradient(135deg, var(--sky), var(--cyan));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .card-hover {
+            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+        }
+        .card-hover:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 40px -10px rgba(0,0,0,0.3);
+            border-color: var(--sky);
+        }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+    <script type="text/babel">
+        const { useState, useEffect, useRef, useCallback } = React;
+        const { createClient } = supabase;
+
+        // Supabase configuration
+        const supabaseUrl = 'https://vznxhjmsshouygmkqtte.supabase.co';
+        const supabaseAnonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZ6bnhoam1zc2hvdXlnbWtxdHRlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODc1ODY2NzYsImV4cCI6MjEwMzE2MjY3Nn0.hMhITeSaH1A3mglzFZa9FD88AfXRKRt1pDAWpyjDst0';
+        const supabaseClient = createClient(supabaseUrl, supabaseAnonKey);
+
+        // Pre-approved media URLs
+        const MEDIA = {
+            heroVideo: 'https://i.imgur.com/WtDk7Xx.mp4',
+            secondaryVideo: 'https://i.imgur.com/33OkPkO.mp4',
+            logo: 'https://i.imgur.com/eLB9sZC.jpeg',
+            programmeImages: [
+                'https://i.imgur.com/bH3qRXv.jpeg',
+                'https://i.imgur.com/VpZHDM0.jpeg',
+                'https://i.imgur.com/HzMLeKE.jpeg',
+                'https://i.imgur.com/67Bsvha.jpeg',
+                'https://i.imgur.com/qIZWL1V.jpeg',
+                'https://i.imgur.com/twWM9fk.jpeg',
+                'https://i.imgur.com/gsPdU4w.jpeg',
+                'https://i.imgur.com/CDYZEpm.jpeg',
+                'https://i.imgur.com/SaxOcJD.jpeg',
+                'https://i.imgur.com/XXLsjG1.jpeg',
+                'https://i.imgur.com/PdgGaJ7.jpeg',
+                'https://i.imgur.com/ZhmYKcW.jpeg',
+                'https://i.imgur.com/rDnJLE4.jpeg'
+            ]
+        };
+
+        // Hook for reduced motion
+        function useReducedMotion() {
+            const [reduced, setReduced] = useState(false);
+            useEffect(() => {
+                const mq = window.matchMedia('(prefers-reduced-motion: reduce)');
+                setReduced(mq.matches);
+                const handler = (e) => setReduced(e.matches);
+                mq.addEventListener('change', handler);
+                return () => mq.removeEventListener('change', handler);
+            }, []);
+            return reduced;
+        }
+
+        // Morphing wrapper using IntersectionObserver
+        function MorphSection({ children, className = '' }) {
+            const ref = useRef(null);
+            const [visible, setVisible] = useState(false);
+            const reduced = useReducedMotion();
+            useEffect(() => {
+                const el = ref.current;
+                if (!el) return;
+                if (reduced) { setVisible(true); return; }
+                const obs = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            setVisible(true);
+                            obs.unobserve(entry.target);
+                        } else {
+                            setVisible(false);
+                        }
+                    });
+                }, { threshold: 0.2, rootMargin: '0px 0px -50px 0px' });
+                obs.observe(el);
+                return () => obs.disconnect();
+            }, [reduced]);
+            return (
+                <div ref={ref} className={`morph-section ${visible ? 'visible' : ''} ${className}`}>
+                    {children}
+                </div>
+            );
+        }
+
+        // Simple Reveal as before but using morph-section class
+        function Reveal({ children, delay = 0, className = '' }) {
+            return (
+                <MorphSection className={className} style={{ transitionDelay: `${delay}s` }}>
+                    {children}
+                </MorphSection>
+            );
+        }
+
+        // SectionHeading
+        function SectionHeading({ eyebrow, title, subtitle, align = 'center', className = '' }) {
+            return (
+                <div className={`max-w-4xl ${align === 'center' ? 'mx-auto text-center' : ''} ${className}`}>
+                    {eyebrow && <Reveal><p className="mb-4 text-sm font-semibold uppercase tracking-[0.3em] text-sky">{eyebrow}</p></Reveal>}
+                    <Reveal delay={0.1}><h2 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight text-white">{title}</h2></Reveal>
+                    {subtitle && <Reveal delay={0.2}><p className="mt-6 text-lg md:text-xl text-white/70">{subtitle}</p></Reveal>}
+                </div>
+            );
+        }
+
+        // MagneticButton
+        function MagneticButton({ children, className = '', onClick }) {
+            const [pos, setPos] = useState({ x: 0, y: 0 });
+            const reduced = useReducedMotion();
+            const handleMouseMove = (e) => {
+                if (reduced) return;
+                const rect = e.currentTarget.getBoundingClientRect();
+                const x = (e.clientX - rect.left - rect.width / 2) * 0.25;
+                const y = (e.clientY - rect.top - rect.height / 2) * 0.25;
+                setPos({ x, y });
+            };
+            const reset = () => setPos({ x: 0, y: 0 });
+            return (
+                <button
+                    className={`transition-transform duration-150 ${className}`}
+                    style={{ transform: `translate(${pos.x}px, ${pos.y}px)` }}
+                    onMouseMove={handleMouseMove}
+                    onMouseLeave={reset}
+                    onClick={onClick}
+                    onTouchStart={(e) => e.preventDefault()}
+                >
+                    {children}
+                </button>
+            );
+        }
+
+        // Preloader
+        function Preloader() {
+            const [loading, setLoading] = useState(true);
+            const reduced = useReducedMotion();
+            useEffect(() => {
+                if (reduced) { setLoading(false); return; }
+                const timer = setTimeout(() => setLoading(false), 1500);
+                return () => clearTimeout(timer);
+            }, [reduced]);
+            if (!loading) return null;
+            return (
+                <div className="fixed inset-0 z-[200] flex items-center justify-center bg-navy transition-opacity duration-500" style={{ opacity: loading ? 1 : 0 }}>
+                    <div className="relative">
+                        <div className="h-20 w-20 rounded-full border-4 border-sky/30 border-t-sky animate-spin" style={{ animationDuration: '1s' }}></div>
+                        <div className="absolute inset-0 flex items-center justify-center"><img src={MEDIA.logo} alt="Elite Global Pathways" className="h-10 w-10 object-contain rounded-full" /></div>
+                    </div>
+                </div>
+            );
+        }
+
+        // CustomCursor
+        function CustomCursor() {
+            const [isTouch, setIsTouch] = useState(false);
+            const [over, setOver] = useState(false);
+            const cursorRef = useRef(null);
+            const dotRef = useRef(null);
+            const reduced = useReducedMotion();
+            useEffect(() => {
+                const touch = window.matchMedia('(hover: none), (pointer: coarse)').matches;
+                setIsTouch(touch);
+                if (touch || reduced) return;
+                const move = (e) => {
+                    if (cursorRef.current) { cursorRef.current.style.left = e.clientX + 'px'; cursorRef.current.style.top = e.clientY + 'px'; }
+                    if (dotRef.current) { dotRef.current.style.left = e.clientX + 'px'; dotRef.current.style.top = e.clientY + 'px'; }
+                    const target = e.target;
+                    const interactive = target.closest('a, button, [role="button"], input, textarea, select, label');
+                    setOver(!!interactive);
+                };
+                window.addEventListener('mousemove', move);
+                return () => window.removeEventListener('mousemove', move);
+            }, [reduced]);
+            if (isTouch || reduced) return null;
+            return (
+                <>
+                    <div ref={cursorRef} className="custom-cursor fixed w-8 h-8 rounded-full border border-white/30 pointer-events-none z-[300]" style={{ transform: 'translate(-50%, -50%)', transition: 'width 0.3s, height 0.3s, border-color 0.3s', width: over ? '48px' : '32px', height: over ? '48px' : '32px', borderColor: over ? 'var(--red)' : 'rgba(255,255,255,0.3)' }}></div>
+                    <div ref={dotRef} className="custom-cursor fixed w-3 h-3 bg-sky rounded-full pointer-events-none z-[301]" style={{ transform: 'translate(-50%, -50%)' }}></div>
+                </>
+            );
+        }
+
+        // SmoothScroll using Lenis
+        function SmoothScroll({ children }) {
+            const reduced = useReducedMotion();
+            useEffect(() => {
+                if (reduced) return;
+                const lenis = new Lenis({ duration: 1.2, easing: t => Math.min(1, 1.001 - Math.pow(2, -10*t)), smoothWheel: true, touchMultiplier: 1.5 });
+                const raf = (time) => { lenis.raf(time); requestAnimationFrame(raf); };
+                requestAnimationFrame(raf);
+                return () => lenis.destroy();
+            }, [reduced]);
+            return <div>{children}</div>;
+        }
+
+        // Navbar
+        function Navbar() {
+            const [scrolled, setScrolled] = useState(false);
+            const [mobileOpen, setMobileOpen] = useState(false);
+            const [settings, setSettings] = useState({});
+            useEffect(() => {
+                const onScroll = () => setScrolled(window.scrollY > 50);
+                window.addEventListener('scroll', onScroll);
+                return () => window.removeEventListener('scroll', onScroll);
+            }, []);
+            useEffect(() => {
+                supabaseClient.from('site_settings').select('key, value').then(({ data }) => {
+                    if (data) setSettings(Object.fromEntries(data.map(d => [d.key, d.value])));
+                });
+            }, []);
+            const links = [
+                { label: 'Destinations', href: '#destinations' },
+                { label: 'Programmes', href: '#programmes' },
+                { label: 'Student Support', href: '#support' },
+                { label: 'How It Works', href: '#how-it-works' },
+                { label: 'Contact', href: '#contact' },
+            ];
+            return (
+                <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${scrolled ? 'glass py-3' : 'bg-transparent py-6'}`}>
+                    <div className="mx-auto max-w-7xl flex items-center justify-between px-6 lg:px-8">
+                        <a href="#" className="flex items-center gap-3">
+                            <img src={MEDIA.logo} alt="Elite Global Pathways" className="h-10 w-10 rounded-full object-cover" />
+                            <span className="text-lg font-bold text-white">Elite Global Pathways</span>
+                        </a>
+                        <nav className="hidden lg:flex items-center gap-8">
+                            {links.map(link => (
+                                <a key={link.href} href={link.href} className="text-sm font-medium text-white/80 hover:text-sky transition-colors">{link.label}</a>
+                            ))}
+                            <a href="#apply" className="rounded-full bg-gradient-to-r from-sky to-cyan px-6 py-2.5 text-sm font-semibold text-navy hover:scale-105 transition-transform">Apply Now</a>
+                        </nav>
+                        <button className="lg:hidden text-white" onClick={() => setMobileOpen(!mobileOpen)} aria-label="Toggle menu">
+                            {mobileOpen ? '✕' : '☰'}
+                        </button>
+                    </div>
+                    {mobileOpen && (
+                        <div className="lg:hidden glass mt-4 mx-4 rounded-2xl p-6">
+                            <nav className="flex flex-col gap-5">
+                                {links.map(link => (
+                                    <a key={link.href} href={link.href} onClick={() => setMobileOpen(false)} className="text-lg font-medium text-white/90 hover:text-sky">{link.label}</a>
+                                ))}
+                                <a href="#apply" onClick={() => setMobileOpen(false)} className="text-lg font-medium text-yellow">Apply Now</a>
+                                <div className="text-sm text-white/70">Email: eliteglobalpathwaysltd2025@gmail.com</div>
+                                <div className="text-sm text-white/70">WhatsApp India: +91 73593 20928</div>
+                                <div className="text-sm text-white/70">WhatsApp Uganda: +256 779 989906</div>
+                                <div className="text-sm text-white/70">WhatsApp Myanmar: +95 3787 5184</div>
+                            </nav>
+                        </div>
+                    )}
+                </header>
+            );
+        }
+
+        // Hero with scroll-controlled video (scrubbing)
+        function Hero() {
+            const videoRef = useRef(null);
+            const containerRef = useRef(null);
+            const reduced = useReducedMotion();
+            const [videoSrc] = useState(MEDIA.heroVideo);
+            const [scrollProgress, setScrollProgress] = useState(0);
+
+            // Handle scroll-driven video playback
+            useEffect(() => {
+                if (reduced) return;
+                const handleScroll = () => {
+                    const hero = document.getElementById('hero');
+                    if (!hero) return;
+                    const rect = hero.getBoundingClientRect();
+                    const total = window.innerHeight;
+                    const scrolled = Math.max(0, Math.min(1, -rect.top / total));
+                    setScrollProgress(scrolled);
+                    if (videoRef.current) {
+                        videoRef.current.currentTime = scrolled * (videoRef.current.duration || 10);
+                    }
+                };
+                window.addEventListener('scroll', handleScroll, { passive: true });
+                return () => window.removeEventListener('scroll', handleScroll);
+            }, [reduced]);
+
+            useEffect(() => {
+                const video = videoRef.current;
+                if (video) {
+                    video.addEventListener('loadedmetadata', () => {
+                        video.currentTime = 0;
+                    });
+                }
+            }, []);
+
+            useEffect(() => {
+                if (reduced) return;
+                const handleMouse = (e) => {
+                    if (!containerRef.current) return;
+                    const { innerWidth, innerHeight } = window;
+                    const mx = (e.clientX / innerWidth) * 2 - 1;
+                    const my = (e.clientY / innerHeight) * 2 - 1;
+                    const el = containerRef.current;
+                    el.style.transform = `perspective(1000px) rotateX(${my * -3}deg) rotateY(${mx * 5}deg) translateX(${mx * 12}px) translateY(${my * 8}px) scale(${1.05 + Math.abs(mx) * 0.03})`;
+                };
+                window.addEventListener('mousemove', handleMouse);
+                return () => window.removeEventListener('mousemove', handleMouse);
+            }, [reduced]);
+
+            return (
+                <section id="hero" className="relative h-screen overflow-hidden bg-navy">
+                    <div ref={containerRef} className="hero-video-container absolute inset-0 transition-transform duration-200 ease-out">
+                        {videoSrc ? (
+                            <video
+                                ref={videoRef}
+                                className="h-full w-full object-cover"
+                                src={videoSrc}
+                                muted
+                                playsInline
+                                preload="metadata"
+                                style={{ pointerEvents: 'none' }}
+                            />
+                        ) : (
+                            <div className="h-full w-full bg-gradient-to-br from-navy to-sky/30"></div>
+                        )}
+                        <div className="absolute inset-0 bg-gradient-to-br from-navy/90 via-navy/70 to-sky/30"></div>
+                        <div className="absolute inset-0" style={{ background: 'radial-gradient(circle at center, transparent 0%, rgba(7,26,47,0.6) 100%)' }}></div>
+                    </div>
+                    <div className="relative z-10 flex h-full flex-col items-center justify-center px-6 text-center">
+                        <Reveal delay={0.2}><img src={MEDIA.logo} alt="Elite Global Pathways" className="mx-auto h-16 w-16 md:h-20 md:w-20 rounded-full object-cover mb-6" /></Reveal>
+                        <Reveal delay={0.4}><p className="mb-4 text-sm font-semibold uppercase tracking-[0.4em] text-sky">Elite Global Pathways</p></Reveal>
+                        <Reveal delay={0.6}><h1 className="max-w-5xl text-5xl md:text-7xl lg:text-8xl font-bold leading-tight text-white">Your Future Starts Here</h1></Reveal>
+                        <Reveal delay={0.8}><p className="mt-6 text-xl md:text-2xl font-medium text-sky-100/90">Study abroad. Access opportunity. Build your future.</p></Reveal>
+                        <Reveal delay={1.0} className="mt-10 flex flex-wrap items-center justify-center gap-4">
+                            <MagneticButton className="rounded-full bg-gradient-to-r from-sky to-cyan px-8 py-4 text-base font-semibold text-navy shadow-lg hover:shadow-sky/30 transition-shadow" onClick={() => window.location.hash = '#apply'}>Apply Now</MagneticButton>
+                            <MagneticButton className="glass rounded-full px-8 py-4 text-base font-semibold text-white hover:bg-white/10 transition-colors" onClick={() => window.location.hash = '#programmes'}>Explore Programmes</MagneticButton>
+                        </Reveal>
+                    </div>
+                    <div className="absolute bottom-8 left-1/2 -translate-x-1/2 text-white/60 animate-bounce">
+                        <div className="flex flex-col items-center gap-2">
+                            <span className="text-xs font-medium tracking-widest">SCROLL TO EXPLORE</span>
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M12 5v14M19 12l-7 7-7-7"/></svg>
+                        </div>
+                    </div>
+                </section>
+            );
+        }
+
+        // Destinations section with route-line motif
+        function Destinations() {
+            const destinations = ['India', 'United Kingdom', 'Canada', 'United States', 'Australia', 'New Zealand', 'Europe', 'Other approved destinations'];
+            return (
+                <MorphSection id="destinations" className="section-padding bg-white">
+                    <div className="mx-auto max-w-6xl px-6 text-center">
+                        <SectionHeading eyebrow="DESTINATIONS" title="Where Will Your Journey Take You?" subtitle="Explore potential study destinations, subject to programme availability and admission requirements." />
+                        <div className="mt-16 flex flex-wrap justify-center gap-4">
+                            {destinations.map((d, i) => (
+                                <Reveal key={i} delay={i * 0.07}>
+                                    <div className="rounded-2xl border border-navy/10 bg-navy/5 px-8 py-6 text-lg font-semibold text-navy transition-all hover:bg-navy hover:text-white hover:border-sky hover:scale-105 cursor-default">
+                                        {d}
+                                    </div>
+                                </Reveal>
+                            ))}
+                        </div>
+                        <Reveal delay={0.5}><p className="mt-10 text-sm text-navy/60">Programme availability varies by destination. We help you explore options that match your profile.</p></Reveal>
+                    </div>
+                </MorphSection>
+            );
+        }
+
+        // Programmes section using provided images
+        function Programmes() {
+            const programmes = [
+                { title: 'Engineering & Technology', image: MEDIA.programmeImages[0], desc: 'Aerospace, Biomedical, B.Tech, Engineering Diplomas', colour: 'var(--sky)' },
+                { title: 'Health & Medical Sciences', image: MEDIA.programmeImages[1], desc: 'Pharmacy, Public Health, Nutrition & Dietetics', colour: 'var(--green)' },
+                { title: 'Business & Management', image: MEDIA.programmeImages[2], desc: 'BBA, Management, Entrepreneurship', colour: 'var(--yellow)' },
+                { title: 'Law & Public Administration', image: MEDIA.programmeImages[3], desc: 'Law, M.A. Public Administration', colour: 'var(--red)' },
+                { title: 'Social Sciences', image: MEDIA.programmeImages[4], desc: 'Social Work, Humanities', colour: 'var(--cyan)' },
+                { title: 'Arts & Design', image: MEDIA.programmeImages[5], desc: 'Fashion Design, Creative Arts', colour: 'var(--yellow)' },
+                { title: 'Humanities', image: MEDIA.programmeImages[6], desc: 'Literature, Philosophy, Cultural Studies', colour: 'var(--sky)' },
+                { title: 'Diplomas & Certificates', image: MEDIA.programmeImages[7], desc: 'Short programmes and diplomas', colour: 'var(--green)' },
+            ];
+            return (
+                <MorphSection id="programmes" className="section-padding bg-navy-2">
+                    <div className="mx-auto max-w-7xl px-6 lg:px-8">
+                        <SectionHeading eyebrow="PROGRAMMES" title="Explore Academic Programmes" subtitle="A curated catalogue of programmes across multiple disciplines." />
+                        <div className="mt-16 grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
+                            {programmes.map((p, i) => (
+                                <Reveal key={i} delay={i * 0.1}>
+                                    <div className="group relative overflow-hidden rounded-2xl shadow-xl card-hover">
+                                        <div className="h-64 overflow-hidden">
+                                            <img src={p.image} alt={p.title} className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110" loading="lazy" />
+                                        </div>
+                                        <div className="absolute inset-0 bg-gradient-to-t from-navy via-navy/60 to-transparent p-6 flex flex-col justify-end">
+                                            <h3 className="text-2xl font-bold text-white">{p.title}</h3>
+                                            <p className="mt-2 text-sm text-white/80">{p.desc}</p>
+                                            <div className="mt-3 h-1 w-12 rounded-full" style={{ backgroundColor: p.colour }}></div>
+                                        </div>
+                                        <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-r from-sky/0 to-sky/0 group-hover:from-sky/10 group-hover:to-red/10 transition-all duration-500 pointer-events-none"></div>
+                                    </div>
+                                </Reveal>
+                            ))}
+                        </div>
+                    </div>
+                </MorphSection>
+            );
+        }
+
+        // Student Support section
+        function Support() {
+            const supports = [
+                { icon: '🎓', title: 'Initial Consultation', desc: 'We assess your academic background, interests, and goals to map a personalised pathway.' },
+                { icon: '🗺️', title: 'Pathway Exploration', desc: 'Discover suitable programmes, destinations, and scholarship opportunities based on your profile.' },
+                { icon: '📄', title: 'Application & Document Preparation', desc: 'Guidance through application forms, documents, and deadlines.' },
+                { icon: '✈️', title: 'Pre-Departure Readiness', desc: 'Practical preparation for your journey, including accommodation and travel tips.' },
+            ];
+            return (
+                <MorphSection id="support" className="section-padding bg-white">
+                    <div className="mx-auto max-w-7xl px-6 lg:px-8">
+                        <SectionHeading eyebrow="STUDENT SUPPORT" title="Support Every Step of the Way" subtitle="From first consultation to pre-departure readiness." />
+                        <div className="mt-16 grid gap-8 md:grid-cols-2 lg:grid-cols-4">
+                            {supports.map((s, i) => (
+                                <Reveal key={i} delay={i * 0.1}>
+                                    <div className="text-center group p-6 rounded-2xl bg-navy/5 hover:bg-navy/10 transition-colors">
+                                        <div className="mx-auto h-20 w-20 rounded-full bg-gradient-to-br from-sky/20 to-cyan/20 flex items-center justify-center text-4xl group-hover:scale-110 transition-transform">{s.icon}</div>
+                                        <h3 className="mt-4 text-xl font-semibold text-navy">{s.title}</h3>
+                                        <p className="mt-3 text-navy/70">{s.desc}</p>
+                                    </div>
+                                </Reveal>
+                            ))}
+                        </div>
+                    </div>
+                </MorphSection>
+            );
+        }
+
+        // How It Works (Journey)
+        function HowItWorks() {
+            const steps = [
+                { num: '01', title: 'Contact Us', desc: 'Reach out via enquiry form, email, or WhatsApp.' },
+                { num: '02', title: 'Student Assessment', desc: 'We evaluate your academic profile and preferences.' },
+                { num: '03', title: 'Explore Options', desc: 'We present suitable programmes and destinations.' },
+                { num: '04', title: 'Document Preparation', desc: 'Guidance on required documents.' },
+                { num: '05', title: 'Application', desc: 'Submission with follow-up.' },
+                { num: '06', title: 'Admission & Scholarship', desc: 'Receive offers and explore funding.' },
+                { num: '07', title: 'Pre-Departure', desc: 'Prepare for your journey.' },
+                { num: '08', title: 'Begin Your Journey', desc: 'Arrive and start your global education.' },
+            ];
+            return (
+                <MorphSection id="how-it-works" className="section-padding bg-navy">
+                    <div className="mx-auto max-w-5xl px-6">
+                        <SectionHeading eyebrow="HOW IT WORKS" title="Your Journey, Step by Step" subtitle="Eight clear steps to your global education future." />
+                        <div className="mt-16 relative">
+                            <div className="absolute left-8 top-0 bottom-0 w-px bg-white/10"></div>
+                            <div className="space-y-12">
+                                {steps.map((s, i) => (
+                                    <Reveal key={i} delay={i * 0.05}>
+                                        <div className="flex gap-8 items-start">
+                                            <div className="relative z-10 flex h-16 w-16 flex-shrink-0 items-center justify-center rounded-full border-2 border-sky bg-sky/10 text-xl font-bold text-sky">{s.num}</div>
+                                            <div className="pt-2">
+                                                <h3 className="text-xl font-bold text-white">{s.title}</h3>
+                                                <p className="mt-2 text-white/70">{s.desc}</p>
+                                            </div>
+                                        </div>
+                                    </Reveal>
+                                ))}
+                            </div>
+                        </div>
+                        <Reveal delay={0.3}><p className="mt-16 text-center text-2xl md:text-3xl font-bold text-sky">Pack Your Dreams. Prepare for Your Future. Go Global.</p></Reveal>
+                    </div>
+                </MorphSection>
+            );
+        }
+
+        // Partners / Why Choose Us (simplified)
+        function WhyChooseUs() {
+            const points = [
+                { icon: '🌍', title: 'African-Focused', desc: 'We understand the unique needs of African students.' },
+                { icon: '💰', title: 'Affordable Opportunities', desc: 'Explore tuition-reduction and scholarship options.' },
+                { icon: '🔒', title: 'Transparent & Trustworthy', desc: 'We provide honest information, no false guarantees.' },
+                { icon: '🤝', title: 'End-to-End Guidance', desc: 'From first call to arrival, we are with you.' },
+            ];
+            return (
+                <MorphSection className="section-padding bg-navy-2">
+                    <div className="mx-auto max-w-6xl px-6">
+                        <SectionHeading eyebrow="WHY CHOOSE US" title="A Partner You Can Trust" subtitle="We provide honest, transparent guidance for African students." />
+                        <div className="mt-16 grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
+                            {points.map((p, i) => (
+                                <Reveal key={i} delay={i * 0.1}>
+                                    <div className="text-center p-6 rounded-2xl bg-white/5 hover:bg-white/10 transition-colors">
+                                        <div className="text-4xl mb-4">{p.icon}</div>
+                                        <h3 className="text-lg font-semibold text-white">{p.title}</h3>
+                                        <p className="mt-2 text-sm text-white/70">{p.desc}</p>
+                                    </div>
+                                </Reveal>
+                            ))}
+                        </div>
+                    </div>
+                </MorphSection>
+            );
+        }
+
+        // FAQ
+        function FAQ() {
+            const [faqs, setFaqs] = useState([]);
+            const [openId, setOpenId] = useState(null);
+            useEffect(() => {
+                supabaseClient.from('faqs').select('*').eq('is_published', true).order('order_index').then(({ data }) => setFaqs(data || []));
+            }, []);
+            const defaultFaqs = [
+                { id: '1', question: 'Do you guarantee scholarships?', answer: 'No. Scholarship awards are not guaranteed. Eligibility and final decisions are determined by the relevant institution or scholarship provider. We guide you through available opportunities and help you prepare strong applications.' },
+                { id: '2', question: 'Is the half scholarship available to everyone?', answer: 'No. The approximate 50% tuition support is subject to eligibility, academic performance, programme requirements, university admission, availability, and deadlines.' },
+                { id: '3', question: 'Does a 50% scholarship mean I pay nothing?', answer: 'No. A 50% tuition support typically reduces tuition fees by approximately half. You are still responsible for remaining tuition, accommodation, living expenses, travel, and other costs.' },
+                { id: '4', question: 'Do you help with university applications?', answer: 'Yes. We assist with application preparation, document guidance, and follow-up with the university where applicable.' },
+                { id: '5', question: 'Do you provide visa services?', answer: 'We provide general pre-departure guidance and information. Official visa applications must be handled through the relevant embassy or authorised visa service.' },
+            ];
+            const displayFaqs = faqs.length > 0 ? faqs : defaultFaqs;
+            return (
+                <MorphSection id="faq" className="section-padding bg-white">
+                    <div className="mx-auto max-w-3xl px-6">
+                        <SectionHeading eyebrow="FAQ" title="Frequently Asked Questions" />
+                        <div className="mt-12 space-y-4">
+                            {displayFaqs.map(faq => {
+                                const isOpen = openId === faq.id;
+                                return (
+                                    <div key={faq.id} className="border border-navy/10 rounded-2xl overflow-hidden">
+                                        <button className="flex w-full items-center justify-between gap-4 p-6 text-left text-navy hover:bg-navy/5 transition-colors" onClick={() => setOpenId(isOpen ? null : faq.id)} aria-expanded={isOpen}>
+                                            <span className="text-lg font-semibold">{faq.question}</span>
+                                            <span className="text-2xl">{isOpen ? '−' : '+'}</span>
+                                        </button>
+                                        {isOpen && <div className="px-6 pb-6 text-navy/70">{faq.answer}</div>}
+                                    </div>
+                                );
+                            })}
+                        </div>
+                    </div>
+                </MorphSection>
+            );
+        }
+
+        // Contact / Application Form
+        function ContactForm() {
+            const [form, setForm] = useState({ full_name: '', email: '', phone: '', academic_level: '', preferred_destination: '', preferred_programme: '', message: '', consent: false });
+            const [submitting, setSubmitting] = useState(false);
+            const [success, setSuccess] = useState(false);
+            const [error, setError] = useState('');
+            const levels = ['Secondary School Graduate', 'Diploma/Certificate Holder', 'Undergraduate Graduate', 'Postgraduate Student', 'Working Professional'];
+            const destinations = ['India', 'United Kingdom', 'Canada', 'United States', 'Australia', 'New Zealand', 'Europe', 'Not sure'];
+            const programmes = ['Engineering & Technology', 'Health & Medical Sciences', 'Business & Management', 'Law & Public Administration', 'Social Sciences', 'Arts & Design', 'Humanities', 'Diploma/Certificate'];
+            const handleChange = (e) => {
+                const { name, value, type, checked } = e.target;
+                setForm(prev => ({ ...prev, [name]: type === 'checkbox' ? checked : value }));
+            };
+            const handleSubmit = async (e) => {
+                e.preventDefault();
+                if (!form.full_name || !form.email || !form.consent) {
+                    setError('Please fill in all required fields and provide consent.');
+                    return;
+                }
+                setSubmitting(true); setError('');
+                try {
+                    const { error: submitError } = await supabaseClient.from('enquiries').insert({ ...form, status: 'new', source: 'website' });
+                    if (submitError) { setError('Something went wrong. Please try again later.'); return; }
+                    setSuccess(true);
+                    setForm({ full_name: '', email: '', phone: '', academic_level: '', preferred_destination: '', preferred_programme: '', message: '', consent: false });
+                } catch { setError('Something went wrong. Please try again later.'); }
+                finally { setSubmitting(false); }
+            };
+            return (
+                <MorphSection id="contact" className="section-padding bg-gradient-to-b from-navy to-navy-2">
+                    <div className="mx-auto max-w-4xl px-6">
+                        <SectionHeading eyebrow="CONTACT & APPLICATION" title="Ready to Go Global?" subtitle="Tell us what you want to study and where you want to go." />
+                        <div className="mt-12 grid gap-8 md:grid-cols-3">
+                            <div className="md:col-span-2">
+                                {success ? (
+                                    <div className="rounded-3xl border border-green/30 bg-green/10 p-12 text-center">
+                                        <div className="text-6xl mb-4">✅</div>
+                                        <h3 className="text-2xl font-bold text-white">Application Received!</h3>
+                                        <p className="mt-2 text-white/70">Thank you for your enquiry. Our team will contact you soon.</p>
+                                    </div>
+                                ) : (
+                                    <form onSubmit={handleSubmit} className="space-y-6">
+                                        {error && <div className="rounded-xl border border-red-500/30 bg-red-500/10 p-4 text-red-200">{error}</div>}
+                                        <div className="grid gap-6 md:grid-cols-2">
+                                            <div>
+                                                <label className="block text-sm font-medium text-white/80">Full Name *</label>
+                                                <input type="text" name="full_name" value={form.full_name} onChange={handleChange} required className="mt-2 w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-white placeholder-white/40 focus:border-sky focus:outline-none" placeholder="Your full name" />
+                                            </div>
+                                            <div>
+                                                <label className="block text-sm font-medium text-white/80">Email *</label>
+                                                <input type="email" name="email" value={form.email} onChange={handleChange} required className="mt-2 w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-white placeholder-white/40 focus:border-sky focus:outline-none" placeholder="you@example.com" />
+                                            </div>
+                                            <div>
+                                                <label className="block text-sm font-medium text-white/80">Phone Number</label>
+                                                <input type="tel" name="phone" value={form.phone} onChange={handleChange} className="mt-2 w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-white placeholder-white/40 focus:border-sky focus:outline-none" placeholder="+256 700 000 000" />
+                                            </div>
+                                            <div>
+                                                <label className="block text-sm font-medium text-white/80">Academic Level</label>
+                                                <select name="academic_level" value={form.academic_level} onChange={handleChange} className="mt-2 w-full rounded-xl border border-white/10 bg-navy px-4 py-3 text-white focus:border-sky focus:outline-none">
+                                                    <option value="">Select level</option>
+                                                    {levels.map(l => <option key={l} value={l}>{l}</option>)}
+                                                </select>
+                                            </div>
+                                            <div>
+                                                <label className="block text-sm font-medium text-white/80">Preferred Destination</label>
+                                                <select name="preferred_destination" value={form.preferred_destination} onChange={handleChange} className="mt-2 w-full rounded-xl border border-white/10 bg-navy px-4 py-3 text-white focus:border-sky focus:outline-none">
+                                                    <option value="">Select destination</option>
+                                                    {destinations.map(d => <option key={d} value={d}>{d}</option>)}
+                                                </select>
+                                            </div>
+                                            <div>
+                                                <label className="block text-sm font-medium text-white/80">Preferred Programme</label>
+                                                <select name="preferred_programme" value={form.preferred_programme} onChange={handleChange} className="mt-2 w-full rounded-xl border border-white/10 bg-navy px-4 py-3 text-white focus:border-sky focus:outline-none">
+                                                    <option value="">Select programme</option>
+                                                    {programmes.map(p => <option key={p} value={p}>{p}</option>)}
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <label className="block text-sm font-medium text-white/80">Message</label>
+                                            <textarea name="message" rows={4} value={form.message} onChange={handleChange} className="mt-2 w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-white placeholder-white/40 focus:border-sky focus:outline-none" placeholder="Tell us more..."></textarea>
+                                        </div>
+                                        <label className="flex items-start gap-3 text-sm text-white/80">
+                                            <input type="checkbox" name="consent" checked={form.consent} onChange={handleChange} className="mt-1 h-4 w-4 rounded border-white/20 bg-white/5 text-sky focus:ring-sky" />
+                                            <span>I consent to Elite Global Pathways processing my enquiry and understand that admission, scholarship, and visa outcomes are not guaranteed.</span>
+                                        </label>
+                                        <button type="submit" disabled={submitting} className="flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-sky to-cyan px-8 py-4 text-lg font-semibold text-navy hover:scale-[1.02] transition-transform disabled:opacity-50 disabled:cursor-not-allowed">
+                                            {submitting ? 'Submitting...' : 'Submit Application'} <span>➤</span>
+                                        </button>
+                                    </form>
+                                )}
+                            </div>
+                            <div className="space-y-6">
+                                <div className="glass rounded-2xl p-6">
+                                    <h3 className="text-xl font-semibold text-white">Direct Contact</h3>
+                                    <ul className="mt-4 space-y-3 text-sm text-white/80">
+                                        <li><a href="mailto:eliteglobalpathwaysltd2025@gmail.com" className="hover:text-sky">📧 eliteglobalpathwaysltd2025@gmail.com</a></li>
+                                        <li><a href="https://wa.me/917359320928" className="hover:text-sky">💬 WhatsApp India: +91 73593 20928</a></li>
+                                        <li><a href="https://wa.me/256779989906" className="hover:text-sky">💬 WhatsApp Uganda: +256 779 989906</a></li>
+                                        <li><a href="https://wa.me/9537875184" className="hover:text-sky">💬 WhatsApp Myanmar: +95 3787 5184</a></li>
+                                        <li className="flex gap-3 mt-2">
+                                            <a href="#" className="text-sky hover:text-cyan">X</a>
+                                            <a href="#" className="text-sky hover:text-cyan">Instagram</a>
+                                            <a href="#" className="text-sky hover:text-cyan">TikTok</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div className="glass rounded-2xl p-6">
+                                    <h3 className="text-xl font-semibold text-white">Important</h3>
+                                    <p className="mt-2 text-xs text-white/70">Elite Global Pathways does not guarantee admission, scholarship awards, or visa approval. All opportunities are subject to eligibility and institutional terms.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </MorphSection>
+            );
+        }
+
+        // Footer
+        function Footer() {
+            return (
+                <footer className="bg-navy py-12 text-white/70 border-t border-white/10">
+                    <div className="mx-auto max-w-7xl px-6 lg:px-8">
+                        <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-4">
+                            <div>
+                                <div className="flex items-center gap-3">
+                                    <img src={MEDIA.logo} alt="Elite Global Pathways" className="h-10 w-10 rounded-full object-cover" />
+                                    <span className="text-lg font-bold text-white">Elite Global Pathways</span>
+                                </div>
+                                <p className="mt-4 text-sm">Connecting African Students to Global Education.</p>
+                                <p className="mt-2 italic text-sky">Your Dreams. Our Pathway. Your Global Future.</p>
+                            </div>
+                            <div>
+                                <h3 className="text-sm font-semibold uppercase tracking-wider text-white">Contact</h3>
+                                <ul className="mt-4 space-y-3 text-sm">
+                                    <li><a href="mailto:eliteglobalpathwaysltd2025@gmail.com" className="hover:text-sky">eliteglobalpathwaysltd2025@gmail.com</a></li>
+                                    <li>+91 73593 20928 (India)</li>
+                                    <li>+256 779 989906 (Uganda)</li>
+                                    <li>+95 3787 5184 (Myanmar)</li>
+                                </ul>
+                            </div>
+                            <div>
+                                <h3 className="text-sm font-semibold uppercase tracking-wider text-white">Quick Links</h3>
+                                <ul className="mt-4 space-y-3 text-sm">
+                                    <li><a href="#destinations" className="hover:text-sky">Destinations</a></li>
+                                    <li><a href="#programmes" className="hover:text-sky">Programmes</a></li>
+                                    <li><a href="#support" className="hover:text-sky">Student Support</a></li>
+                                    <li><a href="#how-it-works" className="hover:text-sky">How It Works</a></li>
+                                    <li><a href="#contact" className="hover:text-sky">Contact</a></li>
+                                </ul>
+                            </div>
+                            <div>
+                                <h3 className="text-sm font-semibold uppercase tracking-wider text-white">Legal</h3>
+                                <ul className="mt-4 space-y-3 text-sm">
+                                    <li><a href="#" className="hover:text-sky">Privacy Policy</a></li>
+                                    <li><a href="#" className="hover:text-sky">Terms & Conditions</a></li>
+                                    <li className="text-xs text-white/50">Elite Global Pathways does not guarantee admission, scholarship awards, or visa approval.</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div className="mt-8 border-t border-white/10 pt-6 text-center text-xs text-white/50">
+                            © {new Date().getFullYear()} Elite Global Pathways Limited. All rights reserved.
+                        </div>
+                    </div>
+                </footer>
+            );
+        }
+
+        // Admin components
+        function AdminLogin() {
+            const [email, setEmail] = useState('');
+            const [password, setPassword] = useState('');
+            const [error, setError] = useState('');
+            const handleLogin = async (e) => {
+                e.preventDefault();
+                setError('');
+                const { data, error: loginError } = await supabaseClient.auth.signInWithPassword({ email, password });
+                if (loginError || data?.user?.app_metadata?.role !== 'admin') {
+                    setError('Invalid credentials or not admin');
+                    await supabaseClient.auth.signOut();
+                    return;
+                }
+                window.location.hash = '#/admin/dashboard';
+            };
+            return (
+                <div className="min-h-screen flex items-center justify-center bg-navy px-6">
+                    <form onSubmit={handleLogin} className="w-full max-w-md rounded-2xl border border-white/10 bg-white/5 p-8">
+                        <img src={MEDIA.logo} alt="Elite Global Pathways" className="mx-auto h-12 w-12 rounded-full mb-4" />
+                        <h1 className="text-2xl font-bold text-white mb-6">Admin Login</h1>
+                        {error && <p className="mb-4 text-red-400">{error}</p>}
+                        <input type="email" placeholder="Email" value={email} onChange={e => setEmail(e.target.value)} className="mb-4 w-full rounded-xl border border-white/10 bg-navy px-4 py-3 text-white" required />
+                        <input type="password" placeholder="Password" value={password} onChange={e => setPassword(e.target.value)} className="mb-6 w-full rounded-xl border border-white/10 bg-navy px-4 py-3 text-white" required />
+                        <button className="w-full rounded-xl bg-gradient-to-r from-sky to-cyan py-3 font-semibold text-navy">Sign In</button>
+                    </form>
+                </div>
+            );
+        }
+
+        function AdminDashboard() {
+            const [counts, setCounts] = useState({ programmes: 0, enquiries: 0, media: 0 });
+            useEffect(() => {
+                Promise.all([
+                    supabaseClient.from('programmes').select('id', { count: 'exact', head: true }),
+                    supabaseClient.from('enquiries').select('id', { count: 'exact', head: true }),
+                    supabaseClient.from('media_assets').select('id', { count: 'exact', head: true })
+                ]).then(([p, e, m]) => setCounts({ programmes: p.count || 0, enquiries: e.count || 0, media: m.count || 0 }));
+            }, []);
+            return (
+                <div className="p-8">
+                    <h1 className="text-3xl font-bold">Dashboard</h1>
+                    <div className="mt-8 grid gap-6 md:grid-cols-3">
+                        <div className="rounded-2xl border border-white/10 bg-white/5 p-6"><p className="text-sm text-white/60">Programmes</p><p className="text-4xl font-bold text-sky">{counts.programmes}</p></div>
+                        <div className="rounded-2xl border border-white/10 bg-white/5 p-6"><p className="text-sm text-white/60">Enquiries</p><p className="text-4xl font-bold text-yellow">{counts.enquiries}</p></div>
+                        <div className="rounded-2xl border border-white/10 bg-white/5 p-6"><p className="text-sm text-white/60">Media Assets</p><p className="text-4xl font-bold text-green">{counts.media}</p></div>
+                    </div>
+                </div>
+            );
+        }
+
+        function CMSPage() {
+            const [activeTab, setActiveTab] = useState('sections');
+            const [sections, setSections] = useState([]);
+            const [programmes, setProgrammes] = useState([]);
+            useEffect(() => {
+                if (activeTab === 'sections') {
+                    supabaseClient.from('sections').select('*').order('order_index').then(({ data }) => setSections(data || []));
+                } else {
+                    supabaseClient.from('programmes').select('*').order('order_index').then(({ data }) => setProgrammes(data || []));
+                }
+            }, [activeTab]);
+            const togglePublish = async (table, id, current, isPublishedColumn = 'is_published') => {
+                const { error } = await supabaseClient.from(table).update({ [isPublishedColumn]: !current }).eq('id', id);
+                if (!error) {
+                    if (table === 'sections') setSections(prev => prev.map(s => s.id === id ? { ...s, [isPublishedColumn]: !current } : s));
+                    else setProgrammes(prev => prev.map(p => p.id === id ? { ...p, [isPublishedColumn]: !current } : p));
+                }
+            };
+            return (
+                <div className="p-8">
+                    <h1 className="text-3xl font-bold mb-8">CMS</h1>
+                    <div className="mb-8 flex gap-4">
+                        <button onClick={() => setActiveTab('sections')} className={`rounded-full px-6 py-2 ${activeTab === 'sections' ? 'bg-sky text-navy' : 'bg-white/10'}`}>Sections</button>
+                        <button onClick={() => setActiveTab('programmes')} className={`rounded-full px-6 py-2 ${activeTab === 'programmes' ? 'bg-sky text-navy' : 'bg-white/10'}`}>Programmes</button>
+                    </div>
+                    {activeTab === 'sections' ? (
+                        <div className="space-y-4">
+                            {sections.map(s => (
+                                <div key={s.id} className="flex items-center justify-between rounded-xl border border-white/10 bg-white/5 p-4">
+                                    <div><p className="font-semibold">{s.title}</p><p className="text-sm text-white/60">Order: {s.order_index}</p></div>
+                                    <button onClick={() => togglePublish('sections', s.id, s.is_published)} className={`rounded-full px-4 py-2 text-sm ${s.is_published ? 'bg-green/20 text-green' : 'bg-red/20 text-red-400'}`}>{s.is_published ? 'Published' : 'Draft'}</button>
+                                </div>
+                            ))}
+                        </div>
+                    ) : (
+                        <div className="space-y-4">
+                            {programmes.map(p => (
+                                <div key={p.id} className="flex items-center justify-between rounded-xl border border-white/10 bg-white/5 p-4">
+                                    <div><p className="font-semibold">{p.title}</p><p className="text-sm text-white/60">{p.category}</p></div>
+                                    <button onClick={() => togglePublish('programmes', p.id, p.is_published)} className={`rounded-full px-4 py-2 text-sm ${p.is_published ? 'bg-green/20 text-green' : 'bg-red/20 text-red-400'}`}>{p.is_published ? 'Published' : 'Draft'}</button>
+                                </div>
+                            ))}
+                        </div>
+                    )}
+                </div>
+            );
+        }
+
+        function LeadsPage() {
+            const [leads, setLeads] = useState([]);
+            const [filter, setFilter] = useState('all');
+            useEffect(() => {
+                let query = supabaseClient.from('enquiries').select('*').order('created_at', { ascending: false });
+                if (filter !== 'all') query = query.eq('status', filter);
+                query.then(({ data }) => setLeads(data || []));
+            }, [filter]);
+            const updateStatus = async (id, status) => {
+                await supabaseClient.from('enquiries').update({ status }).eq('id', id);
+                setLeads(prev => prev.map(l => l.id === id ? { ...l, status } : l));
+            };
+            return (
+                <div className="p-8">
+                    <h1 className="text-3xl font-bold mb-8">Lead Management</h1>
+                    <div className="mb-6 flex gap-2">
+                        {['all','new','contacted','qualified','closed','spam'].map(s => (
+                            <button key={s} onClick={() => setFilter(s)} className={`rounded-full px-4 py-2 text-sm ${filter === s ? 'bg-sky text-navy' : 'bg-white/10'}`}>{s}</button>
+                        ))}
+                    </div>
+                    <div className="space-y-4">
+                        {leads.map(lead => (
+                            <div key={lead.id} className="rounded-xl border border-white/10 bg-white/5 p-4">
+                                <div className="flex flex-wrap items-center justify-between gap-4">
+                                    <div>
+                                        <p className="font-semibold">{lead.full_name}</p>
+                                        <p className="text-sm text-white/60">{lead.email} • {lead.phone || 'No phone'}</p>
+                                        <p className="text-sm text-white/60">{lead.country} • {lead.preferred_destination || 'N/A'} • {lead.preferred_programme || 'N/A'}</p>
+                                    </div>
+                                    <select value={lead.status} onChange={e => updateStatus(lead.id, e.target.value)} className="rounded-lg bg-navy px-3 py-1 text-sm border border-white/10">
+                                        <option value="new">new</option>
+                                        <option value="contacted">contacted</option>
+                                        <option value="qualified">qualified</option>
+                                        <option value="closed">closed</option>
+                                        <option value="spam">spam</option>
+                                    </select>
+                                </div>
+                                {lead.message && <p className="mt-2 text-sm text-white/70">{lead.message}</p>}
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            );
+        }
+
+        function AdminLayout({ children }) {
+            const [authChecked, setAuthChecked] = useState(false);
+            const [isAdmin, setIsAdmin] = useState(false);
+            useEffect(() => {
+                supabaseClient.auth.getSession().then(({ data: { session } }) => {
+                    if (!session || session.user?.app_metadata?.role !== 'admin') {
+                        window.location.hash = '#/admin/login';
+                    } else {
+                        setIsAdmin(true);
+                    }
+                    setAuthChecked(true);
+                });
+            }, []);
+            if (!authChecked) return <div className="flex h-screen items-center justify-center bg-navy text-white">Loading...</div>;
+            if (!isAdmin) return null;
+            const signOut = async () => { await supabaseClient.auth.signOut(); window.location.hash = '#/'; };
+            return (
+                <div className="min-h-screen bg-navy text-white">
+                    <nav className="glass p-4 flex gap-6">
+                        <img src={MEDIA.logo} alt="Elite Global Pathways" className="h-8 w-8 rounded-full" />
+                        <a href="#/admin/dashboard" className="font-semibold text-sky">Dashboard</a>
+                        <a href="#/admin/cms" className="hover:text-sky">CMS</a>
+                        <a href="#/admin/leads" className="hover:text-sky">Leads</a>
+                        <button onClick={signOut} className="ml-auto text-red-400 hover:text-red-300">Sign Out</button>
+                    </nav>
+                    {children}
+                </div>
+            );
+        }
+
+        function App() {
+            const [route, setRoute] = useState(window.location.hash);
+            useEffect(() => {
+                const handler = () => setRoute(window.location.hash);
+                window.addEventListener('hashchange', handler);
+                return () => window.removeEventListener('hashchange', handler);
+            }, []);
+            const isAdminRoute = route.startsWith('#/admin');
+            return (
+                <SmoothScroll>
+                    <Preloader />
+                    <CustomCursor />
+                    {isAdminRoute ? (
+                        <AdminLayout>
+                            {route === '#/admin/dashboard' && <AdminDashboard />}
+                            {route === '#/admin/cms' && <CMSPage />}
+                            {route === '#/admin/leads' && <LeadsPage />}
+                            {route === '#/admin/login' && <AdminLogin />}
+                        </AdminLayout>
+                    ) : (
+                        <>
+                            <Navbar />
+                            <Hero />
+                            <Destinations />
+                            <Programmes />
+                            <Support />
+                            <HowItWorks />
+                            <WhyChooseUs />
+                            <FAQ />
+                            <ContactForm />
+                            <Footer />
+                        </>
+                    )}
+                </SmoothScroll>
+            );
+        }
+
+        ReactDOM.render(<App />, document.getElementById('root'));
+    </script>
+</body>
+</html>
