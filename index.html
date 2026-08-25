@@ -41,17 +41,17 @@
     </script>
     <style>
         :root {
-            --navy: #071A2F;
-            --navy-2: #0B2745;
+            --navy: #071A2B;
+            --navy-2: #0B2239;
             --sky: #38BDF8;
             --sky-2: #0EA5E9;
             --cyan: #22D3EE;
-            --yellow: #FACC15;
-            --gold: #FFD700;
-            --red: #EF4444;
+            --yellow: #F4C542;
+            --gold: #FACC15;
+            --red: #E53935;
             --red-light: #F87171;
             --white: #FFFFFF;
-            --green: #22C55E;
+            --green: #16A34A;
         }
         * { margin: 0; padding: 0; box-sizing: border-box; }
         html { scroll-behavior: auto; }
@@ -76,9 +76,7 @@
             opacity: 0;
             transform: scale(0.95) translateY(40px);
             filter: blur(8px);
-            transition: opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1),
-                        transform 0.8s cubic-bezier(0.22, 1, 0.36, 1),
-                        filter 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+            transition: opacity 0.8s cubic-bezier(0.22,1,0.36,1), transform 0.8s cubic-bezier(0.22,1,0.36,1), filter 0.8s cubic-bezier(0.22,1,0.36,1);
             will-change: opacity, transform, filter;
         }
         .morph-section.visible {
@@ -117,7 +115,7 @@
             left: -50%;
             width: 200%;
             height: 200%;
-            background: radial-gradient(circle at 50% 50%, rgba(250,204,21,0.15) 0%, transparent 60%);
+            background: radial-gradient(circle at 50% 50%, rgba(244,197,66,0.15) 0%, transparent 60%);
             opacity: 0;
             transition: opacity 0.4s ease;
             pointer-events: none;
@@ -125,7 +123,7 @@
         .card-premium:hover::before { opacity: 1; }
         .card-premium:hover {
             transform: translateY(-6px);
-            box-shadow: 0 25px 50px -10px rgba(0,0,0,0.6), 0 0 0 1px var(--yellow), 0 0 30px rgba(250,204,21,0.3);
+            box-shadow: 0 25px 50px -10px rgba(0,0,0,0.6), 0 0 0 1px var(--yellow), 0 0 30px rgba(244,197,66,0.3);
             border-color: var(--yellow);
         }
 
@@ -167,7 +165,7 @@
             width: 100%;
             height: 0;
             background: linear-gradient(135deg, var(--red), var(--red-light));
-            transition: height 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+            transition: height 0.5s cubic-bezier(0.22,1,0.36,1);
             z-index: -1;
         }
         .btn-waterfill:hover::before { height: 100%; }
@@ -181,7 +179,6 @@
             margin: 0 auto 10px;
             box-shadow: 0 2px 8px rgba(0,0,0,0.3);
         }
-
         .whatsapp-float {
             position: fixed;
             bottom: 30px;
@@ -197,16 +194,8 @@
             box-shadow: 0 4px 15px rgba(37,211,102,0.4);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
-        .whatsapp-float:hover {
-            transform: scale(1.1);
-            box-shadow: 0 8px 25px rgba(37,211,102,0.6);
-        }
-        .whatsapp-float svg {
-            fill: white;
-            width: 32px;
-            height: 32px;
-        }
-
+        .whatsapp-float:hover { transform: scale(1.1); box-shadow: 0 8px 25px rgba(37,211,102,0.6); }
+        .whatsapp-float svg { fill: white; width: 32px; height: 32px; }
         .hero-video {
             position: absolute;
             inset: 0;
@@ -214,14 +203,15 @@
             height: 100%;
             object-fit: cover;
             z-index: 0;
+            pointer-events: none;
         }
         .hero-overlay {
             position: absolute;
             inset: 0;
-            background: linear-gradient(to bottom, rgba(7,26,47,0.7), rgba(11,39,69,0.7));
+            background: linear-gradient(to bottom, rgba(7,26,43,0.7), rgba(11,34,57,0.7));
             z-index: 1;
+            pointer-events: none;
         }
-
         .splash-screen {
             position: fixed;
             inset: 0;
@@ -230,7 +220,9 @@
             align-items: center;
             justify-content: center;
             background: #000;
+            transition: opacity 0.8s ease-in-out;
         }
+        .splash-screen.fade-out { opacity: 0; pointer-events: none; }
         .splash-video {
             position: absolute;
             inset: 0;
@@ -239,12 +231,7 @@
             object-fit: cover;
             opacity: 0.7;
         }
-        .splash-content {
-            position: relative;
-            z-index: 2;
-            text-align: center;
-            padding: 20px;
-        }
+        .splash-content { position: relative; z-index: 2; text-align: center; padding: 20px; }
         .splash-logo {
             width: 120px;
             height: 120px;
@@ -252,15 +239,9 @@
             object-fit: cover;
             margin: 0 auto 20px;
             border: 3px solid var(--yellow);
-            box-shadow: 0 0 30px rgba(250,204,21,0.5);
+            box-shadow: 0 0 30px rgba(244,197,66,0.5);
         }
-        .splash-tagline {
-            font-size: 1.5rem;
-            font-weight: 600;
-            color: var(--white);
-            margin-top: 10px;
-            letter-spacing: 0.05em;
-        }
+        .splash-tagline { font-size: 1.5rem; font-weight: 600; color: var(--white); margin-top: 10px; letter-spacing: 0.05em; }
         .skip-link {
             position: absolute;
             top: -40px;
@@ -272,7 +253,6 @@
             transition: top 0.3s;
         }
         .skip-link:focus { top: 0; }
-
         .modal-overlay {
             position: fixed;
             inset: 0;
@@ -305,7 +285,6 @@
             cursor: pointer;
         }
         .modal-close:hover { color: var(--yellow); }
-
         .error-boundary-fallback {
             min-height: 100vh;
             display: flex;
@@ -317,6 +296,41 @@
             text-align: center;
             padding: 2rem;
         }
+        /* Programme card */
+        .programme-card {
+            position: relative;
+            border-radius: 1.25rem;
+            overflow: hidden;
+            box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5);
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+            cursor: pointer;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+        .programme-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 30px 60px -12px rgba(0,0,0,0.7), 0 0 0 1px var(--yellow);
+        }
+        .programme-image {
+            width: 100%;
+            height: 260px;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.5s ease;
+        }
+        .programme-card:hover .programme-image { transform: scale(1.03); }
+        .programme-info {
+            padding: 1.25rem 1.5rem;
+            background: rgba(11,34,57,0.9);
+            backdrop-filter: blur(10px);
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        .programme-title { font-size: 1.5rem; font-weight: bold; color: white; margin-bottom: 0.25rem; }
+        .programme-meta { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--yellow); margin-bottom: 0.5rem; }
+        .programme-desc { font-size: 0.9rem; color: rgba(255,255,255,0.75); line-height: 1.5; }
     </style>
 </head>
 <body>
@@ -337,37 +351,21 @@
         }
 
         const STORAGE_BUCKET = 'elite-media';
-        const STORAGE_BASE = supabaseClient ? supabaseClient.storage.from(STORAGE_BUCKET).getPublicUrl('').data.publicUrl : '';
-
         function resolveStorageUrl(path) {
             if (!path) return null;
             try {
                 const { data } = supabaseClient.storage.from(STORAGE_BUCKET).getPublicUrl(path);
                 return data.publicUrl;
             } catch (err) {
-                console.warn('Error generating storage URL:', err);
+                console.warn('Storage URL error:', err);
                 return null;
             }
         }
 
-        function getMediaPublicUrl(asset) {
-            if (!asset) return null;
-            if (asset.storage_path) {
-                const url = resolveStorageUrl(asset.storage_path);
-                if (url) return url;
-            }
-            if (asset.public_url && asset.public_url.startsWith('http')) {
-                return asset.public_url;
-            }
-            return null;
-        }
-
         const defaultMedia = {
-            logo: 'https://eliteglobalpathways.com/elite-logo.jpg',
-            heroVideo: 'https://eliteglobalpathways.com/hero-homepage.mp4',
-            splashVideo: 'https://eliteglobalpathways.com/splash.mp4',
-            programmeImages: {},
-            destinationImages: {}
+            logo: resolveStorageUrl('branding/elite-logo.jpg') || 'https://eliteglobalpathways.com/elite-logo.jpg',
+            heroVideo: resolveStorageUrl('hero/videos/homepage.mp4') || 'https://eliteglobalpathways.com/hero-homepage.mp4',
+            splashVideo: resolveStorageUrl('hero/backgrounds/splash.mp4') || 'https://eliteglobalpathways.com/splash.mp4',
         };
 
         const ScrollContext = createContext(null);
@@ -389,34 +387,18 @@
             const [hasError, setHasError] = useState(false);
             useEffect(() => {
                 const handler = (event) => {
-                    if (event.error) {
-                        console.error('Global error:', event.error);
-                        setHasError(true);
-                    }
+                    if (event.error) { console.error('Global error:', event.error); setHasError(true); }
                 };
                 window.addEventListener('error', handler);
-                window.addEventListener('unhandledrejection', (e) => {
-                    if (e.reason) {
-                        console.error('Unhandled rejection:', e.reason);
-                        setHasError(true);
-                    }
-                });
-                return () => {
-                    window.removeEventListener('error', handler);
-                    window.removeEventListener('unhandledrejection', handler);
-                };
+                window.addEventListener('unhandledrejection', (e) => { if (e.reason) { console.error('Unhandled rejection:', e.reason); setHasError(true); } });
+                return () => { window.removeEventListener('error', handler); window.removeEventListener('unhandledrejection', handler); };
             }, []);
             if (hasError) {
                 return (
                     <div className="error-boundary-fallback" role="alert">
                         <h1 className="text-3xl font-bold mb-4">Something went wrong.</h1>
                         <p className="text-white/70 mb-8">The website is still available.</p>
-                        <button
-                            onClick={() => { setHasError(false); window.location.reload(); }}
-                            className="btn-waterfill rounded-full px-8 py-3 text-base font-semibold text-white bg-transparent border border-red"
-                        >
-                            Reload Website
-                        </button>
+                        <button onClick={() => { setHasError(false); window.location.reload(); }} className="btn-waterfill rounded-full px-8 py-3 text-base font-semibold text-white bg-transparent border border-red">Reload Website</button>
                     </div>
                 );
             }
@@ -431,14 +413,11 @@
                 let isMounted = true;
                 setLoading(true);
                 setError(null);
-                fetcher().then(result => { if (isMounted) setData(result); }).catch(err => {
-                    if (isMounted) { console.error('Async data error:', err); setError(err); }
-                }).finally(() => { if (isMounted) setLoading(false); });
+                fetcher().then(result => { if (isMounted) setData(result); }).catch(err => { if (isMounted) { console.error('Async data error:', err); setError(err); } }).finally(() => { if (isMounted) setLoading(false); });
                 return () => { isMounted = false; };
             }, deps);
             const retry = useCallback(() => {
-                setLoading(true);
-                setError(null);
+                setLoading(true); setError(null);
                 fetcher().then(result => setData(result)).catch(err => { console.error('Retry error:', err); setError(err); }).finally(() => setLoading(false));
             }, [fetcher]);
             return { data, loading, error, retry };
@@ -453,12 +432,7 @@
                 if (!el) return;
                 if (reduced) { setVisible(true); return; }
                 const obs = new IntersectionObserver((entries) => {
-                    entries.forEach(entry => {
-                        if (entry.isIntersecting) {
-                            setVisible(true);
-                            obs.unobserve(entry.target);
-                        }
-                    });
+                    entries.forEach(entry => { if (entry.isIntersecting) { setVisible(true); obs.unobserve(entry.target); } });
                 }, { threshold: 0.2, rootMargin: '0px 0px -50px 0px' });
                 obs.observe(el);
                 return () => obs.disconnect();
@@ -488,15 +462,11 @@
             const content = <span className="relative z-10">{children}</span>;
             if (href) {
                 return (
-                    <a href={href} className={`btn-waterfill inline-block ${className}`} onClick={onClick} aria-label={ariaLabel}>
-                        {content}
-                    </a>
+                    <a href={href} className={`btn-waterfill inline-block ${className}`} onClick={onClick} aria-label={ariaLabel}>{content}</a>
                 );
             }
             return (
-                <button type={type} className={`btn-waterfill inline-block ${className}`} onClick={onClick} aria-label={ariaLabel}>
-                    {content}
-                </button>
+                <button type={type} className={`btn-waterfill inline-block ${className}`} onClick={onClick} aria-label={ariaLabel}>{content}</button>
             );
         }
 
@@ -523,39 +493,23 @@
                     if (typeof Lenis !== 'undefined') {
                         lenis = new Lenis({ duration: 1.2, easing: t => Math.min(1, 1.001 - Math.pow(2, -10*t)), smoothWheel: true, touchMultiplier: 1.5 });
                         lenisRef.current = lenis;
-                        lenis.on('scroll', () => {
-                            if (typeof ScrollTrigger !== 'undefined') ScrollTrigger.update();
-                        });
+                        lenis.on('scroll', () => { if (typeof ScrollTrigger !== 'undefined') ScrollTrigger.update(); });
                         ticker = (time) => { lenis.raf(time * 1000); };
-                        if (typeof gsap !== 'undefined') {
-                            gsap.ticker.add(ticker);
-                            gsap.ticker.lagSmoothing(0);
-                        }
+                        if (typeof gsap !== 'undefined') { gsap.ticker.add(ticker); gsap.ticker.lagSmoothing(0); }
                     }
-                } catch (err) {
-                    console.warn('Lenis initialization failed:', err);
-                }
+                } catch (err) { console.warn('Lenis init failed:', err); }
                 const scrollToFn = (target) => {
                     const el = document.querySelector(target);
                     if (!el) return;
                     const headerOffset = 80;
                     const elementPosition = el.getBoundingClientRect().top;
                     const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
-                    if (lenis) {
-                        lenis.scrollTo(offsetPosition, { duration: 1.2 });
-                    } else if (typeof window !== 'undefined' && 'scrollTo' in window) {
-                        window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
-                    } else {
-                        window.scrollTo(0, offsetPosition);
-                    }
+                    if (lenis) { lenis.scrollTo(offsetPosition, { duration: 1.2 }); }
+                    else if (typeof window !== 'undefined' && 'scrollTo' in window) { window.scrollTo({ top: offsetPosition, behavior: 'smooth' }); }
+                    else { window.scrollTo(0, offsetPosition); }
                 };
                 setScrollTo(() => scrollToFn);
-                return () => {
-                    if (ticker && typeof gsap !== 'undefined') {
-                        gsap.ticker.remove(ticker);
-                    }
-                    if (lenis) lenis.destroy();
-                };
+                return () => { if (ticker && typeof gsap !== 'undefined') { gsap.ticker.remove(ticker); } if (lenis) lenis.destroy(); };
             }, [reduced]);
             const effectiveScrollTo = scrollTo || ((target) => {
                 const el = document.querySelector(target);
@@ -567,26 +521,23 @@
                 }
             });
             return (
-                <ScrollContext.Provider value={effectiveScrollTo}>
-                    {children}
-                </ScrollContext.Provider>
+                <ScrollContext.Provider value={effectiveScrollTo}>{children}</ScrollContext.Provider>
             );
         }
 
         function SplashScreen({ onComplete }) {
             const [show, setShow] = useState(true);
+            const [fadeOut, setFadeOut] = useState(false);
             const reduced = useReducedMotion();
             useEffect(() => {
                 if (reduced) { setShow(false); onComplete(); return; }
-                const timer = setTimeout(() => {
-                    setShow(false);
-                    onComplete();
-                }, 4000);
-                return () => clearTimeout(timer);
+                const timer1 = setTimeout(() => setFadeOut(true), 3200); // start fade after 3.2s
+                const timer2 = setTimeout(() => { setShow(false); onComplete(); }, 4000); // complete after 4s
+                return () => { clearTimeout(timer1); clearTimeout(timer2); };
             }, [reduced, onComplete]);
             if (!show) return null;
             return (
-                <div className="splash-screen" role="presentation" aria-hidden="true">
+                <div className={`splash-screen ${fadeOut ? 'fade-out' : ''}`} role="presentation" aria-hidden="true">
                     <video className="splash-video" autoPlay muted loop playsInline preload="auto" poster="">
                         <source src={defaultMedia.splashVideo} type="video/mp4" />
                         Your browser does not support the video tag.
@@ -612,36 +563,35 @@
             }, []);
             useEffect(() => {
                 const handleClickOutside = (e) => {
-                    if (mobileOpen && menuRef.current && !menuRef.current.contains(e.target) && !buttonRef.current?.contains(e.target)) {
-                        setMobileOpen(false);
-                    }
+                    if (mobileOpen && menuRef.current && !menuRef.current.contains(e.target) && !buttonRef.current?.contains(e.target)) setMobileOpen(false);
                 };
                 const handleEscape = (e) => { if (e.key === 'Escape') setMobileOpen(false); };
                 document.addEventListener('mousedown', handleClickOutside);
                 document.addEventListener('keydown', handleEscape);
-                return () => {
-                    document.removeEventListener('mousedown', handleClickOutside);
-                    document.removeEventListener('keydown', handleEscape);
-                };
+                return () => { document.removeEventListener('mousedown', handleClickOutside); document.removeEventListener('keydown', handleEscape); };
             }, [mobileOpen]);
             const links = [
                 { label: 'Home', href: '#home' },
+                { label: 'About', href: '#about' },
                 { label: 'Programmes', href: '#programmes' },
                 { label: 'Destinations', href: '#destinations' },
-                { label: 'Support', href: '#support' },
                 { label: 'How It Works', href: '#how-it-works' },
-                { label: 'FAQ', href: '#faq' }
+                { label: 'Support', href: '#support' },
+                { label: 'Scholarships', href: '#scholarships' },
+                { label: 'Parents', href: '#parents' },
+                { label: 'Why Choose Us', href: '#why-choose-us' },
+                { label: 'Partners', href: '#partners' },
+                { label: 'FAQ', href: '#faq' },
+                { label: 'Contact', href: '#contact' }
             ];
             const handleNavClick = (e, href) => {
                 e.preventDefault();
                 scrollTo(href);
                 setMobileOpen(false);
-                if (window.history) {
-                    window.history.pushState(null, '', href);
-                }
+                if (window.history) window.history.pushState(null, '', href);
             };
             return (
-                <header className={`navbar-layer fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${scrolled ? 'glass py-3' : 'bg-transparent py-6'}`}>
+                <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${scrolled ? 'glass py-3' : 'bg-transparent py-6'}`}>
                     <a href="#main-content" className="skip-link">Skip to main content</a>
                     <div className="mx-auto max-w-7xl flex items-center justify-between px-6 lg:px-8">
                         <a href="#home" className="flex items-center gap-3" onClick={(e) => handleNavClick(e, '#home')} aria-label="Go to home">
@@ -650,19 +600,11 @@
                         </a>
                         <nav className="hidden lg:flex items-center gap-6" aria-label="Main navigation">
                             {links.map(link => (
-                                <a key={link.href} href={link.href} onClick={(e) => handleNavClick(e, link.href)} className="text-sm font-medium text-white/80 hover:text-sky transition-colors cursor-pointer">
-                                    {link.label}
-                                </a>
+                                <a key={link.href} href={link.href} onClick={(e) => handleNavClick(e, link.href)} className="text-sm font-medium text-white/80 hover:text-sky transition-colors cursor-pointer">{link.label}</a>
                             ))}
                             <WaterfillButton href="#apply" onClick={(e) => handleNavClick(e, '#apply')} className="rounded-full px-6 py-2.5 text-sm font-semibold text-white bg-transparent border border-red" ariaLabel="Apply Now">Apply Now</WaterfillButton>
                         </nav>
-                        <button
-                            ref={buttonRef}
-                            className="lg:hidden text-white text-2xl focus:outline-none focus:ring-2 focus:ring-sky rounded-md p-1"
-                            onClick={() => setMobileOpen(!mobileOpen)}
-                            aria-label={mobileOpen ? 'Close menu' : 'Open menu'}
-                            aria-expanded={mobileOpen}
-                        >
+                        <button ref={buttonRef} className="lg:hidden text-white text-2xl focus:outline-none focus:ring-2 focus:ring-sky rounded-md p-1" onClick={() => setMobileOpen(!mobileOpen)} aria-label={mobileOpen ? 'Close menu' : 'Open menu'} aria-expanded={mobileOpen}>
                             {mobileOpen ? '✕' : '☰'}
                         </button>
                     </div>
@@ -670,9 +612,7 @@
                         <div ref={menuRef} className="lg:hidden glass mt-4 mx-4 rounded-2xl p-6" role="dialog" aria-label="Mobile navigation">
                             <nav className="flex flex-col gap-4">
                                 {links.map(link => (
-                                    <a key={link.href} href={link.href} onClick={(e) => handleNavClick(e, link.href)} className="text-lg font-medium text-white/90 hover:text-sky">
-                                        {link.label}
-                                    </a>
+                                    <a key={link.href} href={link.href} onClick={(e) => handleNavClick(e, link.href)} className="text-lg font-medium text-white/90 hover:text-sky">{link.label}</a>
                                 ))}
                                 <WaterfillButton href="#apply" onClick={(e) => handleNavClick(e, '#apply')} className="rounded-full px-6 py-2.5 text-sm font-semibold text-white bg-transparent border border-red" ariaLabel="Apply Now">Apply Now</WaterfillButton>
                                 <div className="text-sm text-white/70 pt-4 border-t border-white/10">
@@ -690,6 +630,7 @@
 
         function ParallaxHero() {
             const heroRef = useRef(null);
+            const videoRef = useRef(null);
             const reduced = useReducedMotion();
             const scrollTo = useScrollTo();
             const [videoError, setVideoError] = useState(false);
@@ -703,20 +644,36 @@
                 if (!supabaseClient) return;
                 const loadSettings = async () => {
                     try {
-                        const { data, error } = await supabaseClient.from('site_settings').select('key,value').in('key', ['hero_title','hero_subtitle','motto','hero_video_url','logo_url']);
+                        const { data, error } = await supabaseClient.from('site_settings').select('key,value').in('key', ['hero_title','hero_subtitle','motto']);
                         if (error) throw error;
                         const map = {};
                         data.forEach(s => { map[s.key] = s.value; });
-                        setHeroContent(prev => ({
-                            ...prev,
-                            title: map.hero_title || prev.title,
-                            subtitle: map.hero_subtitle || prev.subtitle,
-                            motto: map.motto || prev.motto
-                        }));
+                        setHeroContent(prev => ({ ...prev, title: map.hero_title || prev.title, subtitle: map.hero_subtitle || prev.subtitle, motto: map.motto || prev.motto }));
                     } catch (err) { console.warn('Failed to load hero settings:', err); }
                 };
                 loadSettings();
             }, []);
+
+            useEffect(() => {
+                if (reduced || videoError) return;
+                const video = videoRef.current;
+                if (!video) return;
+                const tryPlay = () => {
+                    const promise = video.play();
+                    if (promise !== undefined) {
+                        promise.catch(err => {
+                            console.warn('Autoplay prevented:', err);
+                            // Retry on user interaction
+                            const retry = () => { video.play().catch(() => {}); document.removeEventListener('click', retry); document.removeEventListener('touchstart', retry); };
+                            document.addEventListener('click', retry, { once: true });
+                            document.addEventListener('touchstart', retry, { once: true });
+                        });
+                    }
+                };
+                const onCanPlay = () => tryPlay();
+                video.addEventListener('canplay', onCanPlay);
+                return () => video.removeEventListener('canplay', onCanPlay);
+            }, [reduced, videoError]);
 
             useEffect(() => {
                 if (reduced) return;
@@ -739,15 +696,15 @@
             return (
                 <section id="home" ref={heroRef} className="relative h-screen overflow-hidden bg-navy" aria-label="Hero">
                     {!videoError ? (
-                        <video className="hero-video" autoPlay muted loop playsInline preload="metadata" poster="" onError={() => setVideoError(true)}>
+                        <video ref={videoRef} className="hero-video" autoPlay muted loop playsInline preload="auto" poster="" onError={() => setVideoError(true)}>
                             <source src={heroVideoUrl} type="video/mp4" />
                             Your browser does not support the video tag.
                         </video>
                     ) : (
-                        <div className="hero-video" style={{ background: 'linear-gradient(135deg, #071A2F 0%, #0B2745 50%, #071A2F 100%)' }}></div>
+                        <div className="hero-video" style={{ background: 'linear-gradient(135deg, #071A2B 0%, #0B2239 50%, #071A2B 100%)' }}></div>
                     )}
                     <div className="hero-overlay"></div>
-                    <div className="absolute inset-0 layer-foreground" style={{ background: 'radial-gradient(circle at 70% 80%, rgba(34,211,238,0.2) 0%, transparent 50%)', zIndex: 2, pointerEvents: 'none' }}></div>
+                    <div className="absolute inset-0 layer-foreground" style={{ background: 'radial-gradient(circle at 70% 80%, rgba(56,189,248,0.2) 0%, transparent 50%)', zIndex: 2, pointerEvents: 'none' }}></div>
                     <div className="absolute inset-0 flex items-center justify-center layer-typography z-10" style={{ pointerEvents: 'none' }}>
                         <div className="text-center px-6" style={{ pointerEvents: 'auto' }}>
                             <Reveal delay={0.2}><p className="text-sm font-semibold uppercase tracking-[0.4em] text-sky mb-2">Elite Global Pathways</p></Reveal>
@@ -762,72 +719,22 @@
                     </div>
                     <div className="absolute rounded-full filter blur-2xl opacity-30 floating-shape" style={{ width: 300, height: 300, background: 'rgba(56,189,248,0.15)', top: '-5%', left: '-5%', zIndex: 3, pointerEvents: 'none' }}></div>
                     <div className="absolute rounded-full filter blur-2xl opacity-30 floating-shape" style={{ width: 200, height: 200, background: 'rgba(34,211,238,0.1)', bottom: '-10%', right: '-5%', zIndex: 3, pointerEvents: 'none' }}></div>
-                    <div className="absolute rounded-full filter blur-2xl opacity-30 floating-shape" style={{ width: 400, height: 400, background: 'rgba(7,26,47,0.3)', border: '2px solid rgba(255,255,255,0.05)', top: '30%', left: '60%', zIndex: 3, pointerEvents: 'none' }}></div>
+                    <div className="absolute rounded-full filter blur-2xl opacity-30 floating-shape" style={{ width: 400, height: 400, background: 'rgba(7,26,43,0.3)', border: '2px solid rgba(255,255,255,0.05)', top: '30%', left: '60%', zIndex: 3, pointerEvents: 'none' }}></div>
                 </section>
             );
         }
 
-        // Data fetching functions (centralized)
-        async function fetchSiteSettings() {
-            if (!supabaseClient) return null;
-            const { data, error } = await supabaseClient.from('site_settings').select('*');
-            if (error) throw error;
-            return data;
-        }
-        async function fetchSections() {
-            if (!supabaseClient) return null;
-            const { data, error } = await supabaseClient.from('sections').select('*').eq('is_published', true);
-            if (error) throw error;
-            return data;
-        }
-        async function fetchProgrammes() {
-            if (!supabaseClient) return null;
-            const { data, error } = await supabaseClient.from('programmes').select('*').eq('is_published', true).order('order_index');
-            if (error) throw error;
-            return data;
-        }
-        async function fetchDestinations() {
-            if (!supabaseClient) return null;
-            const { data, error } = await supabaseClient.from('destinations').select('*').eq('is_published', true).order('order_index');
-            if (error) throw error;
-            return data;
-        }
-        async function fetchProcessSteps() {
-            if (!supabaseClient) return null;
-            const { data, error } = await supabaseClient.from('process_steps').select('*').eq('is_published', true).order('order_index');
-            if (error) throw error;
-            return data;
-        }
-        async function fetchSupportServices() {
-            if (!supabaseClient) return null;
-            const { data, error } = await supabaseClient.from('support_services').select('*').eq('is_published', true).order('order_index');
-            if (error) throw error;
-            return data;
-        }
-        async function fetchWhyChooseUs() {
-            if (!supabaseClient) return null;
-            const { data, error } = await supabaseClient.from('why_choose_us').select('*').eq('is_published', true).order('order_index');
-            if (error) throw error;
-            return data;
-        }
-        async function fetchFaqs() {
-            if (!supabaseClient) return null;
-            const { data, error } = await supabaseClient.from('faqs').select('*').eq('is_published', true).order('order_index');
-            if (error) throw error;
-            return data;
-        }
-        async function fetchTestimonials() {
-            if (!supabaseClient) return null;
-            const { data, error } = await supabaseClient.from('testimonials').select('*').eq('is_published', true).order('order_index');
-            if (error) throw error;
-            return data;
-        }
-        async function fetchMediaAssets() {
-            if (!supabaseClient) return null;
-            const { data, error } = await supabaseClient.from('media_assets').select('*').eq('is_active', true);
-            if (error) throw error;
-            return data;
-        }
+        // Centralized data fetchers
+        async function fetchSiteSettings() { if (!supabaseClient) return null; const { data, error } = await supabaseClient.from('site_settings').select('*'); if (error) throw error; return data; }
+        async function fetchSections() { if (!supabaseClient) return null; const { data, error } = await supabaseClient.from('sections').select('*').eq('is_published', true); if (error) throw error; return data; }
+        async function fetchProgrammes() { if (!supabaseClient) return null; const { data, error } = await supabaseClient.from('programmes').select('*').eq('is_published', true).order('order_index'); if (error) throw error; return data; }
+        async function fetchDestinations() { if (!supabaseClient) return null; const { data, error } = await supabaseClient.from('destinations').select('*').eq('is_published', true).order('order_index'); if (error) throw error; return data; }
+        async function fetchProcessSteps() { if (!supabaseClient) return null; const { data, error } = await supabaseClient.from('process_steps').select('*').eq('is_published', true).order('order_index'); if (error) throw error; return data; }
+        async function fetchSupportServices() { if (!supabaseClient) return null; const { data, error } = await supabaseClient.from('support_services').select('*').eq('is_published', true).order('order_index'); if (error) throw error; return data; }
+        async function fetchWhyChooseUs() { if (!supabaseClient) return null; const { data, error } = await supabaseClient.from('why_choose_us').select('*').eq('is_published', true).order('order_index'); if (error) throw error; return data; }
+        async function fetchFaqs() { if (!supabaseClient) return null; const { data, error } = await supabaseClient.from('faqs').select('*').eq('is_published', true).order('order_index'); if (error) throw error; return data; }
+        async function fetchTestimonials() { if (!supabaseClient) return null; const { data, error } = await supabaseClient.from('testimonials').select('*').eq('is_published', true).order('order_index'); if (error) throw error; return data; }
+        async function fetchMediaAssets() { if (!supabaseClient) return null; const { data, error } = await supabaseClient.from('media_assets').select('*').eq('is_active', true); if (error) throw error; return data; }
 
         function Destinations() {
             const { data: destinations, loading, error, retry } = useAsyncData(async () => {
@@ -835,37 +742,23 @@
                 try {
                     const data = await fetchDestinations();
                     if (!data || data.length === 0) return [];
-                    // attempt to map images from storage or fallback
                     const media = await fetchMediaAssets();
                     const mediaMap = {};
-                    if (media) {
-                        media.forEach(m => {
-                            if (m.storage_path) {
-                                mediaMap[m.name] = m;
-                            }
-                        });
-                    }
+                    if (media) media.forEach(m => { if (m.storage_path) mediaMap[m.name] = m; });
                     return data.map(dest => {
                         let imageUrl = null;
-                        if (dest.image_url && dest.image_url.startsWith('http')) {
-                            imageUrl = dest.image_url;
-                        } else if (dest.name) {
+                        if (dest.image_url && dest.image_url.startsWith('http')) imageUrl = dest.image_url;
+                        else if (dest.name) {
                             const key = dest.name.toLowerCase().replace(/\s+/g, '-');
-                            // try to find matching media asset by name pattern
                             const match = media.find(m => m.name.toLowerCase().includes(key) || (m.storage_path && m.storage_path.toLowerCase().includes(key)));
-                            if (match) {
-                                imageUrl = getMediaPublicUrl(match);
-                            }
+                            if (match) imageUrl = getMediaPublicUrl(match);
                         }
                         return { ...dest, imageUrl: imageUrl || null };
                     });
-                } catch (err) {
-                    console.warn('Destinations fetch failed:', err);
-                    return [];
-                }
+                } catch (err) { console.warn('Destinations fetch failed:', err); return []; }
             }, []);
-            if (loading) return <MorphSection id="destinations" className="section-padding bg-navy"><div className="mx-auto max-w-6xl px-6 text-center"><p className="text-white/70">Loading destinations...</p></div></MorphSection>;
-            if (error && (!destinations || destinations.length === 0)) return <MorphSection id="destinations" className="section-padding bg-navy"><div className="mx-auto max-w-6xl px-6 text-center"><p className="text-white/70">Destinations temporarily unavailable. Please try again.</p><button onClick={retry} className="btn-waterfill rounded-full px-6 py-2 mt-4 text-sm font-semibold text-white bg-transparent border border-red">Retry</button></div></MorphSection>;
+            if (loading) return <MorphSection id="destinations" className="section-padding bg-navy"><div className="text-center text-white/70">Loading destinations...</div></MorphSection>;
+            if (error && (!destinations || destinations.length === 0)) return <MorphSection id="destinations" className="section-padding bg-navy"><div className="text-center text-white/70">Destinations temporarily unavailable. <button onClick={retry} className="underline">Retry</button></div></MorphSection>;
             const list = destinations || [];
             return (
                 <MorphSection id="destinations" className="section-padding bg-navy">
@@ -875,11 +768,7 @@
                             {list.map((d, i) => (
                                 <Reveal key={d.id} delay={i * 0.07} className="h-full">
                                     <div className="card-premium rounded-2xl p-6 text-center h-full w-full">
-                                        {d.imageUrl ? (
-                                            <img src={d.imageUrl} alt={`${d.name} destination`} className="flag-img" loading="lazy" onError={(e) => { e.target.style.display = 'none'; }} />
-                                        ) : (
-                                            <div className="flag-img" style={{ background: 'var(--navy-2)' }}></div>
-                                        )}
+                                        {d.imageUrl ? <img src={d.imageUrl} alt={`${d.name} destination`} className="flag-img" loading="lazy" onError={(e) => { e.target.style.display = 'none'; }} /> : <div className="flag-img" style={{ background: 'var(--navy-2)' }}></div>}
                                         <h3 className="text-xl font-semibold text-white">{d.name}</h3>
                                         {d.description && <p className="mt-2 text-sm text-white/60 line-clamp-2">{d.description}</p>}
                                     </div>
@@ -901,34 +790,21 @@
                     if (!data || data.length === 0) return [];
                     const media = await fetchMediaAssets();
                     const mediaMap = {};
-                    if (media) {
-                        media.forEach(m => {
-                            if (m.storage_path) {
-                                mediaMap[m.name] = m;
-                            }
-                        });
-                    }
+                    if (media) media.forEach(m => { if (m.storage_path) mediaMap[m.name] = m; });
                     return data.map(prog => {
                         let imageUrl = prog.image_url;
-                        if (imageUrl && !imageUrl.startsWith('http')) {
-                            imageUrl = resolveStorageUrl(imageUrl) || imageUrl;
-                        } else if (imageUrl && imageUrl.includes('imgur.com')) {
-                            // try to find matching Supabase asset by name
+                        if (imageUrl && !imageUrl.startsWith('http')) imageUrl = resolveStorageUrl(imageUrl) || imageUrl;
+                        else if (imageUrl && imageUrl.includes('imgur.com')) {
                             const match = media.find(m => m.name.toLowerCase().includes(prog.title.toLowerCase()));
-                            if (match) {
-                                imageUrl = getMediaPublicUrl(match);
-                            }
+                            if (match) imageUrl = getMediaPublicUrl(match);
                         }
                         return { ...prog, imageUrl: imageUrl || null };
                     });
-                } catch (err) {
-                    console.warn('Programmes fetch failed:', err);
-                    return [];
-                }
+                } catch (err) { console.warn('Programmes fetch failed:', err); return []; }
             }, []);
             const scrollTo = useScrollTo();
-            if (loading) return <MorphSection id="programmes" className="section-padding bg-navy-2"><div className="mx-auto max-w-7xl px-6 lg:px-8 text-center"><p className="text-white/70">Loading programmes...</p></div></MorphSection>;
-            if (error && (!programmes || programmes.length === 0)) return <MorphSection id="programmes" className="section-padding bg-navy-2"><div className="mx-auto max-w-7xl px-6 lg:px-8 text-center"><p className="text-white/70">Programmes temporarily unavailable. Please try again.</p><button onClick={retry} className="btn-waterfill rounded-full px-6 py-2 mt-4 text-sm font-semibold text-white bg-transparent border border-red">Retry</button></div></MorphSection>;
+            if (loading) return <MorphSection id="programmes" className="section-padding bg-navy-2"><div className="text-center text-white/70">Loading programmes...</div></MorphSection>;
+            if (error && (!programmes || programmes.length === 0)) return <MorphSection id="programmes" className="section-padding bg-navy-2"><div className="text-center text-white/70">Programmes temporarily unavailable. <button onClick={retry} className="underline">Retry</button></div></MorphSection>;
             const list = programmes || [];
             return (
                 <MorphSection id="programmes" className="section-padding bg-navy-2">
@@ -937,67 +813,34 @@
                         <div className="mt-16 grid gap-6 sm:grid-cols-2 lg:grid-cols-4 grid-equal">
                             {list.map((p, i) => (
                                 <Reveal key={p.id} delay={i * 0.1} className="h-full">
-                                    <button
-                                        onClick={() => setSelectedProgramme(p)}
-                                        className="card-premium rounded-2xl p-6 h-full w-full text-left cursor-pointer focus:outline-none focus:ring-2 focus:ring-yellow"
-                                        aria-label={`View details for ${p.title}`}
-                                    >
-                                        <div className="flex items-center gap-3 mb-4">
-                                            <div className="h-4 w-4 rounded-full flex-shrink-0" style={{ backgroundColor: p.colour || 'var(--sky)' }}></div>
-                                            <h3 className="text-xl font-bold text-white">{p.title}</h3>
-                                        </div>
-                                        {p.category && <p className="text-xs uppercase tracking-wider text-sky mb-2">{p.category}</p>}
-                                        <p className="text-sm text-white/80 leading-relaxed">{p.description || p.pathway_description || 'Click to view programme details.'}</p>
-                                        <div className="mt-auto pt-4 flex items-center justify-between">
-                                            <div className="h-1.5 w-12 rounded-full" style={{ backgroundColor: p.colour || 'var(--sky)' }}></div>
-                                            <span className="text-xs text-white/50">View Details →</span>
+                                    <button onClick={() => setSelectedProgramme(p)} className="programme-card card-premium rounded-2xl p-6 h-full w-full text-left cursor-pointer focus:outline-none focus:ring-2 focus:ring-yellow" aria-label={`View details for ${p.title}`}>
+                                        {p.imageUrl && <img src={p.imageUrl} alt={p.title} className="programme-image mb-4 rounded-lg" loading="lazy" onError={(e) => { e.target.style.display = 'none'; }} />}
+                                        <div className="programme-info p-4">
+                                            <h3 className="programme-title text-white font-bold text-xl">{p.title}</h3>
+                                            {p.category && <p className="programme-meta text-xs uppercase tracking-wider text-yellow mb-1">{p.category}</p>}
+                                            <p className="programme-desc text-sm text-white/75">{p.description || 'Click to view programme details.'}</p>
+                                            <span className="mt-3 inline-block text-xs text-white/50">View Details →</span>
                                         </div>
                                     </button>
                                 </Reveal>
                             ))}
                         </div>
-                        {list.length === 0 && (
-                            <div className="text-center mt-10"><p className="text-white/70">No programmes currently available. Please check back soon.</p></div>
-                        )}
+                        {list.length === 0 && <div className="text-center mt-10 text-white/70">No programmes available.</div>}
                     </div>
                     {selectedProgramme && (
                         <div className="modal-overlay" role="dialog" aria-modal="true" aria-label={`${selectedProgramme.title} details`}>
                             <div className="modal-content">
                                 <button className="modal-close" onClick={() => setSelectedProgramme(null)} aria-label="Close programme details">✕</button>
                                 <h3 className="text-2xl font-bold text-white mb-2">{selectedProgramme.title}</h3>
-                                {selectedProgramme.category && <p className="text-sm uppercase tracking-wider text-sky mb-4">{selectedProgramme.category}</p>}
+                                {selectedProgramme.category && <p className="text-sm uppercase tracking-wider text-yellow mb-4">{selectedProgramme.category}</p>}
                                 {selectedProgramme.level && <p className="text-sm text-white/70 mb-2"><strong>Level:</strong> {selectedProgramme.level}</p>}
                                 {selectedProgramme.description && <p className="text-white/80 mt-4 leading-relaxed">{selectedProgramme.description}</p>}
-                                {selectedProgramme.pathway_description && (
-                                    <div className="mt-4">
-                                        <h4 className="text-lg font-semibold text-white mb-2">Pathway Description</h4>
-                                        <p className="text-white/70 leading-relaxed">{selectedProgramme.pathway_description}</p>
-                                    </div>
-                                )}
-                                {selectedProgramme.academic_direction && (
-                                    <div className="mt-4">
-                                        <h4 className="text-lg font-semibold text-white mb-2">Academic Direction</h4>
-                                        <p className="text-white/70 leading-relaxed">{selectedProgramme.academic_direction}</p>
-                                    </div>
-                                )}
-                                {selectedProgramme.next_steps && (
-                                    <div className="mt-4">
-                                        <h4 className="text-lg font-semibold text-white mb-2">Next Steps</h4>
-                                        <p className="text-white/70 leading-relaxed">{selectedProgramme.next_steps}</p>
-                                    </div>
-                                )}
-                                {selectedProgramme.imageUrl && (
-                                    <img src={selectedProgramme.imageUrl} alt={selectedProgramme.title} className="mt-4 w-full h-48 object-cover rounded-lg" loading="lazy" onError={(e) => { e.target.style.display = 'none'; }} />
-                                )}
+                                {selectedProgramme.pathway_description && <div className="mt-4"><h4 className="text-lg font-semibold text-white mb-2">Pathway Description</h4><p className="text-white/70 leading-relaxed">{selectedProgramme.pathway_description}</p></div>}
+                                {selectedProgramme.academic_direction && <div className="mt-4"><h4 className="text-lg font-semibold text-white mb-2">Academic Direction</h4><p className="text-white/70 leading-relaxed">{selectedProgramme.academic_direction}</p></div>}
+                                {selectedProgramme.next_steps && <div className="mt-4"><h4 className="text-lg font-semibold text-white mb-2">Next Steps</h4><p className="text-white/70 leading-relaxed">{selectedProgramme.next_steps}</p></div>}
+                                {selectedProgramme.imageUrl && <img src={selectedProgramme.imageUrl} alt={selectedProgramme.title} className="mt-4 w-full h-48 object-cover rounded-lg" loading="lazy" onError={(e) => { e.target.style.display = 'none'; }} />}
                                 <div className="mt-6">
-                                    <WaterfillButton
-                                        href="#apply"
-                                        onClick={(e) => { e.preventDefault(); setSelectedProgramme(null); scrollTo('#apply'); }}
-                                        className="rounded-full px-8 py-3 text-base font-semibold text-white bg-transparent border border-red w-full text-center"
-                                        ariaLabel="Apply for this programme"
-                                    >
-                                        Apply for This Programme
-                                    </WaterfillButton>
+                                    <WaterfillButton href="#apply" onClick={(e) => { e.preventDefault(); setSelectedProgramme(null); scrollTo('#apply'); }} className="rounded-full px-8 py-3 text-base font-semibold text-white bg-transparent border border-red w-full text-center" ariaLabel="Apply for this programme">Apply for This Programme</WaterfillButton>
                                 </div>
                             </div>
                         </div>
@@ -1009,12 +852,7 @@
         function Support() {
             const { data: services, loading, error, retry } = useAsyncData(async () => {
                 if (!supabaseClient) return [];
-                try {
-                    return await fetchSupportServices() || [];
-                } catch (err) {
-                    console.warn('Support services fetch failed:', err);
-                    return [];
-                }
+                try { return await fetchSupportServices() || []; } catch (err) { console.warn('Support services fetch failed:', err); return []; }
             }, []);
             const defaultServices = [
                 { id: 'consultation', icon: '🎓', title: 'Initial Consultation', description: 'We assess your academic background, interests, and goals to map a personalised pathway.' },
@@ -1023,7 +861,7 @@
                 { id: 'pre-departure', icon: '✈️', title: 'Pre-Departure Readiness', description: 'Practical preparation for your journey, including accommodation and travel tips.' }
             ];
             const displayServices = (services && services.length > 0) ? services : defaultServices;
-            if (loading) return <MorphSection id="support" className="section-padding bg-navy"><div className="mx-auto max-w-7xl px-6 lg:px-8 text-center"><p className="text-white/70">Loading support services...</p></div></MorphSection>;
+            if (loading) return <MorphSection id="support" className="section-padding bg-navy"><div className="text-center text-white/70">Loading support services...</div></MorphSection>;
             return (
                 <MorphSection id="support" className="section-padding bg-navy">
                     <div className="mx-auto max-w-7xl px-6 lg:px-8">
@@ -1047,12 +885,7 @@
         function HowItWorks() {
             const { data: steps, loading, error, retry } = useAsyncData(async () => {
                 if (!supabaseClient) return [];
-                try {
-                    return await fetchProcessSteps() || [];
-                } catch (err) {
-                    console.warn('Process steps fetch failed:', err);
-                    return [];
-                }
+                try { return await fetchProcessSteps() || []; } catch (err) { console.warn('Process steps fetch failed:', err); return []; }
             }, []);
             const defaultSteps = [
                 { id: '01', step_number: 1, title: 'Contact Us', description: 'Reach out via enquiry form, email, or WhatsApp.' },
@@ -1065,7 +898,7 @@
                 { id: '08', step_number: 8, title: 'Begin Your Journey', description: 'Arrive and start your global education.' }
             ];
             const displaySteps = (steps && steps.length > 0) ? steps : defaultSteps;
-            if (loading) return <MorphSection id="how-it-works" className="section-padding bg-navy-2"><div className="mx-auto max-w-5xl px-6 lg:px-8 text-center"><p className="text-white/70">Loading process steps...</p></div></MorphSection>;
+            if (loading) return <MorphSection id="how-it-works" className="section-padding bg-navy-2"><div className="text-center text-white/70">Loading process steps...</div></MorphSection>;
             return (
                 <MorphSection id="how-it-works" className="section-padding bg-navy-2">
                     <div className="mx-auto max-w-5xl px-6 lg:px-8">
@@ -1076,13 +909,8 @@
                                 {displaySteps.map((s, i) => (
                                     <Reveal key={s.id} delay={i * 0.05}>
                                         <div className="flex gap-6 items-start">
-                                            <div className="relative z-10 flex h-16 w-16 flex-shrink-0 items-center justify-center rounded-full border-2 border-sky bg-sky/10 text-xl font-bold text-sky">
-                                                {String(s.step_number || i + 1).padStart(2, '0')}
-                                            </div>
-                                            <div className="pt-1">
-                                                <h3 className="text-xl font-bold text-white">{s.title}</h3>
-                                                <p className="mt-2 text-white/70 text-sm leading-relaxed">{s.description || s.desc || ''}</p>
-                                            </div>
+                                            <div className="relative z-10 flex h-16 w-16 flex-shrink-0 items-center justify-center rounded-full border-2 border-sky bg-sky/10 text-xl font-bold text-sky">{String(s.step_number || i + 1).padStart(2, '0')}</div>
+                                            <div className="pt-1"><h3 className="text-xl font-bold text-white">{s.title}</h3><p className="mt-2 text-white/70 text-sm leading-relaxed">{s.description || s.desc || ''}</p></div>
                                         </div>
                                     </Reveal>
                                 ))}
@@ -1097,12 +925,7 @@
         function WhyChooseUs() {
             const { data: points, loading, error, retry } = useAsyncData(async () => {
                 if (!supabaseClient) return [];
-                try {
-                    return await fetchWhyChooseUs() || [];
-                } catch (err) {
-                    console.warn('Why choose us fetch failed:', err);
-                    return [];
-                }
+                try { return await fetchWhyChooseUs() || []; } catch (err) { console.warn('Why choose us fetch failed:', err); return []; }
             }, []);
             const defaultPoints = [
                 { id: 'african', icon: '🌍', title: 'African-Focused', description: 'We understand the unique needs of African students.' },
@@ -1111,9 +934,9 @@
                 { id: 'guidance', icon: '🤝', title: 'End-to-End Guidance', description: 'From first call to arrival, we are with you.' }
             ];
             const displayPoints = (points && points.length > 0) ? points : defaultPoints;
-            if (loading) return <MorphSection className="section-padding bg-navy"><div className="mx-auto max-w-6xl px-6 lg:px-8 text-center"><p className="text-white/70">Loading...</p></div></MorphSection>;
+            if (loading) return <MorphSection className="section-padding bg-navy"><div className="text-center text-white/70">Loading...</div></MorphSection>;
             return (
-                <MorphSection className="section-padding bg-navy">
+                <MorphSection id="why-choose-us" className="section-padding bg-navy">
                     <div className="mx-auto max-w-6xl px-6 lg:px-8">
                         <SectionHeading eyebrow="WHY CHOOSE US" title="A Partner You Can Trust" subtitle="We provide honest, transparent guidance for African students." />
                         <div className="mt-16 grid gap-6 sm:grid-cols-2 lg:grid-cols-4 grid-equal">
@@ -1136,23 +959,17 @@
             const [openId, setOpenId] = useState(null);
             const { data: faqs, loading, error, retry } = useAsyncData(async () => {
                 if (!supabaseClient) return [];
-                try {
-                    return await fetchFaqs() || [];
-                } catch (err) {
-                    console.warn('FAQ fetch failed:', err);
-                    return [];
-                }
+                try { return await fetchFaqs() || []; } catch (err) { console.warn('FAQ fetch failed:', err); return []; }
             }, []);
             const defaultFaqs = [
-                { id: '1', question: 'Do you guarantee scholarships?', answer: 'No. Scholarship awards are not guaranteed. Eligibility and final decisions are determined by the relevant institution or scholarship provider. We guide you through available opportunities and help you prepare strong applications.' },
+                { id: '1', question: 'Do you guarantee scholarships?', answer: 'No. Scholarship awards are not guaranteed. Eligibility and final decisions are determined by the relevant institution or scholarship provider.' },
                 { id: '2', question: 'Is the half scholarship available to everyone?', answer: 'No. The approximate 50% tuition support is subject to eligibility, academic performance, programme requirements, university admission, availability, and deadlines.' },
                 { id: '3', question: 'Does a 50% scholarship mean I pay nothing?', answer: 'No. A 50% tuition support typically reduces tuition fees by approximately half. You are still responsible for remaining tuition, accommodation, living expenses, travel, and other costs.' },
                 { id: '4', question: 'Do you help with university applications?', answer: 'Yes. We assist with application preparation, document guidance, and follow-up with the university where applicable.' },
                 { id: '5', question: 'Do you provide visa services?', answer: 'We provide general pre-departure guidance and information. Official visa applications must be handled through the relevant embassy or authorised visa service.' }
             ];
             const displayFaqs = (faqs && faqs.length > 0) ? faqs : defaultFaqs;
-            if (loading) return <MorphSection id="faq" className="section-padding bg-navy"><div className="mx-auto max-w-3xl px-6 lg:px-8 text-center"><p className="text-white/70">Loading FAQs...</p></div></MorphSection>;
-            if (error && displayFaqs.length === 0) return <MorphSection id="faq" className="section-padding bg-navy"><div className="mx-auto max-w-3xl px-6 lg:px-8 text-center"><p className="text-white/70">FAQs temporarily unavailable. Please try again.</p><button onClick={retry} className="btn-waterfill rounded-full px-6 py-2 mt-4 text-sm font-semibold text-white bg-transparent border border-red">Retry</button></div></MorphSection>;
+            if (loading) return <MorphSection id="faq" className="section-padding bg-navy"><div className="text-center text-white/70">Loading FAQs...</div></MorphSection>;
             return (
                 <MorphSection id="faq" className="section-padding bg-navy">
                     <div className="mx-auto max-w-3xl px-6 lg:px-8">
@@ -1162,20 +979,11 @@
                                 const isOpen = openId === faq.id;
                                 return (
                                     <div key={faq.id} className="border border-yellow/20 rounded-2xl overflow-hidden">
-                                        <button
-                                            className="flex w-full items-center justify-between gap-4 p-6 text-left text-white hover:bg-white/5 transition-colors"
-                                            onClick={() => setOpenId(isOpen ? null : faq.id)}
-                                            aria-expanded={isOpen}
-                                            aria-controls={`faq-answer-${faq.id}`}
-                                        >
+                                        <button className="flex w-full items-center justify-between gap-4 p-6 text-left text-white hover:bg-white/5 transition-colors" onClick={() => setOpenId(isOpen ? null : faq.id)} aria-expanded={isOpen} aria-controls={`faq-answer-${faq.id}`}>
                                             <span className="text-lg font-semibold">{faq.question}</span>
                                             <span className="text-2xl" aria-hidden="true">{isOpen ? '−' : '+'}</span>
                                         </button>
-                                        {isOpen && (
-                                            <div id={`faq-answer-${faq.id}`} className="px-6 pb-6 text-white/70 leading-relaxed">
-                                                {faq.answer}
-                                            </div>
-                                        )}
+                                        {isOpen && <div id={`faq-answer-${faq.id}`} className="px-6 pb-6 text-white/70 leading-relaxed">{faq.answer}</div>}
                                     </div>
                                 );
                             })}
@@ -1188,14 +996,9 @@
         function Testimonials() {
             const { data: testimonials, loading, error, retry } = useAsyncData(async () => {
                 if (!supabaseClient) return [];
-                try {
-                    return await fetchTestimonials() || [];
-                } catch (err) {
-                    console.warn('Testimonials fetch failed:', err);
-                    return [];
-                }
+                try { return await fetchTestimonials() || []; } catch (err) { console.warn('Testimonials fetch failed:', err); return []; }
             }, []);
-            if (loading) return <MorphSection className="section-padding bg-navy-2"><div className="mx-auto max-w-6xl px-6 lg:px-8 text-center"><p className="text-white/70">Loading testimonials...</p></div></MorphSection>;
+            if (loading) return <MorphSection className="section-padding bg-navy-2"><div className="text-center text-white/70">Loading testimonials...</div></MorphSection>;
             if (testimonials && testimonials.length > 0) {
                 return (
                     <MorphSection className="section-padding bg-navy-2">
@@ -1205,9 +1008,7 @@
                                 {testimonials.map((t, i) => (
                                     <Reveal key={t.id} delay={i * 0.1} className="h-full">
                                         <div className="card-premium rounded-2xl p-6 h-full w-full">
-                                            {t.image_url && (
-                                                <img src={t.image_url} alt={`${t.name || 'Student'} photo`} className="w-16 h-16 rounded-full object-cover mb-4" loading="lazy" onError={(e) => { e.target.style.display = 'none'; }} />
-                                            )}
+                                            {t.image_url && <img src={t.image_url} alt={`${t.name || 'Student'} photo`} className="w-16 h-16 rounded-full object-cover mb-4" loading="lazy" onError={(e) => { e.target.style.display = 'none'; }} />}
                                             <p className="text-white/80 italic leading-relaxed">"{t.quote || t.testimonial}"</p>
                                             {t.name && <p className="mt-4 font-semibold text-white">{t.name}</p>}
                                             {t.destination && <p className="text-sm text-sky">{t.destination}</p>}
@@ -1222,12 +1023,123 @@
             return null;
         }
 
+        function AboutSection() {
+            const { data: sections, loading, error } = useAsyncData(async () => {
+                if (!supabaseClient) return null;
+                const { data, error } = await supabaseClient.from('sections').select('*').eq('slug', 'about').maybeSingle();
+                if (error) throw error;
+                return data;
+            }, []);
+            const defaultContent = { title: 'About Elite Global Pathways', subtitle: 'Connecting African students to global education.', body: 'Elite Global Pathways Limited is dedicated to helping African students explore international higher-education opportunities. We provide guidance, application support, and scholarship information to help you achieve your academic dreams.' };
+            const content = sections || defaultContent;
+            if (loading) return <MorphSection id="about" className="section-padding bg-navy-2"><div className="text-center text-white/70">Loading about...</div></MorphSection>;
+            return (
+                <MorphSection id="about" className="section-padding bg-navy-2">
+                    <div className="mx-auto max-w-5xl px-6 lg:px-8">
+                        <SectionHeading eyebrow="ABOUT" title={content.title || 'About Elite Global Pathways'} subtitle={content.subtitle} />
+                        {content.body && <Reveal delay={0.2}><p className="mt-6 text-lg text-white/70 leading-relaxed text-center">{content.body}</p></Reveal>}
+                    </div>
+                </MorphSection>
+            );
+        }
+
+        function ScholarshipsSection() {
+            const { data: sections, loading, error } = useAsyncData(async () => {
+                if (!supabaseClient) return null;
+                const { data, error } = await supabaseClient.from('sections').select('*').eq('slug', 'scholarships').maybeSingle();
+                if (error) throw error;
+                return data;
+            }, []);
+            const defaultContent = { title: 'Scholarship Opportunities', subtitle: 'Explore tuition-reduction and scholarship options.', body: 'We help students identify and apply for scholarship opportunities that match their academic profile and financial needs.' };
+            const content = sections || defaultContent;
+            if (loading) return <MorphSection id="scholarships" className="section-padding bg-navy"><div className="text-center text-white/70">Loading scholarships...</div></MorphSection>;
+            return (
+                <MorphSection id="scholarships" className="section-padding bg-navy">
+                    <div className="mx-auto max-w-5xl px-6 lg:px-8">
+                        <SectionHeading eyebrow="SCHOLARSHIPS" title={content.title || 'Scholarship Opportunities'} subtitle={content.subtitle} />
+                        {content.body && <Reveal delay={0.2}><p className="mt-6 text-lg text-white/70 leading-relaxed text-center">{content.body}</p></Reveal>}
+                    </div>
+                </MorphSection>
+            );
+        }
+
+        function ParentsSection() {
+            const { data: sections, loading, error } = useAsyncData(async () => {
+                if (!supabaseClient) return null;
+                const { data, error } = await supabaseClient.from('sections').select('*').eq('slug', 'parents').maybeSingle();
+                if (error) throw error;
+                return data;
+            }, []);
+            const defaultContent = { title: 'Information for Parents', subtitle: 'We support families throughout the journey.', body: 'We understand that parents play a vital role in educational decisions. Our team provides clear information and ongoing support to help families make informed choices.' };
+            const content = sections || defaultContent;
+            if (loading) return <MorphSection id="parents" className="section-padding bg-navy-2"><div className="text-center text-white/70">Loading parents information...</div></MorphSection>;
+            return (
+                <MorphSection id="parents" className="section-padding bg-navy-2">
+                    <div className="mx-auto max-w-5xl px-6 lg:px-8">
+                        <SectionHeading eyebrow="PARENTS" title={content.title || 'Information for Parents'} subtitle={content.subtitle} />
+                        {content.body && <Reveal delay={0.2}><p className="mt-6 text-lg text-white/70 leading-relaxed text-center">{content.body}</p></Reveal>}
+                    </div>
+                </MorphSection>
+            );
+        }
+
+        function PartnersSection() {
+            const { data: sections, loading, error } = useAsyncData(async () => {
+                if (!supabaseClient) return null;
+                const { data, error } = await supabaseClient.from('sections').select('*').eq('slug', 'partners').maybeSingle();
+                if (error) throw error;
+                return data;
+            }, []);
+            const defaultContent = { title: 'Our Partners', subtitle: 'Collaborating with institutions worldwide.', body: 'We work with a network of reputable universities and educational institutions to provide diverse opportunities for students.' };
+            const content = sections || defaultContent;
+            if (loading) return <MorphSection id="partners" className="section-padding bg-navy"><div className="text-center text-white/70">Loading partners...</div></MorphSection>;
+            return (
+                <MorphSection id="partners" className="section-padding bg-navy">
+                    <div className="mx-auto max-w-5xl px-6 lg:px-8">
+                        <SectionHeading eyebrow="PARTNERS" title={content.title || 'Our Partners'} subtitle={content.subtitle} />
+                        {content.body && <Reveal delay={0.2}><p className="mt-6 text-lg text-white/70 leading-relaxed text-center">{content.body}</p></Reveal>}
+                    </div>
+                </MorphSection>
+            );
+        }
+
+        function ContactSection() {
+            const { data: settings, loading, error } = useAsyncData(async () => {
+                if (!supabaseClient) return null;
+                const { data, error } = await supabaseClient.from('site_settings').select('key,value');
+                if (error) throw error;
+                const map = {};
+                data.forEach(s => { map[s.key] = s.value; });
+                return map;
+            }, []);
+            const defaultContact = { email: 'eliteglobalpathwaysltd2025@gmail.com', whatsapp_india: '+91 73593 20928', whatsapp_uganda: '+256 779 989906', whatsapp_myanmar: '+95 3787 5184' };
+            const contact = settings || defaultContact;
+            if (loading) return <MorphSection id="contact" className="section-padding bg-navy-2"><div className="text-center text-white/70">Loading contact information...</div></MorphSection>;
+            return (
+                <MorphSection id="contact" className="section-padding bg-navy-2">
+                    <div className="mx-auto max-w-5xl px-6 lg:px-8">
+                        <SectionHeading eyebrow="CONTACT" title="Get in Touch" subtitle="We are here to help you with your international education journey." />
+                        <div className="mt-16 grid gap-8 md:grid-cols-2">
+                            <div className="glass rounded-2xl p-6 border border-yellow/20">
+                                <h3 className="text-xl font-semibold text-white mb-4">Email</h3>
+                                <p className="text-white/70"><a href={`mailto:${contact.email}`} className="hover:text-sky">{contact.email}</a></p>
+                            </div>
+                            <div className="glass rounded-2xl p-6 border border-yellow/20">
+                                <h3 className="text-xl font-semibold text-white mb-4">WhatsApp</h3>
+                                <ul className="space-y-2 text-white/70">
+                                    <li><a href={`https://wa.me/${contact.whatsapp_india?.replace(/\D/g,'')}`} className="hover:text-sky">India: {contact.whatsapp_india}</a></li>
+                                    <li><a href={`https://wa.me/${contact.whatsapp_uganda?.replace(/\D/g,'')}`} className="hover:text-sky">Uganda: {contact.whatsapp_uganda}</a></li>
+                                    <li><a href={`https://wa.me/${contact.whatsapp_myanmar?.replace(/\D/g,'')}`} className="hover:text-sky">Myanmar: {contact.whatsapp_myanmar}</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </MorphSection>
+            );
+        }
+
         function ContactForm() {
-            const [form, setForm] = useState({
-                full_name: '', email: '', phone: '', country: '',
-                academic_level: '', preferred_destination: '', preferred_programme: '',
-                message: '', consent: false
-            });
+            const [form, setForm] = useState({ full_name: '', email: '', phone: '', country: '', academic_level: '', preferred_destination: '', preferred_programme: '', message: '', consent: false });
             const [submitting, setSubmitting] = useState(false);
             const [success, setSuccess] = useState(false);
             const [error, setError] = useState('');
@@ -1237,61 +1149,13 @@
             const levels = ['Secondary School Graduate', 'Diploma/Certificate Holder', 'Undergraduate Graduate', 'Postgraduate Student', 'Working Professional'];
             const destinations = ['India', 'United Kingdom', 'Canada', 'United States', 'Australia', 'New Zealand', 'Europe', 'Not sure'];
             const programmes = ['Engineering & Technology', 'Health & Medical Sciences', 'Business & Management', 'Law & Public Administration', 'Social Sciences', 'Arts & Design', 'Humanities', 'Diploma/Certificate'];
-
-            useEffect(() => { if (success && successRef.current) { successRef.current.focus(); } }, [success]);
-
-            const handleChange = (e) => {
-                const { name, value, type, checked } = e.target;
-                setForm(prev => ({ ...prev, [name]: type === 'checkbox' ? checked : value }));
-                if (fieldErrors[name]) { setFieldErrors(prev => ({ ...prev, [name]: null })); }
-            };
+            useEffect(() => { if (success && successRef.current) successRef.current.focus(); }, [success]);
+            const handleChange = (e) => { const { name, value, type, checked } = e.target; setForm(prev => ({ ...prev, [name]: type === 'checkbox' ? checked : value })); if (fieldErrors[name]) setFieldErrors(prev => ({ ...prev, [name]: null })); };
             const validateEmail = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-            const validate = () => {
-                const errors = {};
-                if (!form.full_name.trim()) errors.full_name = 'Full name is required';
-                if (!form.email.trim()) errors.email = 'Email is required';
-                else if (!validateEmail(form.email)) errors.email = 'Please enter a valid email address';
-                if (!form.consent) errors.consent = 'Please provide consent to submit your enquiry';
-                return errors;
-            };
-            const generateReference = () => {
-                const timestamp = Date.now().toString(36).toUpperCase();
-                const random = Math.random().toString(36).substring(2, 6).toUpperCase();
-                return `EGP-${timestamp}-${random}`;
-            };
-            const handleSubmit = async (e) => {
-                e.preventDefault();
-                setError('');
-                const errors = validate();
-                if (Object.keys(errors).length > 0) { setFieldErrors(errors); return; }
-                setSubmitting(true);
-                try {
-                    if (!supabaseClient) throw new Error('Supabase not initialized');
-                    const ref = generateReference();
-                    const { error: submitError } = await supabaseClient
-                        .from('enquiries')
-                        .insert([{ ...form, status: 'new', source: 'website', reference: ref }]);
-                    if (submitError) {
-                        console.error('Submission error:', submitError);
-                        setError('We couldn\'t submit your application right now. Your information has not been lost. Please try again.');
-                        return;
-                    }
-                    setReference(ref);
-                    setSuccess(true);
-                    setForm({
-                        full_name: '', email: '', phone: '', country: '',
-                        academic_level: '', preferred_destination: '', preferred_programme: '',
-                        message: '', consent: false
-                    });
-                } catch (err) {
-                    console.error('Unexpected error:', err);
-                    setError('Network error. Please check your connection and try again.');
-                } finally {
-                    setSubmitting(false);
-                }
-            };
+            const validate = () => { const errors = {}; if (!form.full_name.trim()) errors.full_name = 'Full name is required'; if (!form.email.trim()) errors.email = 'Email is required'; else if (!validateEmail(form.email)) errors.email = 'Please enter a valid email address'; if (!form.consent) errors.consent = 'Please provide consent to submit your enquiry'; return errors; };
+            const generateReference = () => { const timestamp = Date.now().toString(36).toUpperCase(); const random = Math.random().toString(36).substring(2, 6).toUpperCase(); return `EGP-${timestamp}-${random}`; };
+            const handleSubmit = async (e) => { e.preventDefault(); setError(''); const errors = validate(); if (Object.keys(errors).length > 0) { setFieldErrors(errors); return; } setSubmitting(true); try { if (!supabaseClient) throw new Error('Supabase not initialized'); const ref = generateReference(); const { error: submitError } = await supabaseClient.from('enquiries').insert([{ ...form, status: 'new', source: 'website', reference: ref }]); if (submitError) { console.error('Submission error:', submitError); setError('We couldn\'t submit your application right now. Your information has not been lost. Please try again.'); return; } setReference(ref); setSuccess(true); setForm({ full_name: '', email: '', phone: '', country: '', academic_level: '', preferred_destination: '', preferred_programme: '', message: '', consent: false }); } catch (err) { console.error('Unexpected error:', err); setError('Network error. Please check your connection and try again.'); } finally { setSubmitting(false); } };
             const resetForm = () => { setSuccess(false); setReference(''); setError(''); setFieldErrors({}); };
-
             return (
                 <MorphSection id="apply" className="section-padding bg-navy">
                     <div className="mx-auto max-w-5xl px-6 lg:px-8">
@@ -1312,91 +1176,26 @@
                                     </div>
                                 ) : (
                                     <form onSubmit={handleSubmit} className="space-y-6" noValidate>
-                                        {error && (
-                                            <div className="rounded-xl border border-red-500/30 bg-red-500/10 p-4 text-red-200" role="alert">
-                                                {error}
-                                                <button onClick={() => setError('')} className="ml-2 underline">Dismiss</button>
-                                            </div>
-                                        )}
+                                        {error && <div className="rounded-xl border border-red-500/30 bg-red-500/10 p-4 text-red-200" role="alert">{error} <button onClick={() => setError('')} className="ml-2 underline">Dismiss</button></div>}
                                         <div className="grid gap-6 md:grid-cols-2">
-                                            <div>
-                                                <label htmlFor="full_name" className="block text-sm font-medium text-white/80 mb-2">Full Name *</label>
-                                                <input type="text" id="full_name" name="full_name" value={form.full_name} onChange={handleChange} required className="input-gold w-full rounded-xl px-5 py-3 text-white placeholder-white/40 focus:outline-none" placeholder="Your full name" aria-invalid={!!fieldErrors.full_name} />
-                                                {fieldErrors.full_name && <p className="mt-1 text-sm text-red-400">{fieldErrors.full_name}</p>}
-                                            </div>
-                                            <div>
-                                                <label htmlFor="email" className="block text-sm font-medium text-white/80 mb-2">Email *</label>
-                                                <input type="email" id="email" name="email" value={form.email} onChange={handleChange} required className="input-gold w-full rounded-xl px-5 py-3 text-white placeholder-white/40 focus:outline-none" placeholder="you@example.com" aria-invalid={!!fieldErrors.email} />
-                                                {fieldErrors.email && <p className="mt-1 text-sm text-red-400">{fieldErrors.email}</p>}
-                                            </div>
-                                            <div>
-                                                <label htmlFor="phone" className="block text-sm font-medium text-white/80 mb-2">Phone Number</label>
-                                                <input type="tel" id="phone" name="phone" value={form.phone} onChange={handleChange} className="input-gold w-full rounded-xl px-5 py-3 text-white placeholder-white/40 focus:outline-none" placeholder="+256 700 000 000" />
-                                            </div>
-                                            <div>
-                                                <label htmlFor="country" className="block text-sm font-medium text-white/80 mb-2">Country</label>
-                                                <input type="text" id="country" name="country" value={form.country} onChange={handleChange} className="input-gold w-full rounded-xl px-5 py-3 text-white placeholder-white/40 focus:outline-none" placeholder="Your country" />
-                                            </div>
-                                            <div>
-                                                <label htmlFor="academic_level" className="block text-sm font-medium text-white/80 mb-2">Academic Level</label>
-                                                <select id="academic_level" name="academic_level" value={form.academic_level} onChange={handleChange} className="select-gold w-full rounded-xl px-5 py-3 text-white focus:outline-none">
-                                                    <option value="" disabled>Select level</option>
-                                                    {levels.map(l => <option key={l} value={l}>{l}</option>)}
-                                                </select>
-                                            </div>
-                                            <div>
-                                                <label htmlFor="preferred_destination" className="block text-sm font-medium text-white/80 mb-2">Preferred Destination</label>
-                                                <select id="preferred_destination" name="preferred_destination" value={form.preferred_destination} onChange={handleChange} className="select-gold w-full rounded-xl px-5 py-3 text-white focus:outline-none">
-                                                    <option value="" disabled>Select destination</option>
-                                                    {destinations.map(d => <option key={d} value={d}>{d}</option>)}
-                                                </select>
-                                            </div>
-                                            <div>
-                                                <label htmlFor="preferred_programme" className="block text-sm font-medium text-white/80 mb-2">Preferred Programme</label>
-                                                <select id="preferred_programme" name="preferred_programme" value={form.preferred_programme} onChange={handleChange} className="select-gold w-full rounded-xl px-5 py-3 text-white focus:outline-none">
-                                                    <option value="" disabled>Select programme</option>
-                                                    {programmes.map(p => <option key={p} value={p}>{p}</option>)}
-                                                </select>
-                                            </div>
+                                            <div><label htmlFor="full_name" className="block text-sm font-medium text-white/80 mb-2">Full Name *</label><input type="text" id="full_name" name="full_name" value={form.full_name} onChange={handleChange} required className="input-gold w-full rounded-xl px-5 py-3 text-white placeholder-white/40 focus:outline-none" placeholder="Your full name" aria-invalid={!!fieldErrors.full_name} />{fieldErrors.full_name && <p className="mt-1 text-sm text-red-400">{fieldErrors.full_name}</p>}</div>
+                                            <div><label htmlFor="email" className="block text-sm font-medium text-white/80 mb-2">Email *</label><input type="email" id="email" name="email" value={form.email} onChange={handleChange} required className="input-gold w-full rounded-xl px-5 py-3 text-white placeholder-white/40 focus:outline-none" placeholder="you@example.com" aria-invalid={!!fieldErrors.email} />{fieldErrors.email && <p className="mt-1 text-sm text-red-400">{fieldErrors.email}</p>}</div>
+                                            <div><label htmlFor="phone" className="block text-sm font-medium text-white/80 mb-2">Phone Number</label><input type="tel" id="phone" name="phone" value={form.phone} onChange={handleChange} className="input-gold w-full rounded-xl px-5 py-3 text-white placeholder-white/40 focus:outline-none" placeholder="+256 700 000 000" /></div>
+                                            <div><label htmlFor="country" className="block text-sm font-medium text-white/80 mb-2">Country</label><input type="text" id="country" name="country" value={form.country} onChange={handleChange} className="input-gold w-full rounded-xl px-5 py-3 text-white placeholder-white/40 focus:outline-none" placeholder="Your country" /></div>
+                                            <div><label htmlFor="academic_level" className="block text-sm font-medium text-white/80 mb-2">Academic Level</label><select id="academic_level" name="academic_level" value={form.academic_level} onChange={handleChange} className="select-gold w-full rounded-xl px-5 py-3 text-white focus:outline-none"><option value="" disabled>Select level</option>{levels.map(l => <option key={l} value={l}>{l}</option>)}</select></div>
+                                            <div><label htmlFor="preferred_destination" className="block text-sm font-medium text-white/80 mb-2">Preferred Destination</label><select id="preferred_destination" name="preferred_destination" value={form.preferred_destination} onChange={handleChange} className="select-gold w-full rounded-xl px-5 py-3 text-white focus:outline-none"><option value="" disabled>Select destination</option>{destinations.map(d => <option key={d} value={d}>{d}</option>)}</select></div>
+                                            <div><label htmlFor="preferred_programme" className="block text-sm font-medium text-white/80 mb-2">Preferred Programme</label><select id="preferred_programme" name="preferred_programme" value={form.preferred_programme} onChange={handleChange} className="select-gold w-full rounded-xl px-5 py-3 text-white focus:outline-none"><option value="" disabled>Select programme</option>{programmes.map(p => <option key={p} value={p}>{p}</option>)}</select></div>
                                         </div>
-                                        <div>
-                                            <label htmlFor="message" className="block text-sm font-medium text-white/80 mb-2">Message</label>
-                                            <textarea id="message" name="message" rows={4} value={form.message} onChange={handleChange} className="input-gold w-full rounded-xl px-5 py-3 text-white placeholder-white/40 focus:outline-none" placeholder="Tell us more..."></textarea>
-                                        </div>
-                                        <label className="flex items-start gap-3 text-sm text-white/80">
-                                            <input type="checkbox" name="consent" checked={form.consent} onChange={handleChange} className="mt-1 h-5 w-5 rounded border-yellow bg-white/5 text-sky focus:ring-sky" aria-invalid={!!fieldErrors.consent} />
-                                            <span>I consent to Elite Global Pathways processing my enquiry and understand that admission, scholarship, and visa outcomes are not guaranteed.</span>
-                                        </label>
+                                        <div><label htmlFor="message" className="block text-sm font-medium text-white/80 mb-2">Message</label><textarea id="message" name="message" rows={4} value={form.message} onChange={handleChange} className="input-gold w-full rounded-xl px-5 py-3 text-white placeholder-white/40 focus:outline-none" placeholder="Tell us more..."></textarea></div>
+                                        <label className="flex items-start gap-3 text-sm text-white/80"><input type="checkbox" name="consent" checked={form.consent} onChange={handleChange} className="mt-1 h-5 w-5 rounded border-yellow bg-white/5 text-sky focus:ring-sky" aria-invalid={!!fieldErrors.consent} /><span>I consent to Elite Global Pathways processing my enquiry and understand that admission, scholarship, and visa outcomes are not guaranteed.</span></label>
                                         {fieldErrors.consent && <p className="text-sm text-red-400">{fieldErrors.consent}</p>}
-                                        <button type="submit" disabled={submitting} className="w-full rounded-xl px-8 py-3 text-lg font-semibold btn-waterfill bg-transparent border border-red text-white hover:shadow-lg hover:shadow-red/30 transition-shadow disabled:opacity-50 disabled:cursor-not-allowed" aria-label="Submit application">
-                                            {submitting ? (
-                                                <span className="flex items-center justify-center gap-2">
-                                                    <svg className="animate-spin h-5 w-5" viewBox="0 0 24 24">
-                                                        <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" strokeDasharray="60" strokeDashoffset="20" />
-                                                    </svg>
-                                                    Submitting...
-                                                </span>
-                                            ) : (
-                                                <>Submit Application <span className="ml-2">➤</span></>
-                                            )}
-                                        </button>
+                                        <button type="submit" disabled={submitting} className="w-full rounded-xl px-8 py-3 text-lg font-semibold btn-waterfill bg-transparent border border-red text-white hover:shadow-lg hover:shadow-red/30 transition-shadow disabled:opacity-50 disabled:cursor-not-allowed" aria-label="Submit application">{submitting ? <span className="flex items-center justify-center gap-2"><svg className="animate-spin h-5 w-5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" strokeDasharray="60" strokeDashoffset="20" /></svg>Submitting...</span> : <>Submit Application <span className="ml-2">➤</span></>}</button>
                                     </form>
                                 )}
                             </div>
                             <div className="space-y-6">
-                                <div className="glass rounded-2xl p-6 border border-yellow/20">
-                                    <h3 className="text-xl font-semibold text-white mb-4">Direct Contact</h3>
-                                    <ul className="space-y-3 text-sm text-white/80">
-                                        <li><a href="mailto:eliteglobalpathwaysltd2025@gmail.com" className="hover:text-sky">📧 eliteglobalpathwaysltd2025@gmail.com</a></li>
-                                        <li><a href="https://wa.me/917359320928" className="hover:text-sky">💬 WhatsApp India: +91 73593 20928</a></li>
-                                        <li><a href="https://wa.me/256779989906" className="hover:text-sky">💬 WhatsApp Uganda: +256 779 989906</a></li>
-                                        <li><a href="https://wa.me/9537875184" className="hover:text-sky">💬 WhatsApp Myanmar: +95 3787 5184</a></li>
-                                    </ul>
-                                </div>
-                                <div className="glass rounded-2xl p-6 border border-yellow/20">
-                                    <h3 className="text-xl font-semibold text-white mb-4">Important</h3>
-                                    <p className="text-sm text-white/70 leading-relaxed">Elite Global Pathways does not guarantee admission, scholarship awards, or visa approval. All opportunities are subject to eligibility and institutional terms.</p>
-                                </div>
+                                <div className="glass rounded-2xl p-6 border border-yellow/20"><h3 className="text-xl font-semibold text-white mb-4">Direct Contact</h3><ul className="space-y-3 text-sm text-white/80"><li><a href="mailto:eliteglobalpathwaysltd2025@gmail.com" className="hover:text-sky">📧 eliteglobalpathwaysltd2025@gmail.com</a></li><li><a href="https://wa.me/917359320928" className="hover:text-sky">💬 WhatsApp India: +91 73593 20928</a></li><li><a href="https://wa.me/256779989906" className="hover:text-sky">💬 WhatsApp Uganda: +256 779 989906</a></li><li><a href="https://wa.me/9537875184" className="hover:text-sky">💬 WhatsApp Myanmar: +95 3787 5184</a></li></ul></div>
+                                <div className="glass rounded-2xl p-6 border border-yellow/20"><h3 className="text-xl font-semibold text-white mb-4">Important</h3><p className="text-sm text-white/70 leading-relaxed">Elite Global Pathways does not guarantee admission, scholarship awards, or visa approval. All opportunities are subject to eligibility and institutional terms.</p></div>
                             </div>
                         </div>
                     </div>
@@ -1413,10 +1212,7 @@
                     <div className="mx-auto max-w-7xl px-6 lg:px-8">
                         <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-4">
                             <div>
-                                <div className="flex items-center gap-3 mb-4">
-                                    <img src={defaultMedia.logo} alt="Elite Global Pathways" className="h-10 w-10 rounded-full object-cover" />
-                                    <span className="text-lg font-bold text-white">Elite Global Pathways</span>
-                                </div>
+                                <div className="flex items-center gap-3 mb-4"><img src={defaultMedia.logo} alt="Elite Global Pathways" className="h-10 w-10 rounded-full object-cover" /><span className="text-lg font-bold text-white">Elite Global Pathways</span></div>
                                 <p className="text-sm leading-relaxed">Connecting African Students to Global Education.</p>
                                 <p className="mt-2 italic text-sky">Your Dreams. Our Pathway. Your Global Future.</p>
                             </div>
@@ -1433,11 +1229,13 @@
                                 <h3 className="text-sm font-semibold uppercase tracking-wider text-white mb-4">Quick Links</h3>
                                 <ul className="space-y-2 text-sm">
                                     <li><a href="#home" onClick={(e)=>{e.preventDefault(); scrollTo('#home');}} className="hover:text-sky cursor-pointer">Home</a></li>
+                                    <li><a href="#about" onClick={(e)=>{e.preventDefault(); scrollTo('#about');}} className="hover:text-sky cursor-pointer">About</a></li>
                                     <li><a href="#programmes" onClick={(e)=>{e.preventDefault(); scrollTo('#programmes');}} className="hover:text-sky cursor-pointer">Programmes</a></li>
                                     <li><a href="#destinations" onClick={(e)=>{e.preventDefault(); scrollTo('#destinations');}} className="hover:text-sky cursor-pointer">Destinations</a></li>
                                     <li><a href="#support" onClick={(e)=>{e.preventDefault(); scrollTo('#support');}} className="hover:text-sky cursor-pointer">Support</a></li>
                                     <li><a href="#how-it-works" onClick={(e)=>{e.preventDefault(); scrollTo('#how-it-works');}} className="hover:text-sky cursor-pointer">How It Works</a></li>
                                     <li><a href="#faq" onClick={(e)=>{e.preventDefault(); scrollTo('#faq');}} className="hover:text-sky cursor-pointer">FAQ</a></li>
+                                    <li><a href="#contact" onClick={(e)=>{e.preventDefault(); scrollTo('#contact');}} className="hover:text-sky cursor-pointer">Contact</a></li>
                                     <li><a href="#apply" onClick={(e)=>{e.preventDefault(); scrollTo('#apply');}} className="hover:text-sky cursor-pointer">Apply Now</a></li>
                                 </ul>
                             </div>
@@ -1450,9 +1248,7 @@
                                 </ul>
                             </div>
                         </div>
-                        <div className="mt-8 border-t border-yellow/20 pt-6 text-center text-xs text-white/50">
-                            © {new Date().getFullYear()} Elite Global Pathways Limited. All rights reserved.
-                        </div>
+                        <div className="mt-8 border-t border-yellow/20 pt-6 text-center text-xs text-white/50">© {new Date().getFullYear()} Elite Global Pathways Limited. All rights reserved.</div>
                     </div>
                     {showPrivacy && (
                         <div className="modal-overlay" role="dialog" aria-modal="true" aria-label="Privacy Policy">
@@ -1499,39 +1295,16 @@
             const [password, setPassword] = useState('');
             const [error, setError] = useState('');
             const [loading, setLoading] = useState(false);
-            const handleSubmit = async (e) => {
-                e.preventDefault();
-                setLoading(true);
-                setError('');
-                try {
-                    if (!supabaseClient) throw new Error('Supabase not initialized');
-                    const { data, error } = await supabaseClient.auth.signInWithPassword({ email, password });
-                    if (error) throw error;
-                    onLogin();
-                } catch (err) {
-                    console.error('Login error:', err);
-                    setError('Invalid credentials. Please try again.');
-                } finally {
-                    setLoading(false);
-                }
-            };
+            const handleSubmit = async (e) => { e.preventDefault(); setLoading(true); setError(''); try { if (!supabaseClient) throw new Error('Supabase not initialized'); const { data, error } = await supabaseClient.auth.signInWithPassword({ email, password }); if (error) throw error; onLogin(); } catch (err) { console.error('Login error:', err); setError('Invalid credentials. Please try again.'); } finally { setLoading(false); } };
             return (
                 <div className="min-h-screen flex items-center justify-center bg-navy px-4">
                     <div className="glass rounded-2xl p-8 w-full max-w-md">
                         <h1 className="text-2xl font-bold text-white mb-6">Admin Login</h1>
                         {error && <div className="mb-4 rounded-lg bg-red-500/20 p-3 text-red-200" role="alert">{error}</div>}
                         <form onSubmit={handleSubmit} className="space-y-4">
-                            <div>
-                                <label htmlFor="admin_email" className="block text-sm text-white/80 mb-2">Email</label>
-                                <input type="email" id="admin_email" value={email} onChange={e => setEmail(e.target.value)} required className="input-gold w-full rounded-xl px-4 py-2" />
-                            </div>
-                            <div>
-                                <label htmlFor="admin_password" className="block text-sm text-white/80 mb-2">Password</label>
-                                <input type="password" id="admin_password" value={password} onChange={e => setPassword(e.target.value)} required className="input-gold w-full rounded-xl px-4 py-2" />
-                            </div>
-                            <button type="submit" disabled={loading} className="btn-waterfill w-full rounded-xl px-6 py-3 border border-red text-white font-semibold">
-                                {loading ? 'Logging in...' : 'Login'}
-                            </button>
+                            <div><label htmlFor="admin_email" className="block text-sm text-white/80 mb-2">Email</label><input type="email" id="admin_email" value={email} onChange={e => setEmail(e.target.value)} required className="input-gold w-full rounded-xl px-4 py-2" /></div>
+                            <div><label htmlFor="admin_password" className="block text-sm text-white/80 mb-2">Password</label><input type="password" id="admin_password" value={password} onChange={e => setPassword(e.target.value)} required className="input-gold w-full rounded-xl px-4 py-2" /></div>
+                            <button type="submit" disabled={loading} className="btn-waterfill w-full rounded-xl px-6 py-3 border border-red text-white font-semibold">{loading ? 'Logging in...' : 'Login'}</button>
                         </form>
                     </div>
                 </div>
@@ -1542,66 +1315,20 @@
             const [counts, setCounts] = useState({ programmes: 0, destinations: 0, faqs: 0, leads: 0, testimonials: 0 });
             const [loading, setLoading] = useState(true);
             useEffect(() => {
-                const fetchCounts = async () => {
-                    try {
-                        if (!supabaseClient) return;
-                        const queries = [
-                            supabaseClient.from('programmes').select('id', { count: 'exact' }),
-                            supabaseClient.from('destinations').select('id', { count: 'exact' }),
-                            supabaseClient.from('faqs').select('id', { count: 'exact' }),
-                            supabaseClient.from('enquiries').select('id', { count: 'exact' }),
-                            supabaseClient.from('testimonials').select('id', { count: 'exact' })
-                        ];
-                        const results = await Promise.all(queries);
-                        setCounts({
-                            programmes: results[0].count || 0,
-                            destinations: results[1].count || 0,
-                            faqs: results[2].count || 0,
-                            leads: results[3].count || 0,
-                            testimonials: results[4].count || 0
-                        });
-                    } catch (err) {
-                        console.error('Error fetching counts:', err);
-                    } finally {
-                        setLoading(false);
-                    }
-                };
+                const fetchCounts = async () => { try { if (!supabaseClient) return; const queries = [supabaseClient.from('programmes').select('id', { count: 'exact' }), supabaseClient.from('destinations').select('id', { count: 'exact' }), supabaseClient.from('faqs').select('id', { count: 'exact' }), supabaseClient.from('enquiries').select('id', { count: 'exact' }), supabaseClient.from('testimonials').select('id', { count: 'exact' })]; const results = await Promise.all(queries); setCounts({ programmes: results[0].count || 0, destinations: results[1].count || 0, faqs: results[2].count || 0, leads: results[3].count || 0, testimonials: results[4].count || 0 }); } catch (err) { console.error('Error fetching counts:', err); } finally { setLoading(false); } };
                 fetchCounts();
             }, []);
-            const stats = [
-                { label: 'Programmes', count: counts.programmes, icon: '📚' },
-                { label: 'Destinations', count: counts.destinations, icon: '🌍' },
-                { label: 'FAQs', count: counts.faqs, icon: '❓' },
-                { label: 'Leads', count: counts.leads, icon: '📋' },
-                { label: 'Testimonials', count: counts.testimonials, icon: '💬' }
-            ];
             return (
                 <div className="p-8 bg-navy min-h-screen">
-                    <div className="flex justify-between items-center mb-8">
-                        <h1 className="text-3xl font-bold text-white">Admin Dashboard</h1>
-                        <button onClick={onLogout} className="px-4 py-2 bg-red-500/20 text-red-200 rounded-lg hover:bg-red-500/30">Logout</button>
-                    </div>
-                    {loading ? (
-                        <p className="text-white/70">Loading dashboard...</p>
-                    ) : (
+                    <div className="flex justify-between items-center mb-8"><h1 className="text-3xl font-bold text-white">Admin Dashboard</h1><button onClick={onLogout} className="px-4 py-2 bg-red-500/20 text-red-200 rounded-lg hover:bg-red-500/30">Logout</button></div>
+                    {loading ? <p className="text-white/70">Loading dashboard...</p> : (
                         <div className="grid gap-6 md:grid-cols-3 lg:grid-cols-5">
-                            {stats.map(stat => (
-                                <div key={stat.label} className="glass rounded-2xl p-6 text-center">
-                                    <div className="text-3xl mb-2">{stat.icon}</div>
-                                    <div className="text-3xl font-bold text-white">{stat.count}</div>
-                                    <div className="text-sm text-white/70 mt-1">{stat.label}</div>
-                                </div>
+                            {[{ label: 'Programmes', count: counts.programmes, icon: '📚' }, { label: 'Destinations', count: counts.destinations, icon: '🌍' }, { label: 'FAQs', count: counts.faqs, icon: '❓' }, { label: 'Leads', count: counts.leads, icon: '📋' }, { label: 'Testimonials', count: counts.testimonials, icon: '💬' }].map(stat => (
+                                <div key={stat.label} className="glass rounded-2xl p-6 text-center"><div className="text-3xl mb-2">{stat.icon}</div><div className="text-3xl font-bold text-white">{stat.count}</div><div className="text-sm text-white/70 mt-1">{stat.label}</div></div>
                             ))}
                         </div>
                     )}
-                    <div className="mt-8">
-                        <h2 className="text-xl font-semibold text-white mb-4">Quick Actions</h2>
-                        <div className="flex flex-wrap gap-4">
-                            <a href="#/admin/programmes" className="btn-waterfill rounded-full px-6 py-2 text-sm font-semibold text-white bg-transparent border border-red">Manage Programmes</a>
-                            <a href="#/admin/leads" className="btn-waterfill rounded-full px-6 py-2 text-sm font-semibold text-white bg-transparent border border-red">View Leads</a>
-                            <a href="#/admin/settings" className="btn-waterfill rounded-full px-6 py-2 text-sm font-semibold text-white bg-transparent border border-red">Site Settings</a>
-                        </div>
-                    </div>
+                    <div className="mt-8"><h2 className="text-xl font-semibold text-white mb-4">Quick Actions</h2><div className="flex flex-wrap gap-4"><a href="#/admin/programmes" className="btn-waterfill rounded-full px-6 py-2 text-sm font-semibold text-white bg-transparent border border-red">Manage Programmes</a><a href="#/admin/leads" className="btn-waterfill rounded-full px-6 py-2 text-sm font-semibold text-white bg-transparent border border-red">View Leads</a><a href="#/admin/settings" className="btn-waterfill rounded-full px-6 py-2 text-sm font-semibold text-white bg-transparent border border-red">Site Settings</a></div></div>
                 </div>
             );
         }
@@ -1609,159 +1336,39 @@
         function AdminSection({ title, children, onBack }) {
             return (
                 <div className="p-8 bg-navy min-h-screen">
-                    <div className="flex items-center gap-4 mb-8">
-                        <button onClick={onBack} className="text-white/70 hover:text-white">← Back</button>
-                        <h1 className="text-3xl font-bold text-white">{title}</h1>
-                    </div>
+                    <div className="flex items-center gap-4 mb-8"><button onClick={onBack} className="text-white/70 hover:text-white">← Back</button><h1 className="text-3xl font-bold text-white">{title}</h1></div>
                     {children}
                 </div>
             );
         }
 
         function AdminProgrammes() {
-            const { data: programmes, loading, error, retry } = useAsyncData(async () => {
-                if (!supabaseClient) return [];
-                const { data, error } = await supabaseClient.from('programmes').select('*').order('order_index');
-                if (error) throw error;
-                return data || [];
-            }, []);
-            const [editing, setEditing] = useState(null);
-            const [showForm, setShowForm] = useState(false);
-            const [formData, setFormData] = useState({ title: '', category: '', level: '', description: '', is_published: true, order_index: 0 });
-            const handleSave = async () => {
-                try {
-                    if (!supabaseClient) return;
-                    if (editing) {
-                        await supabaseClient.from('programmes').update(formData).eq('id', editing.id);
-                    } else {
-                        await supabaseClient.from('programmes').insert([formData]);
-                    }
-                    setShowForm(false);
-                    setEditing(null);
-                    retry();
-                } catch (err) {
-                    console.error('Save error:', err);
-                }
-            };
-            const handleDelete = async (id) => {
-                if (window.confirm('Delete this programme?')) {
-                    if (!supabaseClient) return;
-                    await supabaseClient.from('programmes').delete().eq('id', id);
-                    retry();
-                }
-            };
+            const { data: programmes, loading, error, retry } = useAsyncData(async () => { if (!supabaseClient) return []; const { data, error } = await supabaseClient.from('programmes').select('*').order('order_index'); if (error) throw error; return data || []; }, []);
             if (loading) return <AdminSection title="Programmes" onBack={() => window.location.hash = '#/admin/dashboard'}><p className="text-white/70">Loading...</p></AdminSection>;
             return (
                 <AdminSection title="Programmes" onBack={() => window.location.hash = '#/admin/dashboard'}>
-                    <button onClick={() => { setShowForm(true); setEditing(null); setFormData({ title: '', category: '', level: '', description: '', is_published: true, order_index: 0 }); }} className="btn-waterfill rounded-full px-6 py-2 text-sm font-semibold text-white bg-transparent border border-red mb-4">Add Programme</button>
-                    <div className="space-y-4">
-                        {(programmes || []).map(p => (
-                            <div key={p.id} className="glass rounded-2xl p-4 flex items-center justify-between">
-                                <div>
-                                    <h3 className="text-white font-semibold">{p.title}</h3>
-                                    <p className="text-sm text-white/60">{p.category} | {p.level}</p>
-                                </div>
-                                <div className="flex gap-2">
-                                    <button onClick={() => { setEditing(p); setFormData(p); setShowForm(true); }} className="text-sky hover:text-white">Edit</button>
-                                    <button onClick={() => handleDelete(p.id)} className="text-red-400 hover:text-red-200">Delete</button>
-                                </div>
-                            </div>
-                        ))}
-                    </div>
-                    {showForm && (
-                        <div className="modal-overlay" role="dialog" aria-modal="true">
-                            <div className="modal-content">
-                                <button className="modal-close" onClick={() => setShowForm(false)}>✕</button>
-                                <h3 className="text-xl font-bold text-white mb-4">{editing ? 'Edit Programme' : 'Add Programme'}</h3>
-                                <div className="space-y-4">
-                                    <input type="text" placeholder="Title" value={formData.title} onChange={e => setFormData({...formData, title: e.target.value})} className="input-gold w-full rounded-xl px-4 py-2" />
-                                    <input type="text" placeholder="Category" value={formData.category || ''} onChange={e => setFormData({...formData, category: e.target.value})} className="input-gold w-full rounded-xl px-4 py-2" />
-                                    <input type="text" placeholder="Level" value={formData.level || ''} onChange={e => setFormData({...formData, level: e.target.value})} className="input-gold w-full rounded-xl px-4 py-2" />
-                                    <textarea placeholder="Description" value={formData.description || ''} onChange={e => setFormData({...formData, description: e.target.value})} className="input-gold w-full rounded-xl px-4 py-2" rows={4}></textarea>
-                                    <label className="flex items-center gap-2 text-white/80 text-sm">
-                                        <input type="checkbox" checked={formData.is_published} onChange={e => setFormData({...formData, is_published: e.target.checked})} />
-                                        Published
-                                    </label>
-                                    <input type="number" placeholder="Order Index" value={formData.order_index || 0} onChange={e => setFormData({...formData, order_index: parseInt(e.target.value) || 0})} className="input-gold w-full rounded-xl px-4 py-2" />
-                                    <button onClick={handleSave} className="btn-waterfill w-full rounded-xl px-6 py-2 border border-red text-white font-semibold">Save</button>
-                                </div>
-                            </div>
-                        </div>
-                    )}
+                    <button className="btn-waterfill rounded-full px-6 py-2 text-sm font-semibold text-white bg-transparent border border-red mb-4">Add Programme</button>
+                    <div className="space-y-4">{(programmes || []).map(p => <div key={p.id} className="glass rounded-2xl p-4 flex items-center justify-between"><div><h3 className="text-white font-semibold">{p.title}</h3><p className="text-sm text-white/60">{p.category} | {p.level}</p></div><div className="flex gap-2"><button className="text-sky hover:text-white">Edit</button><button className="text-red-400 hover:text-red-200">Delete</button></div></div>)}</div>
                 </AdminSection>
             );
         }
 
         function AdminLeads() {
-            const { data: leads, loading, error, retry } = useAsyncData(async () => {
-                if (!supabaseClient) return [];
-                const { data, error } = await supabaseClient.from('enquiries').select('*').order('created_at', { ascending: false });
-                if (error) throw error;
-                return data || [];
-            }, []);
+            const { data: leads, loading } = useAsyncData(async () => { if (!supabaseClient) return []; const { data, error } = await supabaseClient.from('enquiries').select('*').order('created_at', { ascending: false }); if (error) throw error; return data || []; }, []);
             if (loading) return <AdminSection title="Leads" onBack={() => window.location.hash = '#/admin/dashboard'}><p className="text-white/70">Loading...</p></AdminSection>;
             return (
                 <AdminSection title="Leads" onBack={() => window.location.hash = '#/admin/dashboard'}>
-                    <div className="space-y-4">
-                        {(leads || []).map(lead => (
-                            <div key={lead.id} className="glass rounded-2xl p-4">
-                                <div className="flex justify-between items-start">
-                                    <div>
-                                        <h3 className="text-white font-semibold">{lead.full_name}</h3>
-                                        <p className="text-sm text-white/60">{lead.email} | {lead.phone || 'No phone'}</p>
-                                        <p className="text-sm text-white/60">{lead.preferred_destination || 'No destination'} | {lead.preferred_programme || 'No programme'}</p>
-                                        {lead.reference && <p className="text-xs text-yellow mt-1">Ref: {lead.reference}</p>}
-                                    </div>
-                                    <span className={`px-3 py-1 rounded-full text-xs ${lead.status === 'new' ? 'bg-blue-500/20 text-blue-200' : lead.status === 'contacted' ? 'bg-yellow-500/20 text-yellow-200' : 'bg-green-500/20 text-green-200'}`}>{lead.status || 'new'}</span>
-                                </div>
-                                {lead.message && <p className="mt-2 text-sm text-white/70">{lead.message}</p>}
-                            </div>
-                        ))}
-                        {(!leads || leads.length === 0) && <p className="text-white/70">No leads yet.</p>}
-                    </div>
+                    <div className="space-y-4">{(leads || []).map(lead => <div key={lead.id} className="glass rounded-2xl p-4"><div className="flex justify-between items-start"><div><h3 className="text-white font-semibold">{lead.full_name}</h3><p className="text-sm text-white/60">{lead.email} | {lead.phone || 'No phone'}</p><p className="text-sm text-white/60">{lead.preferred_destination || 'No destination'} | {lead.preferred_programme || 'No programme'}</p>{lead.reference && <p className="text-xs text-yellow mt-1">Ref: {lead.reference}</p>}</div><span className="px-3 py-1 rounded-full text-xs bg-blue-500/20 text-blue-200">{lead.status || 'new'}</span></div>{lead.message && <p className="mt-2 text-sm text-white/70">{lead.message}</p>}</div>)}</div>
                 </AdminSection>
             );
         }
 
         function AdminSettings() {
-            const { data: settings, loading, error, retry } = useAsyncData(async () => {
-                if (!supabaseClient) return [];
-                const { data, error } = await supabaseClient.from('site_settings').select('*');
-                if (error) throw error;
-                return data || [];
-            }, []);
-            const [formData, setFormData] = useState({});
-            useEffect(() => {
-                if (settings) {
-                    const obj = {};
-                    settings.forEach(s => { obj[s.key] = s.value; });
-                    setFormData(obj);
-                }
-            }, [settings]);
-            const handleSave = async () => {
-                try {
-                    if (!supabaseClient) return;
-                    for (const [key, value] of Object.entries(formData)) {
-                        await supabaseClient.from('site_settings').upsert({ key, value }, { onConflict: 'key' });
-                    }
-                    alert('Settings saved!');
-                    retry();
-                } catch (err) {
-                    console.error('Save error:', err);
-                }
-            };
+            const { data: settings, loading } = useAsyncData(async () => { if (!supabaseClient) return []; const { data, error } = await supabaseClient.from('site_settings').select('*'); if (error) throw error; return data || []; }, []);
             if (loading) return <AdminSection title="Settings" onBack={() => window.location.hash = '#/admin/dashboard'}><p className="text-white/70">Loading...</p></AdminSection>;
             return (
                 <AdminSection title="Site Settings" onBack={() => window.location.hash = '#/admin/dashboard'}>
-                    <div className="space-y-4 max-w-lg">
-                        {Object.entries(formData).map(([key, value]) => (
-                            <div key={key}>
-                                <label className="block text-sm text-white/80 mb-1">{key}</label>
-                                <input type="text" value={value || ''} onChange={e => setFormData({...formData, [key]: e.target.value})} className="input-gold w-full rounded-xl px-4 py-2" />
-                            </div>
-                        ))}
-                        <button onClick={handleSave} className="btn-waterfill rounded-xl px-6 py-3 border border-red text-white font-semibold w-full">Save Settings</button>
-                    </div>
+                    <div className="space-y-4 max-w-lg">{(settings || []).map(s => <div key={s.key}><label className="block text-sm text-white/80 mb-1">{s.key}</label><input type="text" defaultValue={s.value} className="input-gold w-full rounded-xl px-4 py-2" /></div>)}<button className="btn-waterfill rounded-xl px-6 py-3 border border-red text-white font-semibold w-full">Save Settings</button></div>
                 </AdminSection>
             );
         }
@@ -1770,59 +1377,27 @@
             const [session, setSession] = useState(null);
             const [route, setRoute] = useState(window.location.hash);
             useEffect(() => {
-                const checkSession = async () => {
-                    try {
-                        if (!supabaseClient) return;
-                        const { data } = await supabaseClient.auth.getSession();
-                        setSession(data.session);
-                    } catch (err) {
-                        console.error('Session check error:', err);
-                        setSession(null);
-                    }
-                };
+                const checkSession = async () => { try { if (!supabaseClient) return; const { data } = await supabaseClient.auth.getSession(); setSession(data.session); } catch (err) { console.error('Session check error:', err); setSession(null); } };
                 checkSession();
                 if (supabaseClient) {
-                    const { data: authListener } = supabaseClient.auth.onAuthStateChange((_event, session) => {
-                        setSession(session);
-                    });
+                    const { data: authListener } = supabaseClient.auth.onAuthStateChange((_event, session) => { setSession(session); });
                     const hashHandler = () => setRoute(window.location.hash);
                     window.addEventListener('hashchange', hashHandler);
-                    return () => {
-                        if (authListener?.subscription) authListener.subscription.unsubscribe();
-                        window.removeEventListener('hashchange', hashHandler);
-                    };
+                    return () => { if (authListener?.subscription) authListener.subscription.unsubscribe(); window.removeEventListener('hashchange', hashHandler); };
                 } else {
                     const hashHandler = () => setRoute(window.location.hash);
                     window.addEventListener('hashchange', hashHandler);
                     return () => window.removeEventListener('hashchange', hashHandler);
                 }
             }, []);
-            const handleLogout = async () => {
-                try {
-                    if (supabaseClient) await supabaseClient.auth.signOut();
-                } catch (err) {
-                    console.error('Logout error:', err);
-                }
-                setSession(null);
-                window.location.hash = '#/admin/login';
-            };
-            if (!session) {
-                return <AdminLogin onLogin={() => { if (supabaseClient) { supabaseClient.auth.getSession().then(({ data }) => { setSession(data.session); window.location.hash = '#/admin/dashboard'; }); } }} />;
-            }
+            const handleLogout = async () => { try { if (supabaseClient) await supabaseClient.auth.signOut(); } catch (err) { console.error('Logout error:', err); } setSession(null); window.location.hash = '#/admin/login'; };
+            if (!session) return <AdminLogin onLogin={() => { if (supabaseClient) { supabaseClient.auth.getSession().then(({ data }) => { setSession(data.session); window.location.hash = '#/admin/dashboard'; }); } }} />;
             const renderRoute = () => {
                 switch (route) {
                     case '#/admin/dashboard': return <AdminDashboard onLogout={handleLogout} />;
                     case '#/admin/programmes': return <AdminProgrammes />;
                     case '#/admin/leads': return <AdminLeads />;
                     case '#/admin/settings': return <AdminSettings />;
-                    case '#/admin/cms': return <AdminSection title="CMS" onBack={() => window.location.hash = '#/admin/dashboard'}><p className="text-white/70">CMS management coming soon.</p></AdminSection>;
-                    case '#/admin/media': return <AdminSection title="Media" onBack={() => window.location.hash = '#/admin/dashboard'}><p className="text-white/70">Media management coming soon.</p></AdminSection>;
-                    case '#/admin/destinations': return <AdminSection title="Destinations" onBack={() => window.location.hash = '#/admin/dashboard'}><p className="text-white/70">Destination management coming soon.</p></AdminSection>;
-                    case '#/admin/services': return <AdminSection title="Services" onBack={() => window.location.hash = '#/admin/dashboard'}><p className="text-white/70">Service management coming soon.</p></AdminSection>;
-                    case '#/admin/journey': return <AdminSection title="Journey Steps" onBack={() => window.location.hash = '#/admin/dashboard'}><p className="text-white/70">Journey management coming soon.</p></AdminSection>;
-                    case '#/admin/faqs': return <AdminSection title="FAQs" onBack={() => window.location.hash = '#/admin/dashboard'}><p className="text-white/70">FAQ management coming soon.</p></AdminSection>;
-                    case '#/admin/testimonials': return <AdminSection title="Testimonials" onBack={() => window.location.hash = '#/admin/dashboard'}><p className="text-white/70">Testimonial management coming soon.</p></AdminSection>;
-                    case '#/admin/login': return null;
                     default: return <AdminDashboard onLogout={handleLogout} />;
                 }
             };
@@ -1832,31 +1407,30 @@
         function App() {
             const [route, setRoute] = useState(window.location.hash);
             const [splashDone, setSplashDone] = useState(false);
-            useEffect(() => {
-                const handler = () => setRoute(window.location.hash);
-                window.addEventListener('hashchange', handler);
-                return () => window.removeEventListener('hashchange', handler);
-            }, []);
+            useEffect(() => { const handler = () => setRoute(window.location.hash); window.addEventListener('hashchange', handler); return () => window.removeEventListener('hashchange', handler); }, []);
             const isAdminRoute = route.startsWith('#/admin');
             return (
                 <ErrorBoundary>
                     <SmoothScroll>
                         {!splashDone && !isAdminRoute && <SplashScreen onComplete={() => setSplashDone(true)} />}
-                        {isAdminRoute ? (
-                            <AdminLayout />
-                        ) : (
+                        {isAdminRoute ? <AdminLayout /> : (
                             <>
                                 <a href="#main-content" className="skip-link">Skip to main content</a>
                                 <Navbar />
                                 <main id="main-content">
                                     <ParallaxHero />
-                                    <Destinations />
+                                    <AboutSection />
                                     <Programmes />
-                                    <Support />
+                                    <Destinations />
                                     <HowItWorks />
+                                    <Support />
+                                    <ScholarshipsSection />
+                                    <ParentsSection />
                                     <WhyChooseUs />
+                                    <PartnersSection />
                                     <Testimonials />
                                     <FAQ />
+                                    <ContactSection />
                                     <ContactForm />
                                 </main>
                                 <Footer />
@@ -1869,11 +1443,7 @@
         }
 
         const rootElement = document.getElementById('root');
-        if (rootElement) {
-            ReactDOM.render(<App />, rootElement);
-        } else {
-            console.error('Root element not found');
-        }
+        if (rootElement) { ReactDOM.render(<App />, rootElement); } else { console.error('Root element not found'); }
     </script>
 </body>
 </html>
