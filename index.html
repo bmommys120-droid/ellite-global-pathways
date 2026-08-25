@@ -24,20 +24,20 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
     <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "Organization",
-        "name": "Elite Global Pathways Limited",
-        "url": "https://eliteglobalpathways.com",
-        "logo": "https://eliteglobalpathways.com/logo.jpg",
-        "contactPoint": {
-            "@type": "ContactPoint",
-            "telephone": "+256779989906",
-            "contactType": "customer service",
-            "areaServed": ["UG", "IN", "MM"],
-            "availableLanguage": ["English"]
+        {
+            "@context": "https://schema.org",
+            "@type": "Organization",
+            "name": "Elite Global Pathways Limited",
+            "url": "https://eliteglobalpathways.com",
+            "logo": "https://eliteglobalpathways.com/logo.jpg",
+            "contactPoint": {
+                "@type": "ContactPoint",
+                "telephone": "+256779989906",
+                "contactType": "customer service",
+                "areaServed": ["UG", "IN", "MM"],
+                "availableLanguage": ["English"]
+            }
         }
-    }
     </script>
     <style>
         :root {
@@ -93,7 +93,6 @@
         @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
         .section-padding { padding: 7rem 0; }
         @media (max-width: 768px) { .section-padding { padding: 5rem 0; } }
-
         .card-premium {
             position: relative;
             overflow: hidden;
@@ -126,7 +125,6 @@
             box-shadow: 0 25px 50px -10px rgba(0,0,0,0.6), 0 0 0 1px var(--yellow), 0 0 30px rgba(244,197,66,0.3);
             border-color: var(--yellow);
         }
-
         .input-gold {
             border: 1px solid var(--yellow) !important;
             background-color: var(--navy-2) !important;
@@ -147,7 +145,6 @@
         .select-gold option { background: var(--navy-2); color: var(--white); }
         .stars { color: var(--yellow); letter-spacing: 2px; }
         .grid-equal > * { display: flex; }
-
         .btn-waterfill {
             position: relative;
             overflow: hidden;
@@ -170,7 +167,6 @@
         }
         .btn-waterfill:hover::before { height: 100%; }
         .btn-waterfill:hover { color: var(--white) !important; }
-
         .flag-img {
             width: 60px;
             height: 40px;
@@ -231,7 +227,12 @@
             object-fit: cover;
             opacity: 0.7;
         }
-        .splash-content { position: relative; z-index: 2; text-align: center; padding: 20px; }
+        .splash-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            padding: 20px;
+        }
         .splash-logo {
             width: 120px;
             height: 120px;
@@ -241,7 +242,13 @@
             border: 3px solid var(--yellow);
             box-shadow: 0 0 30px rgba(244,197,66,0.5);
         }
-        .splash-tagline { font-size: 1.5rem; font-weight: 600; color: var(--white); margin-top: 10px; letter-spacing: 0.05em; }
+        .splash-tagline {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--white);
+            margin-top: 10px;
+            letter-spacing: 0.05em;
+        }
         .skip-link {
             position: absolute;
             top: -40px;
@@ -296,7 +303,6 @@
             text-align: center;
             padding: 2rem;
         }
-        /* Programme card */
         .programme-card {
             position: relative;
             border-radius: 1.25rem;
@@ -328,9 +334,85 @@
             display: flex;
             flex-direction: column;
         }
-        .programme-title { font-size: 1.5rem; font-weight: bold; color: white; margin-bottom: 0.25rem; }
-        .programme-meta { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--yellow); margin-bottom: 0.5rem; }
-        .programme-desc { font-size: 0.9rem; color: rgba(255,255,255,0.75); line-height: 1.5; }
+        .programme-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: white;
+            margin-bottom: 0.25rem;
+        }
+        .programme-meta {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--yellow);
+            margin-bottom: 0.5rem;
+        }
+        .programme-desc {
+            font-size: 0.9rem;
+            color: rgba(255,255,255,0.75);
+            line-height: 1.5;
+        }
+        /* Admin styles */
+        .admin-sidebar {
+            background: rgba(255,255,255,0.03);
+            border-right: 1px solid rgba(255,255,255,0.06);
+            min-height: 100vh;
+            padding: 1.5rem 1rem;
+            width: 220px;
+            flex-shrink: 0;
+        }
+        .admin-sidebar a {
+            display: block;
+            padding: 0.6rem 1rem;
+            border-radius: 0.5rem;
+            color: rgba(255,255,255,0.7);
+            transition: all 0.2s;
+            font-size: 0.9rem;
+            text-decoration: none;
+        }
+        .admin-sidebar a:hover,
+        .admin-sidebar a.active {
+            background: rgba(56,189,248,0.15);
+            color: white;
+        }
+        .admin-sidebar a.active { border-left: 3px solid var(--sky); }
+        .admin-main { flex: 1; padding: 1.5rem 2rem; overflow-y: auto; }
+        .admin-layout { display: flex; min-height: 100vh; }
+        .admin-card {
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 1rem;
+            padding: 1.25rem;
+            transition: border-color 0.2s;
+        }
+        .admin-card:hover { border-color: rgba(255,255,255,0.12); }
+        .badge {
+            display: inline-block;
+            padding: 0.15rem 0.6rem;
+            border-radius: 999px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+        .badge-green { background: rgba(22,163,74,0.2); color: #4ADE80; }
+        .badge-yellow { background: rgba(244,197,66,0.2); color: var(--yellow); }
+        .badge-blue { background: rgba(56,189,248,0.2); color: var(--sky); }
+        .badge-gray { background: rgba(255,255,255,0.08); color: rgba(255,255,255,0.5); }
+        @media (max-width: 768px) {
+            .admin-layout { flex-direction: column; }
+            .admin-sidebar {
+                width: 100%;
+                min-height: auto;
+                border-right: none;
+                border-bottom: 1px solid rgba(255,255,255,0.06);
+                padding: 1rem;
+                display: flex;
+                flex-wrap: wrap;
+                gap: 0.25rem;
+            }
+            .admin-sidebar a { padding: 0.4rem 0.75rem; font-size: 0.8rem; }
+            .admin-main { padding: 1rem; }
+        }
     </style>
 </head>
 <body>
@@ -339,18 +421,19 @@
         const { useState, useEffect, useRef, useContext, createContext, useCallback, useMemo } = React;
         const { createClient } = supabase;
 
+        // ─── SUPABASE CONFIG ───────────────────────────────────────────────
         const supabaseUrl = 'https://vznxhjmsshouygmkqtte.supabase.co';
-        const supabasePublishableKey = 'sb_publishable_fIzOcCb1L33uUWOVvl6sRw_3noign_j';
         const supabaseAnonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZ6bnhoam1zc2hvdXlnbWtxdHRlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODc1ODY2NzYsImV4cCI6MjEwMzE2MjY3Nn0.hMhITeSaH1A3mglzFZa9FD88AfXRKRt1pDAWpyjDst0';
         let supabaseClient;
         try {
-            supabaseClient = createClient(supabaseUrl, supabasePublishableKey || supabaseAnonKey);
+            supabaseClient = createClient(supabaseUrl, supabaseAnonKey);
         } catch (err) {
             console.error('Supabase init failed:', err);
             supabaseClient = null;
         }
-
         const STORAGE_BUCKET = 'elite-media';
+
+        // ─── HELPERS ──────────────────────────────────────────────────────
         function resolveStorageUrl(path) {
             if (!path) return null;
             try {
@@ -368,6 +451,65 @@
             splashVideo: resolveStorageUrl('hero/backgrounds/splash.mp4') || 'https://eliteglobalpathways.com/splash.mp4',
         };
 
+        // ─── DESTINATION FLAG FALLBACKS (from second code) ──────────────
+        const DESTINATION_FLAG_FALLBACKS = {
+            'india': 'https://media.istockphoto.com/id/931097020/photo/india-flag-waving-background.jpg?s=1024x1024&w=is&k=20&c=X5Gl5Mmzma4Y5g1hwgBWOj201lNF0wZlpjOA3GDKoNc=',
+            'united kingdom': 'https://media.istockphoto.com/id/1181025257/photo/united-kingdom-flag.jpg?s=1024x1024&w=is&k=20&c=yRrnUD4hsmDkdjAjk4tfAbsPSO5iA0KuJ86krFWjQAM=',
+            'uk': 'https://media.istockphoto.com/id/1181025257/photo/united-kingdom-flag.jpg?s=1024x1024&w=is&k=20&c=yRrnUD4hsmDkdjAjk4tfAbsPSO5iA0KuJ86krFWjQAM=',
+            'canada': 'https://media.istockphoto.com/id/484048734/photo/canada-flag.jpg?s=1024x1024&w=is&k=20&c=NDNgzvRdharmJKKvCifvLD3w2Ral2MyoUYtKzH_03kc=',
+            'united states': 'https://images.pexels.com/photos/12578656/pexels-photo-12578656.jpeg',
+            'usa': 'https://images.pexels.com/photos/12578656/pexels-photo-12578656.jpeg',
+            'australia': 'https://media.istockphoto.com/id/484043848/photo/australia-flag.jpg?s=1024x1024&w=is&k=20&c=3I6Q5D0RTXZ2H0EOqxPvQYGxiM08tcXxDpaGm_jezSk=',
+            'new zealand': 'https://media.istockphoto.com/id/497565923/photo/flag-of-new-zealand.jpg?s=1024x1024&w=is&k=20&c=YOpkF-Tzae0IjRn7QCCV7jDA0ENqFgXFwBBH49anLQg=',
+            'europe': 'https://media.istockphoto.com/id/825195542/photo/european-union-flag-painting-on-high-detail-of-wave-cotton-fabrics.jpg?s=1024x1024&w=is&k=20&c=3Y9NzZSGblePnvaLd9G5LFRCLZXay4V75eYAEAMSNWM=',
+            'other': 'https://media.istockphoto.com/id/500276273/photo/international-flags.jpg?s=1024x1024&w=is&k=20&c=BDUQ6PYFjCMyA6kgnd4ctIZyydu7SdBfS7Z7NLnxO_Y=',
+        };
+        function getFlagFallback(name) {
+            if (!name) return null;
+            const lower = name.toLowerCase().trim();
+            for (const [key, url] of Object.entries(DESTINATION_FLAG_FALLBACKS)) {
+                if (lower.includes(key) || key.includes(lower)) return url;
+            }
+            return null;
+        }
+
+        // ─── DATA FETCHERS ─────────────────────────────────────────────────
+        async function fetchSiteSettings() { if (!supabaseClient) return null; const { data, error } = await supabaseClient.from('site_settings').select('*'); if (error) throw error; return data; }
+        async function fetchSections() { if (!supabaseClient) return null; const { data, error } = await supabaseClient.from('sections').select('*').eq('is_published', true); if (error) throw error; return data; }
+        async function fetchProgrammes() { if (!supabaseClient) return null; const { data, error } = await supabaseClient.from('programmes').select('*').eq('is_published', true).order('order_index'); if (error) throw error; return data; }
+        async function fetchDestinations() { if (!supabaseClient) return null; const { data, error } = await supabaseClient.from('destinations').select('*').eq('is_published', true).order('order_index'); if (error) throw error; return data; }
+        async function fetchProcessSteps() { if (!supabaseClient) return null; const { data, error } = await supabaseClient.from('process_steps').select('*').eq('is_published', true).order('order_index'); if (error) throw error; return data; }
+        async function fetchSupportServices() { if (!supabaseClient) return null; const { data, error } = await supabaseClient.from('support_services').select('*').eq('is_published', true).order('order_index'); if (error) throw error; return data; }
+        async function fetchWhyChooseUs() { if (!supabaseClient) return null; const { data, error } = await supabaseClient.from('why_choose_us').select('*').eq('is_published', true).order('order_index'); if (error) throw error; return data; }
+        async function fetchFaqs() { if (!supabaseClient) return null; const { data, error } = await supabaseClient.from('faqs').select('*').eq('is_published', true).order('order_index'); if (error) throw error; return data; }
+        async function fetchTestimonials() { if (!supabaseClient) return null; const { data, error } = await supabaseClient.from('testimonials').select('*').eq('is_published', true).order('order_index'); if (error) throw error; return data; }
+        async function fetchMediaAssets() { if (!supabaseClient) return null; const { data, error } = await supabaseClient.from('media_assets').select('*').eq('is_active', true); if (error) throw error; return data; }
+
+        function getMediaPublicUrl(media) {
+            if (!media) return null;
+            if (media.public_url) return media.public_url;
+            if (media.storage_path) return resolveStorageUrl(media.storage_path);
+            if (media.url && media.url.startsWith('http')) return media.url;
+            return null;
+        }
+
+        function mapMediaToProgrammes(programmes, mediaAssets) {
+            if (!mediaAssets || mediaAssets.length === 0) return programmes.map(p => ({ ...p, imageUrl: null }));
+            return programmes.map(p => {
+                let imageUrl = p.image_url;
+                if (imageUrl && !imageUrl.startsWith('http')) {
+                    imageUrl = resolveStorageUrl(imageUrl);
+                }
+                if (!imageUrl && p.title) {
+                    const key = p.title.toLowerCase();
+                    const match = mediaAssets.find(m => m.name && m.name.toLowerCase().includes(key));
+                    if (match) imageUrl = getMediaPublicUrl(match);
+                }
+                return { ...p, imageUrl: imageUrl || null };
+            });
+        }
+
+        // ─── CONTEXT ─────────────────────────────────────────────────────
         const ScrollContext = createContext(null);
         const useScrollTo = () => useContext(ScrollContext);
 
@@ -383,6 +525,7 @@
             return reduced;
         }
 
+        // ─── ERROR BOUNDARY ──────────────────────────────────────────────
         function ErrorBoundary({ children }) {
             const [hasError, setHasError] = useState(false);
             useEffect(() => {
@@ -390,7 +533,9 @@
                     if (event.error) { console.error('Global error:', event.error); setHasError(true); }
                 };
                 window.addEventListener('error', handler);
-                window.addEventListener('unhandledrejection', (e) => { if (e.reason) { console.error('Unhandled rejection:', e.reason); setHasError(true); } });
+                window.addEventListener('unhandledrejection', (e) => {
+                    if (e.reason) { console.error('Unhandled rejection:', e.reason); setHasError(true); }
+                });
                 return () => { window.removeEventListener('error', handler); window.removeEventListener('unhandledrejection', handler); };
             }, []);
             if (hasError) {
@@ -398,13 +543,16 @@
                     <div className="error-boundary-fallback" role="alert">
                         <h1 className="text-3xl font-bold mb-4">Something went wrong.</h1>
                         <p className="text-white/70 mb-8">The website is still available.</p>
-                        <button onClick={() => { setHasError(false); window.location.reload(); }} className="btn-waterfill rounded-full px-8 py-3 text-base font-semibold text-white bg-transparent border border-red">Reload Website</button>
+                        <button onClick={() => { setHasError(false); window.location.reload(); }} className="btn-waterfill rounded-full px-8 py-3 text-base font-semibold text-white bg-transparent border border-red">
+                            Reload Website
+                        </button>
                     </div>
                 );
             }
             return children;
         }
 
+        // ─── USE ASYNC DATA ──────────────────────────────────────────────
         function useAsyncData(fetcher, deps = []) {
             const [data, setData] = useState(null);
             const [loading, setLoading] = useState(true);
@@ -423,6 +571,7 @@
             return { data, loading, error, retry };
         }
 
+        // ─── MORPH / REVEAL ──────────────────────────────────────────────
         function MorphSection({ children, className = '', style }) {
             const ref = useRef(null);
             const [visible, setVisible] = useState(false);
@@ -462,14 +611,19 @@
             const content = <span className="relative z-10">{children}</span>;
             if (href) {
                 return (
-                    <a href={href} className={`btn-waterfill inline-block ${className}`} onClick={onClick} aria-label={ariaLabel}>{content}</a>
+                    <a href={href} className={`btn-waterfill inline-block ${className}`} onClick={onClick} aria-label={ariaLabel}>
+                        {content}
+                    </a>
                 );
             }
             return (
-                <button type={type} className={`btn-waterfill inline-block ${className}`} onClick={onClick} aria-label={ariaLabel}>{content}</button>
+                <button type={type} className={`btn-waterfill inline-block ${className}`} onClick={onClick} aria-label={ariaLabel}>
+                    {content}
+                </button>
             );
         }
 
+        // ─── SMOOTH SCROLL ──────────────────────────────────────────────
         function SmoothScroll({ children }) {
             const reduced = useReducedMotion();
             const lenisRef = useRef(null);
@@ -525,14 +679,15 @@
             );
         }
 
+        // ─── SPLASH SCREEN ──────────────────────────────────────────────
         function SplashScreen({ onComplete }) {
             const [show, setShow] = useState(true);
             const [fadeOut, setFadeOut] = useState(false);
             const reduced = useReducedMotion();
             useEffect(() => {
                 if (reduced) { setShow(false); onComplete(); return; }
-                const timer1 = setTimeout(() => setFadeOut(true), 3200); // start fade after 3.2s
-                const timer2 = setTimeout(() => { setShow(false); onComplete(); }, 4000); // complete after 4s
+                const timer1 = setTimeout(() => setFadeOut(true), 3200);
+                const timer2 = setTimeout(() => { setShow(false); onComplete(); }, 4000);
                 return () => { clearTimeout(timer1); clearTimeout(timer2); };
             }, [reduced, onComplete]);
             if (!show) return null;
@@ -550,6 +705,7 @@
             );
         }
 
+        // ─── NAVBAR ──────────────────────────────────────────────────────
         function Navbar() {
             const [scrolled, setScrolled] = useState(false);
             const [mobileOpen, setMobileOpen] = useState(false);
@@ -628,6 +784,7 @@
             );
         }
 
+        // ─── PARALLAX HERO ──────────────────────────────────────────────
         function ParallaxHero() {
             const heroRef = useRef(null);
             const videoRef = useRef(null);
@@ -663,7 +820,6 @@
                     if (promise !== undefined) {
                         promise.catch(err => {
                             console.warn('Autoplay prevented:', err);
-                            // Retry on user interaction
                             const retry = () => { video.play().catch(() => {}); document.removeEventListener('click', retry); document.removeEventListener('touchstart', retry); };
                             document.addEventListener('click', retry, { once: true });
                             document.addEventListener('touchstart', retry, { once: true });
@@ -724,41 +880,35 @@
             );
         }
 
-        // Centralized data fetchers
-        async function fetchSiteSettings() { if (!supabaseClient) return null; const { data, error } = await supabaseClient.from('site_settings').select('*'); if (error) throw error; return data; }
-        async function fetchSections() { if (!supabaseClient) return null; const { data, error } = await supabaseClient.from('sections').select('*').eq('is_published', true); if (error) throw error; return data; }
-        async function fetchProgrammes() { if (!supabaseClient) return null; const { data, error } = await supabaseClient.from('programmes').select('*').eq('is_published', true).order('order_index'); if (error) throw error; return data; }
-        async function fetchDestinations() { if (!supabaseClient) return null; const { data, error } = await supabaseClient.from('destinations').select('*').eq('is_published', true).order('order_index'); if (error) throw error; return data; }
-        async function fetchProcessSteps() { if (!supabaseClient) return null; const { data, error } = await supabaseClient.from('process_steps').select('*').eq('is_published', true).order('order_index'); if (error) throw error; return data; }
-        async function fetchSupportServices() { if (!supabaseClient) return null; const { data, error } = await supabaseClient.from('support_services').select('*').eq('is_published', true).order('order_index'); if (error) throw error; return data; }
-        async function fetchWhyChooseUs() { if (!supabaseClient) return null; const { data, error } = await supabaseClient.from('why_choose_us').select('*').eq('is_published', true).order('order_index'); if (error) throw error; return data; }
-        async function fetchFaqs() { if (!supabaseClient) return null; const { data, error } = await supabaseClient.from('faqs').select('*').eq('is_published', true).order('order_index'); if (error) throw error; return data; }
-        async function fetchTestimonials() { if (!supabaseClient) return null; const { data, error } = await supabaseClient.from('testimonials').select('*').eq('is_published', true).order('order_index'); if (error) throw error; return data; }
-        async function fetchMediaAssets() { if (!supabaseClient) return null; const { data, error } = await supabaseClient.from('media_assets').select('*').eq('is_active', true); if (error) throw error; return data; }
-
+        // ─── DESTINATIONS ──────────────────────────────────────────────
         function Destinations() {
             const { data: destinations, loading, error, retry } = useAsyncData(async () => {
                 if (!supabaseClient) return [];
                 try {
                     const data = await fetchDestinations();
                     if (!data || data.length === 0) return [];
-                    const media = await fetchMediaAssets();
-                    const mediaMap = {};
-                    if (media) media.forEach(m => { if (m.storage_path) mediaMap[m.name] = m; });
+                    const media = await fetchMediaAssets().catch(err => { console.warn('Media fetch failed for destinations:', err); return null; });
                     return data.map(dest => {
                         let imageUrl = null;
-                        if (dest.image_url && dest.image_url.startsWith('http')) imageUrl = dest.image_url;
-                        else if (dest.name) {
+                        if (dest.image_url) {
+                            if (dest.image_url.startsWith('http')) imageUrl = dest.image_url;
+                            else imageUrl = resolveStorageUrl(dest.image_url);
+                        }
+                        if (!imageUrl && dest.name && media) {
                             const key = dest.name.toLowerCase().replace(/\s+/g, '-');
-                            const match = media.find(m => m.name.toLowerCase().includes(key) || (m.storage_path && m.storage_path.toLowerCase().includes(key)));
+                            const match = media.find(m => m.name && (m.name.toLowerCase().includes(key) || (m.storage_path && m.storage_path.toLowerCase().includes(key))));
                             if (match) imageUrl = getMediaPublicUrl(match);
+                        }
+                        if (!imageUrl) {
+                            imageUrl = getFlagFallback(dest.name);
                         }
                         return { ...dest, imageUrl: imageUrl || null };
                     });
                 } catch (err) { console.warn('Destinations fetch failed:', err); return []; }
             }, []);
+
             if (loading) return <MorphSection id="destinations" className="section-padding bg-navy"><div className="text-center text-white/70">Loading destinations...</div></MorphSection>;
-            if (error && (!destinations || destinations.length === 0)) return <MorphSection id="destinations" className="section-padding bg-navy"><div className="text-center text-white/70">Destinations temporarily unavailable. <button onClick={retry} className="underline">Retry</button></div></MorphSection>;
+            if (error && (!destinations || destinations.length === 0)) return <MorphSection id="destinations" className="section-padding bg-navy"><div className="text-center text-white/70">Destinations temporarily unavailable. <button onClick={retry} className="underline ml-2">Retry</button></div></MorphSection>;
             const list = destinations || [];
             return (
                 <MorphSection id="destinations" className="section-padding bg-navy">
@@ -781,30 +931,29 @@
             );
         }
 
+        // ─── PROGRAMMES ──────────────────────────────────────────────────
         function Programmes() {
             const [selectedProgramme, setSelectedProgramme] = useState(null);
             const { data: programmes, loading, error, retry } = useAsyncData(async () => {
                 if (!supabaseClient) return [];
-                try {
-                    const data = await fetchProgrammes();
-                    if (!data || data.length === 0) return [];
-                    const media = await fetchMediaAssets();
-                    const mediaMap = {};
-                    if (media) media.forEach(m => { if (m.storage_path) mediaMap[m.name] = m; });
-                    return data.map(prog => {
-                        let imageUrl = prog.image_url;
-                        if (imageUrl && !imageUrl.startsWith('http')) imageUrl = resolveStorageUrl(imageUrl) || imageUrl;
-                        else if (imageUrl && imageUrl.includes('imgur.com')) {
-                            const match = media.find(m => m.name.toLowerCase().includes(prog.title.toLowerCase()));
-                            if (match) imageUrl = getMediaPublicUrl(match);
-                        }
-                        return { ...prog, imageUrl: imageUrl || null };
-                    });
-                } catch (err) { console.warn('Programmes fetch failed:', err); return []; }
+                const progData = await fetchProgrammes();
+                if (!progData || progData.length === 0) return [];
+                let media = null;
+                try { media = await fetchMediaAssets(); } catch (mediaErr) { console.warn('PROGRAMME MEDIA QUERY FAILED', mediaErr); }
+                return mapMediaToProgrammes(progData, media);
             }, []);
             const scrollTo = useScrollTo();
-            if (loading) return <MorphSection id="programmes" className="section-padding bg-navy-2"><div className="text-center text-white/70">Loading programmes...</div></MorphSection>;
-            if (error && (!programmes || programmes.length === 0)) return <MorphSection id="programmes" className="section-padding bg-navy-2"><div className="text-center text-white/70">Programmes temporarily unavailable. <button onClick={retry} className="underline">Retry</button></div></MorphSection>;
+            if (loading) return <MorphSection id="programmes" className="section-padding bg-navy-2"><div className="text-center text-white/70">Loading academic programmes...</div></MorphSection>;
+            if (error) {
+                return (
+                    <MorphSection id="programmes" className="section-padding bg-navy-2">
+                        <div className="text-center text-white/70">
+                            <p>Unable to load academic programmes.</p>
+                            <button onClick={retry} className="btn-waterfill rounded-full px-6 py-2 mt-4 text-sm font-semibold text-white bg-transparent border border-red">Retry</button>
+                        </div>
+                    </MorphSection>
+                );
+            }
             const list = programmes || [];
             return (
                 <MorphSection id="programmes" className="section-padding bg-navy-2">
@@ -814,7 +963,13 @@
                             {list.map((p, i) => (
                                 <Reveal key={p.id} delay={i * 0.1} className="h-full">
                                     <button onClick={() => setSelectedProgramme(p)} className="programme-card card-premium rounded-2xl p-6 h-full w-full text-left cursor-pointer focus:outline-none focus:ring-2 focus:ring-yellow" aria-label={`View details for ${p.title}`}>
-                                        {p.imageUrl && <img src={p.imageUrl} alt={p.title} className="programme-image mb-4 rounded-lg" loading="lazy" onError={(e) => { e.target.style.display = 'none'; }} />}
+                                        {p.imageUrl ? (
+                                            <img src={p.imageUrl} alt={p.title} className="programme-image mb-4 rounded-lg" loading="lazy" onError={(e) => { e.target.style.display = 'none'; }} />
+                                        ) : (
+                                            <div className="programme-image mb-4 rounded-lg bg-gradient-to-br from-sky/20 to-navy-2 flex items-center justify-center">
+                                                <span className="text-4xl">🎓</span>
+                                            </div>
+                                        )}
                                         <div className="programme-info p-4">
                                             <h3 className="programme-title text-white font-bold text-xl">{p.title}</h3>
                                             {p.category && <p className="programme-meta text-xs uppercase tracking-wider text-yellow mb-1">{p.category}</p>}
@@ -825,7 +980,7 @@
                                 </Reveal>
                             ))}
                         </div>
-                        {list.length === 0 && <div className="text-center mt-10 text-white/70">No programmes available.</div>}
+                        {list.length === 0 && <div className="text-center mt-10 text-white/70">No published programmes are currently available.</div>}
                     </div>
                     {selectedProgramme && (
                         <div className="modal-overlay" role="dialog" aria-modal="true" aria-label={`${selectedProgramme.title} details`}>
@@ -849,6 +1004,7 @@
             );
         }
 
+        // ─── SUPPORT ──────────────────────────────────────────────────────
         function Support() {
             const { data: services, loading, error, retry } = useAsyncData(async () => {
                 if (!supabaseClient) return [];
@@ -882,6 +1038,7 @@
             );
         }
 
+        // ─── HOW IT WORKS ──────────────────────────────────────────────
         function HowItWorks() {
             const { data: steps, loading, error, retry } = useAsyncData(async () => {
                 if (!supabaseClient) return [];
@@ -922,6 +1079,7 @@
             );
         }
 
+        // ─── WHY CHOOSE US ──────────────────────────────────────────────
         function WhyChooseUs() {
             const { data: points, loading, error, retry } = useAsyncData(async () => {
                 if (!supabaseClient) return [];
@@ -936,7 +1094,7 @@
             const displayPoints = (points && points.length > 0) ? points : defaultPoints;
             if (loading) return <MorphSection className="section-padding bg-navy"><div className="text-center text-white/70">Loading...</div></MorphSection>;
             return (
-                <MorphSection id="why-choose-us" className="section-padding bg-navy">
+                <MorphSection className="section-padding bg-navy">
                     <div className="mx-auto max-w-6xl px-6 lg:px-8">
                         <SectionHeading eyebrow="WHY CHOOSE US" title="A Partner You Can Trust" subtitle="We provide honest, transparent guidance for African students." />
                         <div className="mt-16 grid gap-6 sm:grid-cols-2 lg:grid-cols-4 grid-equal">
@@ -955,6 +1113,7 @@
             );
         }
 
+        // ─── FAQ ──────────────────────────────────────────────────────────
         function FAQ() {
             const [openId, setOpenId] = useState(null);
             const { data: faqs, loading, error, retry } = useAsyncData(async () => {
@@ -993,6 +1152,7 @@
             );
         }
 
+        // ─── TESTIMONIALS ──────────────────────────────────────────────
         function Testimonials() {
             const { data: testimonials, loading, error, retry } = useAsyncData(async () => {
                 if (!supabaseClient) return [];
@@ -1023,6 +1183,7 @@
             return null;
         }
 
+        // ─── ABOUT ──────────────────────────────────────────────────────
         function AboutSection() {
             const { data: sections, loading, error } = useAsyncData(async () => {
                 if (!supabaseClient) return null;
@@ -1043,6 +1204,7 @@
             );
         }
 
+        // ─── SCHOLARSHIPS ──────────────────────────────────────────────
         function ScholarshipsSection() {
             const { data: sections, loading, error } = useAsyncData(async () => {
                 if (!supabaseClient) return null;
@@ -1063,6 +1225,7 @@
             );
         }
 
+        // ─── PARENTS ────────────────────────────────────────────────────
         function ParentsSection() {
             const { data: sections, loading, error } = useAsyncData(async () => {
                 if (!supabaseClient) return null;
@@ -1083,6 +1246,7 @@
             );
         }
 
+        // ─── PARTNERS ──────────────────────────────────────────────────
         function PartnersSection() {
             const { data: sections, loading, error } = useAsyncData(async () => {
                 if (!supabaseClient) return null;
@@ -1103,6 +1267,7 @@
             );
         }
 
+        // ─── CONTACT SECTION ──────────────────────────────────────────
         function ContactSection() {
             const { data: settings, loading, error } = useAsyncData(async () => {
                 if (!supabaseClient) return null;
@@ -1138,8 +1303,19 @@
             );
         }
 
+        // ─── CONTACT FORM ──────────────────────────────────────────────
         function ContactForm() {
-            const [form, setForm] = useState({ full_name: '', email: '', phone: '', country: '', academic_level: '', preferred_destination: '', preferred_programme: '', message: '', consent: false });
+            const [form, setForm] = useState({
+                full_name: '',
+                email: '',
+                phone: '',
+                country: '',
+                academic_level: '',
+                preferred_destination: '',
+                preferred_programme: '',
+                message: '',
+                consent: false
+            });
             const [submitting, setSubmitting] = useState(false);
             const [success, setSuccess] = useState(false);
             const [error, setError] = useState('');
@@ -1203,6 +1379,7 @@
             );
         }
 
+        // ─── FOOTER ──────────────────────────────────────────────────────
         function Footer() {
             const scrollTo = useScrollTo();
             const [showPrivacy, setShowPrivacy] = useState(false);
@@ -1282,6 +1459,7 @@
             );
         }
 
+        // ─── WHATSAPP FLOAT ──────────────────────────────────────────────
         function WhatsAppFloat() {
             return (
                 <a href="https://wa.me/256779989906" target="_blank" rel="noopener noreferrer" className="whatsapp-float" aria-label="Chat on WhatsApp">
@@ -1290,12 +1468,32 @@
             );
         }
 
+        // ═══════════════════════════════════════════════════════════════════
+        //  ADMIN PANEL – FULL CMS CONTROLLABLE
+        // ═══════════════════════════════════════════════════════════════════
+
+        // ─── ADMIN LOGIN ──────────────────────────────────────────────────
         function AdminLogin({ onLogin }) {
             const [email, setEmail] = useState('');
             const [password, setPassword] = useState('');
             const [error, setError] = useState('');
             const [loading, setLoading] = useState(false);
-            const handleSubmit = async (e) => { e.preventDefault(); setLoading(true); setError(''); try { if (!supabaseClient) throw new Error('Supabase not initialized'); const { data, error } = await supabaseClient.auth.signInWithPassword({ email, password }); if (error) throw error; onLogin(); } catch (err) { console.error('Login error:', err); setError('Invalid credentials. Please try again.'); } finally { setLoading(false); } };
+            const handleSubmit = async (e) => {
+                e.preventDefault();
+                setLoading(true);
+                setError('');
+                try {
+                    if (!supabaseClient) throw new Error('Supabase not initialized');
+                    const { data, error } = await supabaseClient.auth.signInWithPassword({ email, password });
+                    if (error) throw error;
+                    onLogin();
+                } catch (err) {
+                    console.error('Login error:', err);
+                    setError('Invalid credentials. Please try again.');
+                } finally {
+                    setLoading(false);
+                }
+            };
             return (
                 <div className="min-h-screen flex items-center justify-center bg-navy px-4">
                     <div className="glass rounded-2xl p-8 w-full max-w-md">
@@ -1311,109 +1509,738 @@
             );
         }
 
-        function AdminDashboard({ onLogout }) {
-            const [counts, setCounts] = useState({ programmes: 0, destinations: 0, faqs: 0, leads: 0, testimonials: 0 });
-            const [loading, setLoading] = useState(true);
-            useEffect(() => {
-                const fetchCounts = async () => { try { if (!supabaseClient) return; const queries = [supabaseClient.from('programmes').select('id', { count: 'exact' }), supabaseClient.from('destinations').select('id', { count: 'exact' }), supabaseClient.from('faqs').select('id', { count: 'exact' }), supabaseClient.from('enquiries').select('id', { count: 'exact' }), supabaseClient.from('testimonials').select('id', { count: 'exact' })]; const results = await Promise.all(queries); setCounts({ programmes: results[0].count || 0, destinations: results[1].count || 0, faqs: results[2].count || 0, leads: results[3].count || 0, testimonials: results[4].count || 0 }); } catch (err) { console.error('Error fetching counts:', err); } finally { setLoading(false); } };
-                fetchCounts();
-            }, []);
-            return (
-                <div className="p-8 bg-navy min-h-screen">
-                    <div className="flex justify-between items-center mb-8"><h1 className="text-3xl font-bold text-white">Admin Dashboard</h1><button onClick={onLogout} className="px-4 py-2 bg-red-500/20 text-red-200 rounded-lg hover:bg-red-500/30">Logout</button></div>
-                    {loading ? <p className="text-white/70">Loading dashboard...</p> : (
-                        <div className="grid gap-6 md:grid-cols-3 lg:grid-cols-5">
-                            {[{ label: 'Programmes', count: counts.programmes, icon: '📚' }, { label: 'Destinations', count: counts.destinations, icon: '🌍' }, { label: 'FAQs', count: counts.faqs, icon: '❓' }, { label: 'Leads', count: counts.leads, icon: '📋' }, { label: 'Testimonials', count: counts.testimonials, icon: '💬' }].map(stat => (
-                                <div key={stat.label} className="glass rounded-2xl p-6 text-center"><div className="text-3xl mb-2">{stat.icon}</div><div className="text-3xl font-bold text-white">{stat.count}</div><div className="text-sm text-white/70 mt-1">{stat.label}</div></div>
-                            ))}
-                        </div>
-                    )}
-                    <div className="mt-8"><h2 className="text-xl font-semibold text-white mb-4">Quick Actions</h2><div className="flex flex-wrap gap-4"><a href="#/admin/programmes" className="btn-waterfill rounded-full px-6 py-2 text-sm font-semibold text-white bg-transparent border border-red">Manage Programmes</a><a href="#/admin/leads" className="btn-waterfill rounded-full px-6 py-2 text-sm font-semibold text-white bg-transparent border border-red">View Leads</a><a href="#/admin/settings" className="btn-waterfill rounded-full px-6 py-2 text-sm font-semibold text-white bg-transparent border border-red">Site Settings</a></div></div>
-                </div>
-            );
-        }
-
-        function AdminSection({ title, children, onBack }) {
-            return (
-                <div className="p-8 bg-navy min-h-screen">
-                    <div className="flex items-center gap-4 mb-8"><button onClick={onBack} className="text-white/70 hover:text-white">← Back</button><h1 className="text-3xl font-bold text-white">{title}</h1></div>
-                    {children}
-                </div>
-            );
-        }
-
-        function AdminProgrammes() {
-            const { data: programmes, loading, error, retry } = useAsyncData(async () => { if (!supabaseClient) return []; const { data, error } = await supabaseClient.from('programmes').select('*').order('order_index'); if (error) throw error; return data || []; }, []);
-            if (loading) return <AdminSection title="Programmes" onBack={() => window.location.hash = '#/admin/dashboard'}><p className="text-white/70">Loading...</p></AdminSection>;
-            return (
-                <AdminSection title="Programmes" onBack={() => window.location.hash = '#/admin/dashboard'}>
-                    <button className="btn-waterfill rounded-full px-6 py-2 text-sm font-semibold text-white bg-transparent border border-red mb-4">Add Programme</button>
-                    <div className="space-y-4">{(programmes || []).map(p => <div key={p.id} className="glass rounded-2xl p-4 flex items-center justify-between"><div><h3 className="text-white font-semibold">{p.title}</h3><p className="text-sm text-white/60">{p.category} | {p.level}</p></div><div className="flex gap-2"><button className="text-sky hover:text-white">Edit</button><button className="text-red-400 hover:text-red-200">Delete</button></div></div>)}</div>
-                </AdminSection>
-            );
-        }
-
-        function AdminLeads() {
-            const { data: leads, loading } = useAsyncData(async () => { if (!supabaseClient) return []; const { data, error } = await supabaseClient.from('enquiries').select('*').order('created_at', { ascending: false }); if (error) throw error; return data || []; }, []);
-            if (loading) return <AdminSection title="Leads" onBack={() => window.location.hash = '#/admin/dashboard'}><p className="text-white/70">Loading...</p></AdminSection>;
-            return (
-                <AdminSection title="Leads" onBack={() => window.location.hash = '#/admin/dashboard'}>
-                    <div className="space-y-4">{(leads || []).map(lead => <div key={lead.id} className="glass rounded-2xl p-4"><div className="flex justify-between items-start"><div><h3 className="text-white font-semibold">{lead.full_name}</h3><p className="text-sm text-white/60">{lead.email} | {lead.phone || 'No phone'}</p><p className="text-sm text-white/60">{lead.preferred_destination || 'No destination'} | {lead.preferred_programme || 'No programme'}</p>{lead.reference && <p className="text-xs text-yellow mt-1">Ref: {lead.reference}</p>}</div><span className="px-3 py-1 rounded-full text-xs bg-blue-500/20 text-blue-200">{lead.status || 'new'}</span></div>{lead.message && <p className="mt-2 text-sm text-white/70">{lead.message}</p>}</div>)}</div>
-                </AdminSection>
-            );
-        }
-
-        function AdminSettings() {
-            const { data: settings, loading } = useAsyncData(async () => { if (!supabaseClient) return []; const { data, error } = await supabaseClient.from('site_settings').select('*'); if (error) throw error; return data || []; }, []);
-            if (loading) return <AdminSection title="Settings" onBack={() => window.location.hash = '#/admin/dashboard'}><p className="text-white/70">Loading...</p></AdminSection>;
-            return (
-                <AdminSection title="Site Settings" onBack={() => window.location.hash = '#/admin/dashboard'}>
-                    <div className="space-y-4 max-w-lg">{(settings || []).map(s => <div key={s.key}><label className="block text-sm text-white/80 mb-1">{s.key}</label><input type="text" defaultValue={s.value} className="input-gold w-full rounded-xl px-4 py-2" /></div>)}<button className="btn-waterfill rounded-xl px-6 py-3 border border-red text-white font-semibold w-full">Save Settings</button></div>
-                </AdminSection>
-            );
-        }
-
+        // ─── ADMIN LAYOUT ────────────────────────────────────────────────
         function AdminLayout() {
             const [session, setSession] = useState(null);
             const [route, setRoute] = useState(window.location.hash);
+
             useEffect(() => {
-                const checkSession = async () => { try { if (!supabaseClient) return; const { data } = await supabaseClient.auth.getSession(); setSession(data.session); } catch (err) { console.error('Session check error:', err); setSession(null); } };
+                const checkSession = async () => {
+                    try {
+                        if (!supabaseClient) return;
+                        const { data } = await supabaseClient.auth.getSession();
+                        setSession(data.session);
+                    } catch (err) {
+                        console.error('Session check error:', err);
+                        setSession(null);
+                    }
+                };
                 checkSession();
                 if (supabaseClient) {
-                    const { data: authListener } = supabaseClient.auth.onAuthStateChange((_event, session) => { setSession(session); });
+                    const { data: authListener } = supabaseClient.auth.onAuthStateChange((_event, session) => {
+                        setSession(session);
+                    });
                     const hashHandler = () => setRoute(window.location.hash);
                     window.addEventListener('hashchange', hashHandler);
-                    return () => { if (authListener?.subscription) authListener.subscription.unsubscribe(); window.removeEventListener('hashchange', hashHandler); };
+                    return () => {
+                        if (authListener?.subscription) authListener.subscription.unsubscribe();
+                        window.removeEventListener('hashchange', hashHandler);
+                    };
                 } else {
                     const hashHandler = () => setRoute(window.location.hash);
                     window.addEventListener('hashchange', hashHandler);
                     return () => window.removeEventListener('hashchange', hashHandler);
                 }
             }, []);
-            const handleLogout = async () => { try { if (supabaseClient) await supabaseClient.auth.signOut(); } catch (err) { console.error('Logout error:', err); } setSession(null); window.location.hash = '#/admin/login'; };
-            if (!session) return <AdminLogin onLogin={() => { if (supabaseClient) { supabaseClient.auth.getSession().then(({ data }) => { setSession(data.session); window.location.hash = '#/admin/dashboard'; }); } }} />;
+
+            const handleLogout = async () => {
+                try {
+                    if (supabaseClient) await supabaseClient.auth.signOut();
+                } catch (err) { console.error('Logout error:', err); }
+                setSession(null);
+                window.location.hash = '#/admin/login';
+            };
+
+            if (!session) {
+                return <AdminLogin onLogin={() => {
+                    if (supabaseClient) {
+                        supabaseClient.auth.getSession().then(({ data }) => {
+                            setSession(data.session);
+                            window.location.hash = '#/admin/dashboard';
+                        });
+                    }
+                }} />;
+            }
+
             const renderRoute = () => {
                 switch (route) {
                     case '#/admin/dashboard': return <AdminDashboard onLogout={handleLogout} />;
                     case '#/admin/programmes': return <AdminProgrammes />;
+                    case '#/admin/destinations': return <AdminDestinations />;
+                    case '#/admin/services': return <AdminServices />;
+                    case '#/admin/journey': return <AdminJourney />;
+                    case '#/admin/faqs': return <AdminFaqs />;
+                    case '#/admin/testimonials': return <AdminTestimonials />;
                     case '#/admin/leads': return <AdminLeads />;
+                    case '#/admin/media': return <AdminMedia />;
                     case '#/admin/settings': return <AdminSettings />;
                     default: return <AdminDashboard onLogout={handleLogout} />;
                 }
             };
-            return renderRoute();
+
+            return (
+                <div className="admin-layout">
+                    <nav className="admin-sidebar" aria-label="Admin navigation">
+                        <div className="mb-6"><span className="text-xs uppercase tracking-wider text-white/30">CMS</span></div>
+                        <a href="#/admin/dashboard" className={route === '#/admin/dashboard' ? 'active' : ''}>📊 Dashboard</a>
+                        <a href="#/admin/programmes" className={route === '#/admin/programmes' ? 'active' : ''}>📚 Programmes</a>
+                        <a href="#/admin/destinations" className={route === '#/admin/destinations' ? 'active' : ''}>🌍 Destinations</a>
+                        <a href="#/admin/services" className={route === '#/admin/services' ? 'active' : ''}>🎓 Support Services</a>
+                        <a href="#/admin/journey" className={route === '#/admin/journey' ? 'active' : ''}>🚀 Journey Steps</a>
+                        <a href="#/admin/faqs" className={route === '#/admin/faqs' ? 'active' : ''}>❓ FAQs</a>
+                        <a href="#/admin/testimonials" className={route === '#/admin/testimonials' ? 'active' : ''}>💬 Testimonials</a>
+                        <a href="#/admin/leads" className={route === '#/admin/leads' ? 'active' : ''}>📋 Leads</a>
+                        <a href="#/admin/media" className={route === '#/admin/media' ? 'active' : ''}>🖼️ Media</a>
+                        <a href="#/admin/settings" className={route === '#/admin/settings' ? 'active' : ''}>⚙️ Settings</a>
+                        <div className="mt-6 pt-6 border-t border-white/10">
+                            <button onClick={handleLogout} className="text-sm text-white/50 hover:text-white w-full text-left">🚪 Logout</button>
+                        </div>
+                    </nav>
+                    <div className="admin-main">{renderRoute()}</div>
+                </div>
+            );
         }
 
+        // ─── ADMIN DASHBOARD ────────────────────────────────────────────
+        function AdminDashboard({ onLogout }) {
+            const [counts, setCounts] = useState({
+                programmes: 0, destinations: 0, services: 0, steps: 0, faqs: 0, testimonials: 0, leads: 0
+            });
+            const [loading, setLoading] = useState(true);
+            useEffect(() => {
+                const fetchCounts = async () => {
+                    try {
+                        if (!supabaseClient) return;
+                        const queries = [
+                            supabaseClient.from('programmes').select('id', { count: 'exact' }),
+                            supabaseClient.from('destinations').select('id', { count: 'exact' }),
+                            supabaseClient.from('support_services').select('id', { count: 'exact' }),
+                            supabaseClient.from('process_steps').select('id', { count: 'exact' }),
+                            supabaseClient.from('faqs').select('id', { count: 'exact' }),
+                            supabaseClient.from('testimonials').select('id', { count: 'exact' }),
+                            supabaseClient.from('enquiries').select('id', { count: 'exact' }),
+                        ];
+                        const results = await Promise.all(queries);
+                        setCounts({
+                            programmes: results[0].count || 0,
+                            destinations: results[1].count || 0,
+                            services: results[2].count || 0,
+                            steps: results[3].count || 0,
+                            faqs: results[4].count || 0,
+                            testimonials: results[5].count || 0,
+                            leads: results[6].count || 0,
+                        });
+                    } catch (err) { console.error('Error fetching counts:', err); } finally { setLoading(false); }
+                };
+                fetchCounts();
+            }, []);
+            const stats = [
+                { label: 'Programmes', count: counts.programmes, icon: '📚' },
+                { label: 'Destinations', count: counts.destinations, icon: '🌍' },
+                { label: 'Services', count: counts.services, icon: '🎓' },
+                { label: 'Journey Steps', count: counts.steps, icon: '🚀' },
+                { label: 'FAQs', count: counts.faqs, icon: '❓' },
+                { label: 'Testimonials', count: counts.testimonials, icon: '💬' },
+                { label: 'Leads', count: counts.leads, icon: '📋' },
+            ];
+            return (
+                <div>
+                    <div className="flex justify-between items-center mb-8">
+                        <h1 className="text-3xl font-bold text-white">Dashboard</h1>
+                        <button onClick={onLogout} className="px-4 py-2 bg-red-500/20 text-red-200 rounded-lg hover:bg-red-500/30">Logout</button>
+                    </div>
+                    {loading ? (
+                        <p className="text-white/70">Loading dashboard...</p>
+                    ) : (
+                        <div className="grid gap-4 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-7">
+                            {stats.map(stat => (
+                                <div key={stat.label} className="glass rounded-2xl p-5 text-center">
+                                    <div className="text-2xl mb-1">{stat.icon}</div>
+                                    <div className="text-2xl font-bold text-white">{stat.count}</div>
+                                    <div className="text-xs text-white/60 mt-1">{stat.label}</div>
+                                </div>
+                            ))}
+                        </div>
+                    )}
+                    <div className="mt-8 grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+                        <a href="#/admin/programmes" className="glass rounded-2xl p-5 text-center hover:border-yellow/40 transition-colors">
+                            <div className="text-3xl mb-2">📚</div><p className="text-sm text-white/80">Manage Programmes</p>
+                        </a>
+                        <a href="#/admin/destinations" className="glass rounded-2xl p-5 text-center hover:border-yellow/40 transition-colors">
+                            <div className="text-3xl mb-2">🌍</div><p className="text-sm text-white/80">Manage Destinations</p>
+                        </a>
+                        <a href="#/admin/leads" className="glass rounded-2xl p-5 text-center hover:border-yellow/40 transition-colors">
+                            <div className="text-3xl mb-2">📋</div><p className="text-sm text-white/80">View Leads</p>
+                        </a>
+                        <a href="#/admin/settings" className="glass rounded-2xl p-5 text-center hover:border-yellow/40 transition-colors">
+                            <div className="text-3xl mb-2">⚙️</div><p className="text-sm text-white/80">Site Settings</p>
+                        </a>
+                    </div>
+                </div>
+            );
+        }
+
+        // ─── GENERIC ADMIN CRUD HELPER ──────────────────────────────────
+        function useAdminCrud(tableName, defaultFields = {}, orderBy = 'order_index') {
+            const [items, setItems] = useState([]);
+            const [loading, setLoading] = useState(true);
+            const [error, setError] = useState(null);
+            const [showForm, setShowForm] = useState(false);
+            const [editing, setEditing] = useState(null);
+            const [formData, setFormData] = useState(defaultFields);
+            const [isSubmitting, setIsSubmitting] = useState(false);
+
+            const fetchItems = async () => {
+                if (!supabaseClient) { setLoading(false); return; }
+                setLoading(true);
+                try {
+                    const { data, error } = await supabaseClient.from(tableName).select('*').order(orderBy, { ascending: true });
+                    if (error) throw error;
+                    setItems(data || []);
+                } catch (err) {
+                    console.error(`Error fetching ${tableName}:`, err);
+                    setError(err);
+                } finally {
+                    setLoading(false);
+                }
+            };
+
+            const handleSave = async () => {
+                setIsSubmitting(true);
+                try {
+                    if (!supabaseClient) throw new Error('Supabase not initialized');
+                    if (editing) {
+                        const { error } = await supabaseClient.from(tableName).update(formData).eq('id', editing.id);
+                        if (error) throw error;
+                    } else {
+                        const { error } = await supabaseClient.from(tableName).insert([formData]);
+                        if (error) throw error;
+                    }
+                    setShowForm(false);
+                    setEditing(null);
+                    setFormData(defaultFields);
+                    await fetchItems();
+                } catch (err) {
+                    console.error('Save error:', err);
+                    setError(err);
+                } finally {
+                    setIsSubmitting(false);
+                }
+            };
+
+            const handleDelete = async (id) => {
+                if (!window.confirm('Delete this item?')) return;
+                try {
+                    if (!supabaseClient) throw new Error('Supabase not initialized');
+                    const { error } = await supabaseClient.from(tableName).delete().eq('id', id);
+                    if (error) throw error;
+                    await fetchItems();
+                } catch (err) {
+                    console.error('Delete error:', err);
+                    setError(err);
+                }
+            };
+
+            const openEdit = (item) => {
+                setEditing(item);
+                setFormData({ ...item });
+                setShowForm(true);
+            };
+
+            const openNew = () => {
+                setEditing(null);
+                setFormData({ ...defaultFields });
+                setShowForm(true);
+            };
+
+            useEffect(() => { fetchItems(); }, []);
+
+            return {
+                items, loading, error, showForm, setShowForm, editing, formData, setFormData,
+                isSubmitting, handleSave, handleDelete, openEdit, openNew, fetchItems, defaultFields
+            };
+        }
+
+        // ─── ADMIN PROGRAMMES ──────────────────────────────────────────
+        function AdminProgrammes() {
+            const crud = useAdminCrud('programmes', { title: '', category: '', level: '', description: '', is_published: true, order_index: 0 });
+            if (crud.loading) return <AdminSection title="Programmes" onBack={() => window.location.hash = '#/admin/dashboard'}><p className="text-white/70">Loading...</p></AdminSection>;
+            return (
+                <AdminSection title="Programmes" onBack={() => window.location.hash = '#/admin/dashboard'}>
+                    <button onClick={crud.openNew} className="btn-waterfill rounded-full px-6 py-2 text-sm font-semibold text-white bg-transparent border border-red mb-4">+ Add Programme</button>
+                    {crud.error && <p className="text-red-400 mb-4">Error: {crud.error.message}</p>}
+                    <div className="space-y-3">
+                        {crud.items.map(p => (
+                            <div key={p.id} className="admin-card flex items-center justify-between">
+                                <div>
+                                    <h4 className="text-white font-semibold">{p.title}</h4>
+                                    <p className="text-xs text-white/50">{p.category || 'Uncategorized'} {p.level && `• ${p.level}`} {p.is_published ? <span className="ml-2 badge badge-green">Published</span> : <span className="ml-2 badge badge-gray">Draft</span>}</p>
+                                </div>
+                                <div className="flex gap-2">
+                                    <button onClick={() => crud.openEdit(p)} className="text-sky hover:text-white text-sm">Edit</button>
+                                    <button onClick={() => crud.handleDelete(p.id)} className="text-red-400 hover:text-red-200 text-sm">Delete</button>
+                                </div>
+                            </div>
+                        ))}
+                        {crud.items.length === 0 && <p className="text-white/50">No programmes yet.</p>}
+                    </div>
+                    {crud.showForm && (
+                        <AdminModal title={crud.editing ? 'Edit Programme' : 'Add Programme'} onClose={() => { crud.setShowForm(false); crud.setEditing(null); }} onSave={crud.handleSave} isSubmitting={crud.isSubmitting}>
+                            <div className="space-y-3">
+                                <input type="text" placeholder="Title *" value={crud.formData.title || ''} onChange={(e) => crud.setFormData({...crud.formData, title: e.target.value})} className="input-gold w-full rounded-xl px-4 py-2" required />
+                                <input type="text" placeholder="Category" value={crud.formData.category || ''} onChange={(e) => crud.setFormData({...crud.formData, category: e.target.value})} className="input-gold w-full rounded-xl px-4 py-2" />
+                                <input type="text" placeholder="Level (e.g. Undergraduate, Postgraduate)" value={crud.formData.level || ''} onChange={(e) => crud.setFormData({...crud.formData, level: e.target.value})} className="input-gold w-full rounded-xl px-4 py-2" />
+                                <textarea placeholder="Description" rows={4} value={crud.formData.description || ''} onChange={(e) => crud.setFormData({...crud.formData, description: e.target.value})} className="input-gold w-full rounded-xl px-4 py-2"></textarea>
+                                <input type="number" placeholder="Order Index" value={crud.formData.order_index || 0} onChange={(e) => crud.setFormData({...crud.formData, order_index: parseInt(e.target.value) || 0})} className="input-gold w-full rounded-xl px-4 py-2" />
+                                <label className="flex items-center gap-2 text-white/70 text-sm">
+                                    <input type="checkbox" checked={crud.formData.is_published !== false} onChange={(e) => crud.setFormData({...crud.formData, is_published: e.target.checked})} className="rounded border-yellow bg-white/5 text-sky" /> Published
+                                </label>
+                            </div>
+                        </AdminModal>
+                    )}
+                </AdminSection>
+            );
+        }
+
+        // ─── ADMIN DESTINATIONS ────────────────────────────────────────
+        function AdminDestinations() {
+            const crud = useAdminCrud('destinations', { name: '', description: '', image_url: '', is_published: true, order_index: 0 });
+            if (crud.loading) return <AdminSection title="Destinations" onBack={() => window.location.hash = '#/admin/dashboard'}><p className="text-white/70">Loading...</p></AdminSection>;
+            return (
+                <AdminSection title="Destinations" onBack={() => window.location.hash = '#/admin/dashboard'}>
+                    <button onClick={crud.openNew} className="btn-waterfill rounded-full px-6 py-2 text-sm font-semibold text-white bg-transparent border border-red mb-4">+ Add Destination</button>
+                    {crud.error && <p className="text-red-400 mb-4">Error: {crud.error.message}</p>}
+                    <div className="space-y-3">
+                        {crud.items.map(d => (
+                            <div key={d.id} className="admin-card flex items-center justify-between">
+                                <div className="flex items-center gap-4">
+                                    {d.image_url ? <img src={d.image_url} alt={d.name} className="w-12 h-8 object-cover rounded" /> : <div className="w-12 h-8 bg-navy-2 rounded"></div>}
+                                    <div>
+                                        <h4 className="text-white font-semibold">{d.name}</h4>
+                                        <p className="text-xs text-white/50">{d.description || 'No description'} {d.is_published ? <span className="ml-2 badge badge-green">Published</span> : <span className="ml-2 badge badge-gray">Draft</span>}</p>
+                                    </div>
+                                </div>
+                                <div className="flex gap-2">
+                                    <button onClick={() => crud.openEdit(d)} className="text-sky hover:text-white text-sm">Edit</button>
+                                    <button onClick={() => crud.handleDelete(d.id)} className="text-red-400 hover:text-red-200 text-sm">Delete</button>
+                                </div>
+                            </div>
+                        ))}
+                        {crud.items.length === 0 && <p className="text-white/50">No destinations yet.</p>}
+                    </div>
+                    {crud.showForm && (
+                        <AdminModal title={crud.editing ? 'Edit Destination' : 'Add Destination'} onClose={() => { crud.setShowForm(false); crud.setEditing(null); }} onSave={crud.handleSave} isSubmitting={crud.isSubmitting}>
+                            <div className="space-y-3">
+                                <input type="text" placeholder="Name *" value={crud.formData.name || ''} onChange={(e) => crud.setFormData({...crud.formData, name: e.target.value})} className="input-gold w-full rounded-xl px-4 py-2" required />
+                                <textarea placeholder="Description" rows={3} value={crud.formData.description || ''} onChange={(e) => crud.setFormData({...crud.formData, description: e.target.value})} className="input-gold w-full rounded-xl px-4 py-2"></textarea>
+                                <input type="text" placeholder="Image URL (or leave empty for fallback)" value={crud.formData.image_url || ''} onChange={(e) => crud.setFormData({...crud.formData, image_url: e.target.value})} className="input-gold w-full rounded-xl px-4 py-2" />
+                                <input type="number" placeholder="Order Index" value={crud.formData.order_index || 0} onChange={(e) => crud.setFormData({...crud.formData, order_index: parseInt(e.target.value) || 0})} className="input-gold w-full rounded-xl px-4 py-2" />
+                                <label className="flex items-center gap-2 text-white/70 text-sm">
+                                    <input type="checkbox" checked={crud.formData.is_published !== false} onChange={(e) => crud.setFormData({...crud.formData, is_published: e.target.checked})} className="rounded border-yellow bg-white/5 text-sky" /> Published
+                                </label>
+                            </div>
+                        </AdminModal>
+                    )}
+                </AdminSection>
+            );
+        }
+
+        // ─── ADMIN SERVICES ─────────────────────────────────────────────
+        function AdminServices() {
+            const crud = useAdminCrud('support_services', { title: '', icon: '🎓', description: '', is_published: true, order_index: 0 });
+            if (crud.loading) return <AdminSection title="Support Services" onBack={() => window.location.hash = '#/admin/dashboard'}><p className="text-white/70">Loading...</p></AdminSection>;
+            return (
+                <AdminSection title="Support Services" onBack={() => window.location.hash = '#/admin/dashboard'}>
+                    <button onClick={crud.openNew} className="btn-waterfill rounded-full px-6 py-2 text-sm font-semibold text-white bg-transparent border border-red mb-4">+ Add Service</button>
+                    {crud.error && <p className="text-red-400 mb-4">Error: {crud.error.message}</p>}
+                    <div className="space-y-3">
+                        {crud.items.map(s => (
+                            <div key={s.id} className="admin-card flex items-center justify-between">
+                                <div>
+                                    <h4 className="text-white font-semibold">{s.icon || '🎓'} {s.title}</h4>
+                                    <p className="text-xs text-white/50">{s.description || 'No description'} {s.is_published ? <span className="ml-2 badge badge-green">Published</span> : <span className="ml-2 badge badge-gray">Draft</span>}</p>
+                                </div>
+                                <div className="flex gap-2">
+                                    <button onClick={() => crud.openEdit(s)} className="text-sky hover:text-white text-sm">Edit</button>
+                                    <button onClick={() => crud.handleDelete(s.id)} className="text-red-400 hover:text-red-200 text-sm">Delete</button>
+                                </div>
+                            </div>
+                        ))}
+                        {crud.items.length === 0 && <p className="text-white/50">No support services yet.</p>}
+                    </div>
+                    {crud.showForm && (
+                        <AdminModal title={crud.editing ? 'Edit Service' : 'Add Service'} onClose={() => { crud.setShowForm(false); crud.setEditing(null); }} onSave={crud.handleSave} isSubmitting={crud.isSubmitting}>
+                            <div className="space-y-3">
+                                <input type="text" placeholder="Service Name *" value={crud.formData.title || ''} onChange={(e) => crud.setFormData({...crud.formData, title: e.target.value})} className="input-gold w-full rounded-xl px-4 py-2" required />
+                                <input type="text" placeholder="Icon (emoji)" value={crud.formData.icon || '🎓'} onChange={(e) => crud.setFormData({...crud.formData, icon: e.target.value})} className="input-gold w-full rounded-xl px-4 py-2" />
+                                <textarea placeholder="Description" rows={3} value={crud.formData.description || ''} onChange={(e) => crud.setFormData({...crud.formData, description: e.target.value})} className="input-gold w-full rounded-xl px-4 py-2"></textarea>
+                                <input type="number" placeholder="Order Index" value={crud.formData.order_index || 0} onChange={(e) => crud.setFormData({...crud.formData, order_index: parseInt(e.target.value) || 0})} className="input-gold w-full rounded-xl px-4 py-2" />
+                                <label className="flex items-center gap-2 text-white/70 text-sm">
+                                    <input type="checkbox" checked={crud.formData.is_published !== false} onChange={(e) => crud.setFormData({...crud.formData, is_published: e.target.checked})} className="rounded border-yellow bg-white/5 text-sky" /> Published
+                                </label>
+                            </div>
+                        </AdminModal>
+                    )}
+                </AdminSection>
+            );
+        }
+
+        // ─── ADMIN JOURNEY ─────────────────────────────────────────────
+        function AdminJourney() {
+            const crud = useAdminCrud('process_steps', { title: '', description: '', step_number: 1, is_published: true, order_index: 0 });
+            if (crud.loading) return <AdminSection title="Journey Steps" onBack={() => window.location.hash = '#/admin/dashboard'}><p className="text-white/70">Loading...</p></AdminSection>;
+            return (
+                <AdminSection title="Journey Steps" onBack={() => window.location.hash = '#/admin/dashboard'}>
+                    <button onClick={crud.openNew} className="btn-waterfill rounded-full px-6 py-2 text-sm font-semibold text-white bg-transparent border border-red mb-4">+ Add Step</button>
+                    {crud.error && <p className="text-red-400 mb-4">Error: {crud.error.message}</p>}
+                    <div className="space-y-3">
+                        {crud.items.map(s => (
+                            <div key={s.id} className="admin-card flex items-center justify-between">
+                                <div>
+                                    <h4 className="text-white font-semibold">Step {s.step_number || 0}: {s.title}</h4>
+                                    <p className="text-xs text-white/50">{s.description || 'No description'} {s.is_published ? <span className="ml-2 badge badge-green">Published</span> : <span className="ml-2 badge badge-gray">Draft</span>}</p>
+                                </div>
+                                <div className="flex gap-2">
+                                    <button onClick={() => crud.openEdit(s)} className="text-sky hover:text-white text-sm">Edit</button>
+                                    <button onClick={() => crud.handleDelete(s.id)} className="text-red-400 hover:text-red-200 text-sm">Delete</button>
+                                </div>
+                            </div>
+                        ))}
+                        {crud.items.length === 0 && <p className="text-white/50">No journey steps yet.</p>}
+                    </div>
+                    {crud.showForm && (
+                        <AdminModal title={crud.editing ? 'Edit Step' : 'Add Step'} onClose={() => { crud.setShowForm(false); crud.setEditing(null); }} onSave={crud.handleSave} isSubmitting={crud.isSubmitting}>
+                            <div className="space-y-3">
+                                <input type="text" placeholder="Step Title *" value={crud.formData.title || ''} onChange={(e) => crud.setFormData({...crud.formData, title: e.target.value})} className="input-gold w-full rounded-xl px-4 py-2" required />
+                                <textarea placeholder="Description" rows={3} value={crud.formData.description || ''} onChange={(e) => crud.setFormData({...crud.formData, description: e.target.value})} className="input-gold w-full rounded-xl px-4 py-2"></textarea>
+                                <input type="number" placeholder="Step Number" value={crud.formData.step_number || 1} onChange={(e) => crud.setFormData({...crud.formData, step_number: parseInt(e.target.value) || 1})} className="input-gold w-full rounded-xl px-4 py-2" />
+                                <input type="number" placeholder="Order Index" value={crud.formData.order_index || 0} onChange={(e) => crud.setFormData({...crud.formData, order_index: parseInt(e.target.value) || 0})} className="input-gold w-full rounded-xl px-4 py-2" />
+                                <label className="flex items-center gap-2 text-white/70 text-sm">
+                                    <input type="checkbox" checked={crud.formData.is_published !== false} onChange={(e) => crud.setFormData({...crud.formData, is_published: e.target.checked})} className="rounded border-yellow bg-white/5 text-sky" /> Published
+                                </label>
+                            </div>
+                        </AdminModal>
+                    )}
+                </AdminSection>
+            );
+        }
+
+        // ─── ADMIN FAQS ─────────────────────────────────────────────────
+        function AdminFaqs() {
+            const crud = useAdminCrud('faqs', { question: '', answer: '', is_published: true, order_index: 0 });
+            if (crud.loading) return <AdminSection title="FAQs" onBack={() => window.location.hash = '#/admin/dashboard'}><p className="text-white/70">Loading...</p></AdminSection>;
+            return (
+                <AdminSection title="FAQs" onBack={() => window.location.hash = '#/admin/dashboard'}>
+                    <button onClick={crud.openNew} className="btn-waterfill rounded-full px-6 py-2 text-sm font-semibold text-white bg-transparent border border-red mb-4">+ Add FAQ</button>
+                    {crud.error && <p className="text-red-400 mb-4">Error: {crud.error.message}</p>}
+                    <div className="space-y-3">
+                        {crud.items.map(f => (
+                            <div key={f.id} className="admin-card">
+                                <div className="flex items-center justify-between">
+                                    <div>
+                                        <h4 className="text-white font-semibold">{f.question}</h4>
+                                        <p className="text-xs text-white/50 line-clamp-2">{f.answer} {f.is_published ? <span className="ml-2 badge badge-green">Published</span> : <span className="ml-2 badge badge-gray">Draft</span>}</p>
+                                    </div>
+                                    <div className="flex gap-2">
+                                        <button onClick={() => crud.openEdit(f)} className="text-sky hover:text-white text-sm">Edit</button>
+                                        <button onClick={() => crud.handleDelete(f.id)} className="text-red-400 hover:text-red-200 text-sm">Delete</button>
+                                    </div>
+                                </div>
+                            </div>
+                        ))}
+                        {crud.items.length === 0 && <p className="text-white/50">No FAQs yet.</p>}
+                    </div>
+                    {crud.showForm && (
+                        <AdminModal title={crud.editing ? 'Edit FAQ' : 'Add FAQ'} onClose={() => { crud.setShowForm(false); crud.setEditing(null); }} onSave={crud.handleSave} isSubmitting={crud.isSubmitting}>
+                            <div className="space-y-3">
+                                <input type="text" placeholder="Question *" value={crud.formData.question || ''} onChange={(e) => crud.setFormData({...crud.formData, question: e.target.value})} className="input-gold w-full rounded-xl px-4 py-2" required />
+                                <textarea placeholder="Answer *" rows={4} value={crud.formData.answer || ''} onChange={(e) => crud.setFormData({...crud.formData, answer: e.target.value})} className="input-gold w-full rounded-xl px-4 py-2" required></textarea>
+                                <input type="number" placeholder="Order Index" value={crud.formData.order_index || 0} onChange={(e) => crud.setFormData({...crud.formData, order_index: parseInt(e.target.value) || 0})} className="input-gold w-full rounded-xl px-4 py-2" />
+                                <label className="flex items-center gap-2 text-white/70 text-sm">
+                                    <input type="checkbox" checked={crud.formData.is_published !== false} onChange={(e) => crud.setFormData({...crud.formData, is_published: e.target.checked})} className="rounded border-yellow bg-white/5 text-sky" /> Published
+                                </label>
+                            </div>
+                        </AdminModal>
+                    )}
+                </AdminSection>
+            );
+        }
+
+        // ─── ADMIN TESTIMONIALS ────────────────────────────────────────
+        function AdminTestimonials() {
+            const crud = useAdminCrud('testimonials', { name: '', quote: '', destination: '', image_url: '', is_published: true, order_index: 0 });
+            if (crud.loading) return <AdminSection title="Testimonials" onBack={() => window.location.hash = '#/admin/dashboard'}><p className="text-white/70">Loading...</p></AdminSection>;
+            return (
+                <AdminSection title="Testimonials" onBack={() => window.location.hash = '#/admin/dashboard'}>
+                    <button onClick={crud.openNew} className="btn-waterfill rounded-full px-6 py-2 text-sm font-semibold text-white bg-transparent border border-red mb-4">+ Add Testimonial</button>
+                    {crud.error && <p className="text-red-400 mb-4">Error: {crud.error.message}</p>}
+                    <div className="space-y-3">
+                        {crud.items.map(t => (
+                            <div key={t.id} className="admin-card flex items-center justify-between">
+                                <div>
+                                    <h4 className="text-white font-semibold">{t.name || 'Anonymous'}</h4>
+                                    <p className="text-xs text-white/50 line-clamp-2">"{t.quote}" {t.destination && <span>• {t.destination}</span>} {t.is_published ? <span className="ml-2 badge badge-green">Published</span> : <span className="ml-2 badge badge-gray">Draft</span>}</p>
+                                </div>
+                                <div className="flex gap-2">
+                                    <button onClick={() => crud.openEdit(t)} className="text-sky hover:text-white text-sm">Edit</button>
+                                    <button onClick={() => crud.handleDelete(t.id)} className="text-red-400 hover:text-red-200 text-sm">Delete</button>
+                                </div>
+                            </div>
+                        ))}
+                        {crud.items.length === 0 && <p className="text-white/50">No testimonials yet.</p>}
+                    </div>
+                    {crud.showForm && (
+                        <AdminModal title={crud.editing ? 'Edit Testimonial' : 'Add Testimonial'} onClose={() => { crud.setShowForm(false); crud.setEditing(null); }} onSave={crud.handleSave} isSubmitting={crud.isSubmitting}>
+                            <div className="space-y-3">
+                                <input type="text" placeholder="Name *" value={crud.formData.name || ''} onChange={(e) => crud.setFormData({...crud.formData, name: e.target.value})} className="input-gold w-full rounded-xl px-4 py-2" required />
+                                <textarea placeholder="Testimonial Quote *" rows={4} value={crud.formData.quote || ''} onChange={(e) => crud.setFormData({...crud.formData, quote: e.target.value})} className="input-gold w-full rounded-xl px-4 py-2" required></textarea>
+                                <input type="text" placeholder="Destination" value={crud.formData.destination || ''} onChange={(e) => crud.setFormData({...crud.formData, destination: e.target.value})} className="input-gold w-full rounded-xl px-4 py-2" />
+                                <input type="text" placeholder="Image URL" value={crud.formData.image_url || ''} onChange={(e) => crud.setFormData({...crud.formData, image_url: e.target.value})} className="input-gold w-full rounded-xl px-4 py-2" />
+                                <input type="number" placeholder="Order Index" value={crud.formData.order_index || 0} onChange={(e) => crud.setFormData({...crud.formData, order_index: parseInt(e.target.value) || 0})} className="input-gold w-full rounded-xl px-4 py-2" />
+                                <label className="flex items-center gap-2 text-white/70 text-sm">
+                                    <input type="checkbox" checked={crud.formData.is_published !== false} onChange={(e) => crud.setFormData({...crud.formData, is_published: e.target.checked})} className="rounded border-yellow bg-white/5 text-sky" /> Published
+                                </label>
+                            </div>
+                        </AdminModal>
+                    )}
+                </AdminSection>
+            );
+        }
+
+        // ─── ADMIN LEADS ─────────────────────────────────────────────────
+        function AdminLeads() {
+            const { data: leads, loading, error, retry } = useAsyncData(async () => {
+                if (!supabaseClient) return [];
+                const { data, error } = await supabaseClient.from('enquiries').select('*').order('created_at', { ascending: false });
+                if (error) throw error;
+                return data || [];
+            }, []);
+            if (loading) return <AdminSection title="Leads" onBack={() => window.location.hash = '#/admin/dashboard'}><p className="text-white/70">Loading...</p></AdminSection>;
+            return (
+                <AdminSection title="Leads" onBack={() => window.location.hash = '#/admin/dashboard'}>
+                    <div className="space-y-3">
+                        {(leads || []).map(lead => (
+                            <div key={lead.id} className="admin-card">
+                                <div className="flex justify-between items-start">
+                                    <div>
+                                        <h4 className="text-white font-semibold">{lead.full_name}</h4>
+                                        <p className="text-xs text-white/50">{lead.email} {lead.phone && `• ${lead.phone}`}</p>
+                                        <p className="text-xs text-white/50">{lead.preferred_destination || 'No destination'} {lead.preferred_programme && `• ${lead.preferred_programme}`}</p>
+                                        {lead.reference && <p className="text-xs text-yellow mt-1">Ref: {lead.reference}</p>}
+                                    </div>
+                                    <span className={`badge ${lead.status === 'new' ? 'badge-blue' : lead.status === 'contacted' ? 'badge-yellow' : 'badge-green'}`}>{lead.status || 'new'}</span>
+                                </div>
+                                {lead.message && <p className="mt-2 text-sm text-white/70">{lead.message}</p>}
+                            </div>
+                        ))}
+                        {(!leads || leads.length === 0) && <p className="text-white/50">No leads yet.</p>}
+                    </div>
+                </AdminSection>
+            );
+        }
+
+        // ─── ADMIN MEDIA ─────────────────────────────────────────────────
+        function AdminMedia() {
+            const [mediaItems, setMediaItems] = useState([]);
+            const [loading, setLoading] = useState(true);
+            const [error, setError] = useState(null);
+            const [uploading, setUploading] = useState(false);
+
+            const fetchMedia = async () => {
+                if (!supabaseClient) { setLoading(false); return; }
+                setLoading(true);
+                try {
+                    const { data, error } = await supabaseClient.from('media_assets').select('*').order('created_at', { ascending: false });
+                    if (error) throw error;
+                    setMediaItems(data || []);
+                } catch (err) {
+                    console.error('Error fetching media:', err);
+                    setError(err);
+                } finally {
+                    setLoading(false);
+                }
+            };
+
+            useEffect(() => { fetchMedia(); }, []);
+
+            const handleUpload = async (e) => {
+                const file = e.target.files?.[0];
+                if (!file) return;
+                setUploading(true);
+                try {
+                    if (!supabaseClient) throw new Error('Supabase not initialized');
+                    const path = `uploads/${Date.now()}-${file.name}`;
+                    const { data: uploadData, error: uploadError } = await supabaseClient.storage.from(STORAGE_BUCKET).upload(path, file);
+                    if (uploadError) throw uploadError;
+                    const publicUrl = resolveStorageUrl(path);
+                    const { error: dbError } = await supabaseClient.from('media_assets').insert([{
+                        name: file.name,
+                        storage_path: path,
+                        public_url: publicUrl,
+                        is_active: true,
+                        file_type: file.type,
+                        size: file.size
+                    }]);
+                    if (dbError) throw dbError;
+                    await fetchMedia();
+                } catch (err) {
+                    console.error('Upload error:', err);
+                    setError(err);
+                } finally {
+                    setUploading(false);
+                    e.target.value = '';
+                }
+            };
+
+            const handleDelete = async (id, storagePath) => {
+                if (!window.confirm('Delete this media asset?')) return;
+                try {
+                    if (!supabaseClient) throw new Error('Supabase not initialized');
+                    if (storagePath) {
+                        await supabaseClient.storage.from(STORAGE_BUCKET).remove([storagePath]);
+                    }
+                    await supabaseClient.from('media_assets').delete().eq('id', id);
+                    await fetchMedia();
+                } catch (err) {
+                    console.error('Delete error:', err);
+                    setError(err);
+                }
+            };
+
+            if (loading) return <AdminSection title="Media" onBack={() => window.location.hash = '#/admin/dashboard'}><p className="text-white/70">Loading...</p></AdminSection>;
+
+            return (
+                <AdminSection title="Media Assets" onBack={() => window.location.hash = '#/admin/dashboard'}>
+                    <div className="flex items-center gap-4 mb-4">
+                        <label className="btn-waterfill rounded-full px-6 py-2 text-sm font-semibold text-white bg-transparent border border-red cursor-pointer">
+                            {uploading ? 'Uploading...' : '+ Upload Media'}
+                            <input type="file" onChange={handleUpload} className="hidden" disabled={uploading} />
+                        </label>
+                        {error && <p className="text-red-400 text-sm">Error: {error.message}</p>}
+                    </div>
+                    <div className="grid gap-4 md:grid-cols-3 lg:grid-cols-4">
+                        {mediaItems.map(m => (
+                            <div key={m.id} className="admin-card">
+                                {m.public_url ? <img src={m.public_url} alt={m.name} className="w-full h-32 object-cover rounded-lg mb-2" /> : <div className="w-full h-32 bg-navy-2 rounded-lg mb-2 flex items-center justify-center text-white/30">🖼️</div>}
+                                <p className="text-xs text-white/70 truncate">{m.name}</p>
+                                <p className="text-xs text-white/30">{(m.size / 1024).toFixed(1)} KB</p>
+                                <button onClick={() => handleDelete(m.id, m.storage_path)} className="text-red-400 hover:text-red-200 text-xs mt-1">Delete</button>
+                            </div>
+                        ))}
+                        {mediaItems.length === 0 && <p className="text-white/50 col-span-full">No media assets uploaded yet.</p>}
+                    </div>
+                </AdminSection>
+            );
+        }
+
+        // ─── ADMIN SETTINGS ─────────────────────────────────────────────
+        function AdminSettings() {
+            const { data: settings, loading, error, retry } = useAsyncData(async () => {
+                if (!supabaseClient) return [];
+                const { data, error } = await supabaseClient.from('site_settings').select('*');
+                if (error) throw error;
+                return data || [];
+            }, []);
+            const [formData, setFormData] = useState({});
+            const [saving, setSaving] = useState(false);
+
+            useEffect(() => {
+                if (settings) {
+                    const obj = {};
+                    settings.forEach(s => { obj[s.key] = s.value; });
+                    setFormData(obj);
+                }
+            }, [settings]);
+
+            const handleSave = async () => {
+                setSaving(true);
+                try {
+                    if (!supabaseClient) throw new Error('Supabase not initialized');
+                    for (const [key, value] of Object.entries(formData)) {
+                        await supabaseClient.from('site_settings').upsert({ key, value }, { onConflict: 'key' });
+                    }
+                    await retry();
+                } catch (err) {
+                    console.error('Save error:', err);
+                    setError(err);
+                } finally {
+                    setSaving(false);
+                }
+            };
+
+            if (loading) return <AdminSection title="Settings" onBack={() => window.location.hash = '#/admin/dashboard'}><p className="text-white/70">Loading...</p></AdminSection>;
+
+            const commonKeys = ['hero_title', 'hero_subtitle', 'motto', 'email', 'whatsapp_india', 'whatsapp_uganda', 'whatsapp_myanmar'];
+            const displayKeys = Object.keys(formData).filter(k => commonKeys.includes(k) || !k.startsWith('_')).sort();
+
+            return (
+                <AdminSection title="Site Settings" onBack={() => window.location.hash = '#/admin/dashboard'}>
+                    <div className="max-w-2xl space-y-4">
+                        {displayKeys.map(key => (
+                            <div key={key}>
+                                <label className="block text-sm text-white/70 mb-1">{key.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase())}</label>
+                                <input type="text" value={formData[key] || ''} onChange={(e) => setFormData({...formData, [key]: e.target.value})} className="input-gold w-full rounded-xl px-4 py-2" />
+                            </div>
+                        ))}
+                        <button onClick={handleSave} disabled={saving} className="btn-waterfill rounded-xl px-8 py-3 border border-red text-white font-semibold w-full disabled:opacity-50">{saving ? 'Saving...' : 'Save Settings'}</button>
+                        {error && <p className="text-red-400">Error: {error.message}</p>}
+                    </div>
+                </AdminSection>
+            );
+        }
+
+        // ─── ADMIN MODAL ─────────────────────────────────────────────────
+        function AdminModal({ title, children, onClose, onSave, isSubmitting }) {
+            return (
+                <div className="modal-overlay" role="dialog" aria-modal="true" aria-label={title}>
+                    <div className="modal-content">
+                        <button className="modal-close" onClick={onClose} aria-label="Close modal">✕</button>
+                        <h3 className="text-xl font-bold text-white mb-4">{title}</h3>
+                        <div className="space-y-4">
+                            {children}
+                            <div className="flex gap-3 pt-2">
+                                <button onClick={onSave} disabled={isSubmitting} className="flex-1 btn-waterfill rounded-xl px-6 py-2 border border-red text-white font-semibold disabled:opacity-50">{isSubmitting ? 'Saving...' : 'Save'}</button>
+                                <button onClick={onClose} className="flex-1 rounded-xl px-6 py-2 border border-white/20 text-white/60 hover:text-white">Cancel</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            );
+        }
+
+        // ─── ADMIN SECTION WRAPPER ──────────────────────────────────────
+        function AdminSection({ title, children, onBack }) {
+            return (
+                <div>
+                    <div className="flex items-center gap-4 mb-6">
+                        <button onClick={onBack} className="text-white/50 hover:text-white">← Back</button>
+                        <h1 className="text-2xl font-bold text-white">{title}</h1>
+                    </div>
+                    {children}
+                </div>
+            );
+        }
+
+        // ─── MAIN APP ────────────────────────────────────────────────────
         function App() {
             const [route, setRoute] = useState(window.location.hash);
             const [splashDone, setSplashDone] = useState(false);
-            useEffect(() => { const handler = () => setRoute(window.location.hash); window.addEventListener('hashchange', handler); return () => window.removeEventListener('hashchange', handler); }, []);
+
+            useEffect(() => {
+                const handler = () => setRoute(window.location.hash);
+                window.addEventListener('hashchange', handler);
+                return () => window.removeEventListener('hashchange', handler);
+            }, []);
+
             const isAdminRoute = route.startsWith('#/admin');
+
             return (
                 <ErrorBoundary>
                     <SmoothScroll>
                         {!splashDone && !isAdminRoute && <SplashScreen onComplete={() => setSplashDone(true)} />}
-                        {isAdminRoute ? <AdminLayout /> : (
+                        {isAdminRoute ? (
+                            <AdminLayout />
+                        ) : (
                             <>
                                 <a href="#main-content" className="skip-link">Skip to main content</a>
                                 <Navbar />
@@ -1443,7 +2270,11 @@
         }
 
         const rootElement = document.getElementById('root');
-        if (rootElement) { ReactDOM.render(<App />, rootElement); } else { console.error('Root element not found'); }
+        if (rootElement) {
+            ReactDOM.render(<App />, rootElement);
+        } else {
+            console.error('Root element not found');
+        }
     </script>
 </body>
 </html>
