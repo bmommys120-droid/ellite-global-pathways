@@ -40,24 +40,81 @@
         }
     </script>
     <style>
+        /* ===== ROOT – White Theme ===== */
         :root {
-            --navy: #071A2B;
-            --navy-2: #0B2239;
-            --sky: #38BDF8;
-            --sky-2: #0EA5E9;
-            --cyan: #22D3EE;
-            --yellow: #F4C542;
-            --gold: #FACC15;
+            --navy: #FFFFFF;          /* main background white */
+            --navy-2: #F8F9FA;        /* light gray for alternating sections */
+            --green: #2E7D32;         /* deep green primary */
+            --green-light: #4CAF50;
+            --skyblue: #38BDF8;       /* bright skyblue accent */
+            --skyblue-light: #7DD3FC;
+            --yellow-deep: #E6B800;
+            --yellow-hover: #FFD700;
             --red: #E53935;
             --red-light: #F87171;
             --white: #FFFFFF;
-            --green: #16A34A;
+            --black: #111111;
+            --glass-bg: rgba(0,0,0,0.04);
+            --glass-border: rgba(0,0,0,0.08);
         }
+
+        /* Override Tailwind classes */
+        .text-sky { color: var(--skyblue) !important; }
+        .border-sky { border-color: var(--skyblue) !important; }
+        .bg-sky { background-color: var(--skyblue) !important; }
+        .bg-sky\/10 { background-color: rgba(56,189,248,0.1) !important; }
+        .bg-sky\/20 { background-color: rgba(56,189,248,0.2) !important; }
+        .from-sky { --tw-gradient-from: var(--skyblue) !important; }
+        .to-cyan { --tw-gradient-to: var(--skyblue-light) !important; }
+        .ring-sky { --tw-ring-color: var(--skyblue) !important; }
+        .hover\:text-sky:hover { color: var(--skyblue) !important; }
+        .hover\:border-sky:hover { border-color: var(--skyblue) !important; }
+        .focus\:ring-sky:focus { --tw-ring-color: var(--skyblue) !important; }
+
+        .text-green { color: var(--green) !important; }
+        .border-green { border-color: var(--green) !important; }
+        .bg-green { background-color: var(--green) !important; }
+        .bg-green\/10 { background-color: rgba(46,125,50,0.1) !important; }
+        .bg-green\/20 { background-color: rgba(46,125,50,0.2) !important; }
+        .hover\:text-green:hover { color: var(--green) !important; }
+        .hover\:border-green:hover { border-color: var(--green) !important; }
+
+        /* Override text colors to black */
+        .text-white { color: var(--black) !important; }
+        .text-white\/70 { color: rgba(0,0,0,0.7) !important; }
+        .text-white\/80 { color: rgba(0,0,0,0.8) !important; }
+        .text-white\/90 { color: rgba(0,0,0,0.9) !important; }
+        .text-white\/50 { color: rgba(0,0,0,0.5) !important; }
+        .text-white\/60 { color: rgba(0,0,0,0.6) !important; }
+        .hover\:text-white:hover { color: var(--black) !important; }
+
+        /* Buttons with yellow fill */
+        .btn-yellow {
+            background: var(--yellow-deep);
+            color: white;
+            border: none;
+            padding: 0.75rem 2rem;
+            border-radius: 9999px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(230,184,0,0.4);
+            text-decoration: none;
+            display: inline-block;
+            cursor: pointer;
+        }
+        .btn-yellow:hover {
+            background: var(--yellow-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(230,184,0,0.6);
+            color: var(--black);
+        }
+        .btn-yellow:active { transform: scale(0.97); }
+
         * { margin: 0; padding: 0; box-sizing: border-box; }
         html { scroll-behavior: auto; }
         body {
             background: var(--navy);
-            color: var(--white);
+            color: var(--black);
             font-family: 'Inter', sans-serif;
             overflow-x: hidden;
             -webkit-font-smoothing: antialiased;
@@ -65,18 +122,31 @@
         h1, h2, h3, h4, h5, h6 {
             font-family: 'Sora', sans-serif;
             letter-spacing: -0.02em;
+            color: var(--black);
         }
         .glass {
-            background: rgba(255,255,255,0.06);
+            background: var(--glass-bg);
             backdrop-filter: blur(16px);
             -webkit-backdrop-filter: blur(16px);
-            border: 1px solid rgba(255,255,255,0.1);
+            border: 1px solid var(--glass-border);
         }
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 1.25rem;
+            transition: border-color 0.3s;
+        }
+        .glass-card:hover { border-color: rgba(56,189,248,0.5); }
+
         .morph-section {
             opacity: 0;
             transform: scale(0.95) translateY(40px);
             filter: blur(8px);
-            transition: opacity 0.8s cubic-bezier(0.22,1,0.36,1), transform 0.8s cubic-bezier(0.22,1,0.36,1), filter 0.8s cubic-bezier(0.22,1,0.36,1);
+            transition: opacity 0.8s cubic-bezier(0.22,1,0.36,1),
+                        transform 0.8s cubic-bezier(0.22,1,0.36,1),
+                        filter 0.8s cubic-bezier(0.22,1,0.36,1);
             will-change: opacity, transform, filter;
         }
         .morph-section.visible {
@@ -88,24 +158,27 @@
             .morph-section { opacity: 1; transform: none; filter: none; transition: none; }
             * { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
         }
-        :focus-visible { outline: 3px solid var(--sky); outline-offset: 4px; }
-        .loading-spinner { animation: spin 1s linear infinite; }
-        @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+        :focus-visible { outline: 3px solid var(--skyblue); outline-offset: 4px; }
         .section-padding { padding: 7rem 0; }
         @media (max-width: 768px) { .section-padding { padding: 5rem 0; } }
+
         .card-premium {
             position: relative;
             overflow: hidden;
-            transition: transform 0.4s cubic-bezier(0.22,1,0.36,1), box-shadow 0.4s cubic-bezier(0.22,1,0.36,1), border-color 0.4s;
-            background: rgba(255,255,255,0.05);
+            transition: transform 0.4s cubic-bezier(0.22,1,0.36,1),
+                        box-shadow 0.4s cubic-bezier(0.22,1,0.36,1),
+                        border-color 0.4s;
+            background: var(--glass-bg);
             backdrop-filter: blur(10px);
-            border: 1px solid rgba(255,255,255,0.1);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid var(--glass-border);
             display: flex;
             flex-direction: column;
             height: 100%;
             cursor: pointer;
             text-align: left;
-            color: inherit;
+            color: var(--black);
+            border-radius: 1.25rem;
         }
         .card-premium::before {
             content: '';
@@ -114,7 +187,7 @@
             left: -50%;
             width: 200%;
             height: 200%;
-            background: radial-gradient(circle at 50% 50%, rgba(244,197,66,0.15) 0%, transparent 60%);
+            background: radial-gradient(circle at 50% 50%, rgba(56,189,248,0.15) 0%, transparent 60%);
             opacity: 0;
             transition: opacity 0.4s ease;
             pointer-events: none;
@@ -122,29 +195,29 @@
         .card-premium:hover::before { opacity: 1; }
         .card-premium:hover {
             transform: translateY(-6px);
-            box-shadow: 0 25px 50px -10px rgba(0,0,0,0.6), 0 0 0 1px var(--yellow), 0 0 30px rgba(244,197,66,0.3);
-            border-color: var(--yellow);
+            box-shadow: 0 25px 50px -10px rgba(0,0,0,0.6), 0 0 0 1px var(--skyblue), 0 0 30px rgba(56,189,248,0.25);
+            border-color: var(--skyblue);
         }
+
         .input-gold {
-            border: 1px solid var(--yellow) !important;
-            background-color: var(--navy-2) !important;
-            color: var(--white) !important;
+            border: 1px solid var(--skyblue) !important;
+            background-color: var(--navy) !important;
+            color: var(--black) !important;
         }
         .select-gold {
-            border: 1px solid var(--yellow) !important;
-            background-color: var(--navy-2) !important;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23FFFFFF' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E") !important;
+            border: 1px solid var(--skyblue) !important;
+            background-color: var(--navy) !important;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23000000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E") !important;
             background-repeat: no-repeat !important;
             background-position: right 1rem center !important;
             background-size: 1.2em !important;
-            color: var(--white) !important;
+            color: var(--black) !important;
             -webkit-appearance: none;
             -moz-appearance: none;
             appearance: none;
         }
-        .select-gold option { background: var(--navy-2); color: var(--white); }
-        .stars { color: var(--yellow); letter-spacing: 2px; }
-        .grid-equal > * { display: flex; }
+        .select-gold option { background: var(--navy); color: var(--black); }
+
         .btn-waterfill {
             position: relative;
             overflow: hidden;
@@ -161,12 +234,13 @@
             left: 0;
             width: 100%;
             height: 0;
-            background: linear-gradient(135deg, var(--red), var(--red-light));
+            background: linear-gradient(135deg, var(--green), var(--green-light));
             transition: height 0.5s cubic-bezier(0.22,1,0.36,1);
             z-index: -1;
         }
         .btn-waterfill:hover::before { height: 100%; }
         .btn-waterfill:hover { color: var(--white) !important; }
+
         .flag-img {
             width: 60px;
             height: 40px;
@@ -192,6 +266,7 @@
         }
         .whatsapp-float:hover { transform: scale(1.1); box-shadow: 0 8px 25px rgba(37,211,102,0.6); }
         .whatsapp-float svg { fill: white; width: 32px; height: 32px; }
+
         .hero-video {
             position: absolute;
             inset: 0;
@@ -204,10 +279,11 @@
         .hero-overlay {
             position: absolute;
             inset: 0;
-            background: linear-gradient(to bottom, rgba(7,26,43,0.7), rgba(11,34,57,0.7));
+            background: linear-gradient(to bottom, rgba(255,255,255,0.7), rgba(255,255,255,0.7));
             z-index: 1;
             pointer-events: none;
         }
+
         .splash-screen {
             position: fixed;
             inset: 0;
@@ -239,8 +315,8 @@
             border-radius: 50%;
             object-fit: cover;
             margin: 0 auto 20px;
-            border: 3px solid var(--yellow);
-            box-shadow: 0 0 30px rgba(244,197,66,0.5);
+            border: 3px solid var(--skyblue);
+            box-shadow: 0 0 30px rgba(56,189,248,0.5);
         }
         .splash-tagline {
             font-size: 1.5rem;
@@ -253,13 +329,14 @@
             position: absolute;
             top: -40px;
             left: 0;
-            background: var(--yellow);
-            color: var(--navy);
+            background: var(--skyblue);
+            color: var(--white);
             padding: 8px 16px;
             z-index: 10000;
             transition: top 0.3s;
         }
         .skip-link:focus { top: 0; }
+
         .modal-overlay {
             position: fixed;
             inset: 0;
@@ -271,8 +348,8 @@
             padding: 20px;
         }
         .modal-content {
-            background: var(--navy-2);
-            border: 1px solid var(--yellow);
+            background: var(--navy);
+            border: 1px solid var(--skyblue);
             border-radius: 16px;
             padding: 2rem;
             max-width: 600px;
@@ -280,6 +357,7 @@
             max-height: 80vh;
             overflow-y: auto;
             position: relative;
+            color: var(--black);
         }
         .modal-close {
             position: absolute;
@@ -287,11 +365,12 @@
             right: 1rem;
             background: none;
             border: none;
-            color: var(--white);
+            color: var(--black);
             font-size: 1.5rem;
             cursor: pointer;
         }
-        .modal-close:hover { color: var(--yellow); }
+        .modal-close:hover { color: var(--skyblue); }
+
         .error-boundary-fallback {
             min-height: 100vh;
             display: flex;
@@ -299,10 +378,11 @@
             align-items: center;
             justify-content: center;
             background: var(--navy);
-            color: var(--white);
+            color: var(--black);
             text-align: center;
             padding: 2rem;
         }
+
         .programme-card {
             position: relative;
             border-radius: 1.25rem;
@@ -316,7 +396,7 @@
         }
         .programme-card:hover {
             transform: translateY(-6px);
-            box-shadow: 0 30px 60px -12px rgba(0,0,0,0.7), 0 0 0 1px var(--yellow);
+            box-shadow: 0 30px 60px -12px rgba(0,0,0,0.7), 0 0 0 1px var(--skyblue);
         }
         .programme-image {
             width: 100%;
@@ -328,7 +408,7 @@
         .programme-card:hover .programme-image { transform: scale(1.03); }
         .programme-info {
             padding: 1.25rem 1.5rem;
-            background: rgba(11,34,57,0.9);
+            background: rgba(255,255,255,0.9);
             backdrop-filter: blur(10px);
             flex: 1;
             display: flex;
@@ -337,25 +417,26 @@
         .programme-title {
             font-size: 1.5rem;
             font-weight: bold;
-            color: white;
+            color: var(--black);
             margin-bottom: 0.25rem;
         }
         .programme-meta {
             font-size: 0.75rem;
             text-transform: uppercase;
             letter-spacing: 0.05em;
-            color: var(--yellow);
+            color: var(--skyblue);
             margin-bottom: 0.5rem;
         }
         .programme-desc {
             font-size: 0.9rem;
-            color: rgba(255,255,255,0.75);
+            color: rgba(0,0,0,0.75);
             line-height: 1.5;
         }
+
         /* Admin styles */
         .admin-sidebar {
             background: rgba(255,255,255,0.03);
-            border-right: 1px solid rgba(255,255,255,0.06);
+            border-right: 1px solid rgba(0,0,0,0.06);
             min-height: 100vh;
             padding: 1.5rem 1rem;
             width: 220px;
@@ -365,7 +446,7 @@
             display: block;
             padding: 0.6rem 1rem;
             border-radius: 0.5rem;
-            color: rgba(255,255,255,0.7);
+            color: rgba(0,0,0,0.7);
             transition: all 0.2s;
             font-size: 0.9rem;
             text-decoration: none;
@@ -373,19 +454,19 @@
         .admin-sidebar a:hover,
         .admin-sidebar a.active {
             background: rgba(56,189,248,0.15);
-            color: white;
+            color: var(--black);
         }
-        .admin-sidebar a.active { border-left: 3px solid var(--sky); }
+        .admin-sidebar a.active { border-left: 3px solid var(--skyblue); }
         .admin-main { flex: 1; padding: 1.5rem 2rem; overflow-y: auto; }
-        .admin-layout { display: flex; min-height: 100vh; }
+        .admin-layout { display: flex; min-height: 100vh; background: var(--navy); }
         .admin-card {
-            background: rgba(255,255,255,0.04);
-            border: 1px solid rgba(255,255,255,0.06);
+            background: rgba(0,0,0,0.02);
+            border: 1px solid rgba(0,0,0,0.06);
             border-radius: 1rem;
             padding: 1.25rem;
             transition: border-color 0.2s;
         }
-        .admin-card:hover { border-color: rgba(255,255,255,0.12); }
+        .admin-card:hover { border-color: rgba(0,0,0,0.12); }
         .badge {
             display: inline-block;
             padding: 0.15rem 0.6rem;
@@ -394,17 +475,16 @@
             font-weight: 600;
             text-transform: uppercase;
         }
-        .badge-green { background: rgba(22,163,74,0.2); color: #4ADE80; }
-        .badge-yellow { background: rgba(244,197,66,0.2); color: var(--yellow); }
-        .badge-blue { background: rgba(56,189,248,0.2); color: var(--sky); }
-        .badge-gray { background: rgba(255,255,255,0.08); color: rgba(255,255,255,0.5); }
+        .badge-green { background: rgba(46,125,50,0.2); color: #4CAF50; }
+        .badge-sky { background: rgba(56,189,248,0.2); color: var(--skyblue); }
+        .badge-gray { background: rgba(0,0,0,0.08); color: rgba(0,0,0,0.5); }
         @media (max-width: 768px) {
             .admin-layout { flex-direction: column; }
             .admin-sidebar {
                 width: 100%;
                 min-height: auto;
                 border-right: none;
-                border-bottom: 1px solid rgba(255,255,255,0.06);
+                border-bottom: 1px solid rgba(0,0,0,0.06);
                 padding: 1rem;
                 display: flex;
                 flex-wrap: wrap;
@@ -412,6 +492,126 @@
             }
             .admin-sidebar a { padding: 0.4rem 0.75rem; font-size: 0.8rem; }
             .admin-main { padding: 1rem; }
+        }
+
+        /* Skeleton loading */
+        .skeleton {
+            background: linear-gradient(90deg, rgba(0,0,0,0.04) 25%, rgba(0,0,0,0.09) 50%, rgba(0,0,0,0.04) 75%);
+            background-size: 200% 100%;
+            animation: shimmer 1.6s infinite;
+            border-radius: 0.75rem;
+        }
+        @keyframes shimmer {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+        .skeleton-text { height: 0.8rem; width: 100%; margin-bottom: 0.5rem; }
+        .skeleton-title { height: 1.4rem; width: 70%; margin-bottom: 0.75rem; }
+        .skeleton-card {
+            background: rgba(0,0,0,0.02);
+            border-radius: 1.25rem;
+            padding: 1.5rem;
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+        .skeleton-circle { width: 3rem; height: 3rem; border-radius: 50%; margin-bottom: 0.75rem; }
+        .skeleton-step { display: flex; gap: 1rem; align-items: flex-start; padding: 0.75rem 0; }
+        .skeleton-step .circle { width: 3.5rem; height: 3.5rem; border-radius: 50%; flex-shrink: 0; }
+        .skeleton-step .content { flex: 1; }
+        .skeleton-icon { width: 4rem; height: 4rem; border-radius: 50%; margin: 0 auto 0.75rem; }
+
+        /* Hero logo */
+        .hero-logo-wrap {
+            position: relative;
+            z-index: 10;
+            display: flex;
+            justify-content: center;
+            margin-bottom: 1rem;
+        }
+        .hero-logo {
+            width: 140px;
+            height: 140px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid var(--skyblue);
+            box-shadow: 0 0 60px rgba(56,189,248,0.4);
+            transition: transform 0.5s ease, box-shadow 0.5s ease;
+        }
+        .hero-logo:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 80px rgba(56,189,248,0.6);
+        }
+        @media (max-width: 640px) {
+            .hero-logo { width: 100px; height: 100px; }
+        }
+
+        /* Search dropdown – positioned on the right side */
+        .search-dropdown {
+            position: absolute;
+            top: calc(100% + 8px);
+            right: 0;
+            min-width: 220px;
+            background: var(--navy);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(56,189,248,0.3);
+            border-radius: 0.75rem;
+            padding: 0.5rem;
+            box-shadow: 0 20px 40px -12px rgba(0,0,0,0.6);
+            transition: all 0.3s cubic-bezier(0.22,1,0.36,1);
+            z-index: 60;
+            pointer-events: none;
+            opacity: 0;
+            transform-origin: top right;
+            transform: scale(0.95) translateY(-10px);
+        }
+        .search-dropdown.open {
+            opacity: 1;
+            transform: scale(1) translateY(0);
+            pointer-events: auto;
+        }
+        .search-dropdown a {
+            display: block;
+            padding: 0.6rem 1rem;
+            border-radius: 0.5rem;
+            color: rgba(0,0,0,0.8);
+            transition: all 0.2s;
+            font-size: 0.9rem;
+            text-decoration: none;
+        }
+        .search-dropdown a:hover {
+            background: rgba(56,189,248,0.15);
+            color: var(--black);
+            padding-left: 1.5rem;
+        }
+        .search-dropdown a:active { transform: scale(0.98); }
+
+        .search-input {
+            background: rgba(0,0,0,0.05);
+            border: 1px solid rgba(56,189,248,0.3);
+            border-radius: 2rem;
+            padding: 0.5rem 1.2rem;
+            color: var(--black);
+            width: 200px;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+            cursor: pointer;
+        }
+        .search-input:focus {
+            outline: none;
+            border-color: var(--skyblue);
+            box-shadow: 0 0 0 3px rgba(56,189,248,0.2);
+            width: 220px;
+        }
+        .search-input::placeholder {
+            color: rgba(0,0,0,0.5);
+        }
+        .search-wrapper {
+            position: relative;
+            display: inline-block;
+        }
+        @media (max-width: 768px) {
+            .search-input { width: 150px; font-size: 0.8rem; padding: 0.4rem 1rem; }
+            .search-input:focus { width: 170px; }
+            .search-dropdown { right: 0; min-width: 180px; }
         }
     </style>
 </head>
@@ -451,7 +651,7 @@
             splashVideo: resolveStorageUrl('hero/backgrounds/splash.mp4') || 'https://eliteglobalpathways.com/splash.mp4',
         };
 
-        // ─── DESTINATION FLAG FALLBACKS (from second code) ──────────────
+        // ─── DESTINATION FLAG FALLBACKS ──────────────────────────────────
         const DESTINATION_FLAG_FALLBACKS = {
             'india': 'https://media.istockphoto.com/id/931097020/photo/india-flag-waving-background.jpg?s=1024x1024&w=is&k=20&c=X5Gl5Mmzma4Y5g1hwgBWOj201lNF0wZlpjOA3GDKoNc=',
             'united kingdom': 'https://media.istockphoto.com/id/1181025257/photo/united-kingdom-flag.jpg?s=1024x1024&w=is&k=20&c=yRrnUD4hsmDkdjAjk4tfAbsPSO5iA0KuJ86krFWjQAM=',
@@ -542,7 +742,7 @@
                 return (
                     <div className="error-boundary-fallback" role="alert">
                         <h1 className="text-3xl font-bold mb-4">Something went wrong.</h1>
-                        <p className="text-white/70 mb-8">The website is still available.</p>
+                        <p className="text-black/70 mb-8">The website is still available.</p>
                         <button onClick={() => { setHasError(false); window.location.reload(); }} className="btn-waterfill rounded-full px-8 py-3 text-base font-semibold text-white bg-transparent border border-red">
                             Reload Website
                         </button>
@@ -569,6 +769,72 @@
                 fetcher().then(result => setData(result)).catch(err => { console.error('Retry error:', err); setError(err); }).finally(() => setLoading(false));
             }, [fetcher]);
             return { data, loading, error, retry };
+        }
+
+        // ─── SKELETON COMPONENTS ──────────────────────────────────────────
+        function SkeletonCard() {
+            return (
+                <div className="skeleton-card">
+                    <div className="skeleton skeleton-title"></div>
+                    <div className="skeleton skeleton-text"></div>
+                    <div className="skeleton skeleton-text" style={{ width: '80%' }}></div>
+                    <div className="skeleton skeleton-text" style={{ width: '60%' }}></div>
+                </div>
+            );
+        }
+
+        function SkeletonGrid({ count = 4 }) {
+            return (
+                <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+                    {Array.from({ length: count }).map((_, i) => <SkeletonCard key={i} />)}
+                </div>
+            );
+        }
+
+        function SkeletonStep() {
+            return (
+                <div className="skeleton-step">
+                    <div className="skeleton skeleton-circle circle"></div>
+                    <div className="content">
+                        <div className="skeleton skeleton-title" style={{ width: '60%' }}></div>
+                        <div className="skeleton skeleton-text"></div>
+                        <div className="skeleton skeleton-text" style={{ width: '70%' }}></div>
+                    </div>
+                </div>
+            );
+        }
+
+        function SkeletonService() {
+            return (
+                <div className="skeleton-card text-center">
+                    <div className="skeleton skeleton-icon mx-auto"></div>
+                    <div className="skeleton skeleton-title mx-auto" style={{ width: '60%' }}></div>
+                    <div className="skeleton skeleton-text"></div>
+                    <div className="skeleton skeleton-text" style={{ width: '80%' }}></div>
+                </div>
+            );
+        }
+
+        function SkeletonFaq() {
+            return (
+                <div className="skeleton-card">
+                    <div className="flex justify-between items-center">
+                        <div className="skeleton skeleton-title" style={{ width: '70%' }}></div>
+                        <div className="skeleton" style={{ width: '2rem', height: '2rem', borderRadius: '50%' }}></div>
+                    </div>
+                </div>
+            );
+        }
+
+        function SkeletonTestimonial() {
+            return (
+                <div className="skeleton-card">
+                    <div className="skeleton skeleton-circle" style={{ width: '4rem', height: '4rem', borderRadius: '50%', marginBottom: '0.75rem' }}></div>
+                    <div className="skeleton skeleton-text"></div>
+                    <div className="skeleton skeleton-text" style={{ width: '90%' }}></div>
+                    <div className="skeleton skeleton-text" style={{ width: '60%' }}></div>
+                </div>
+            );
         }
 
         // ─── MORPH / REVEAL ──────────────────────────────────────────────
@@ -601,8 +867,8 @@
             return (
                 <div className={`max-w-4xl ${align === 'center' ? 'mx-auto text-center' : ''} ${className}`}>
                     {eyebrow && <Reveal><p className="mb-4 text-sm font-semibold uppercase tracking-[0.3em] text-sky">{eyebrow}</p></Reveal>}
-                    <Reveal delay={0.1}><h2 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight text-white">{title}</h2></Reveal>
-                    {subtitle && <Reveal delay={0.2}><p className="mt-6 text-lg md:text-xl text-white/70">{subtitle}</p></Reveal>}
+                    <Reveal delay={0.1}><h2 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight text-black">{title}</h2></Reveal>
+                    {subtitle && <Reveal delay={0.2}><p className="mt-6 text-lg md:text-xl text-black/70">{subtitle}</p></Reveal>}
                 </div>
             );
         }
@@ -628,6 +894,7 @@
             const reduced = useReducedMotion();
             const lenisRef = useRef(null);
             const [scrollTo, setScrollTo] = useState(null);
+
             useEffect(() => {
                 if (reduced) {
                     setScrollTo(() => (target) => {
@@ -641,30 +908,57 @@
                     });
                     return;
                 }
+
                 let lenis = null;
                 let ticker = null;
                 try {
                     if (typeof Lenis !== 'undefined') {
-                        lenis = new Lenis({ duration: 1.2, easing: t => Math.min(1, 1.001 - Math.pow(2, -10*t)), smoothWheel: true, touchMultiplier: 1.5 });
+                        lenis = new Lenis({
+                            duration: 1.2,
+                            easing: t => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+                            smoothWheel: true,
+                            touchMultiplier: 1.5
+                        });
                         lenisRef.current = lenis;
                         lenis.on('scroll', () => { if (typeof ScrollTrigger !== 'undefined') ScrollTrigger.update(); });
                         ticker = (time) => { lenis.raf(time * 1000); };
                         if (typeof gsap !== 'undefined') { gsap.ticker.add(ticker); gsap.ticker.lagSmoothing(0); }
                     }
                 } catch (err) { console.warn('Lenis init failed:', err); }
+
                 const scrollToFn = (target) => {
                     const el = document.querySelector(target);
-                    if (!el) return;
+                    if (!el) {
+                        setTimeout(() => {
+                            const el2 = document.querySelector(target);
+                            if (el2) {
+                                const headerOffset = 80;
+                                const elementPosition = el2.getBoundingClientRect().top;
+                                const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+                                if (lenis) {
+                                    lenis.scrollTo(offsetPosition, { duration: 1.2 });
+                                } else {
+                                    window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
+                                }
+                            }
+                        }, 150);
+                        return;
+                    }
                     const headerOffset = 80;
                     const elementPosition = el.getBoundingClientRect().top;
                     const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
-                    if (lenis) { lenis.scrollTo(offsetPosition, { duration: 1.2 }); }
-                    else if (typeof window !== 'undefined' && 'scrollTo' in window) { window.scrollTo({ top: offsetPosition, behavior: 'smooth' }); }
-                    else { window.scrollTo(0, offsetPosition); }
+                    if (lenis) {
+                        lenis.scrollTo(offsetPosition, { duration: 1.2 });
+                    } else if (typeof window !== 'undefined' && 'scrollTo' in window) {
+                        window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
+                    } else {
+                        window.scrollTo(0, offsetPosition);
+                    }
                 };
                 setScrollTo(() => scrollToFn);
                 return () => { if (ticker && typeof gsap !== 'undefined') { gsap.ticker.remove(ticker); } if (lenis) lenis.destroy(); };
             }, [reduced]);
+
             const effectiveScrollTo = scrollTo || ((target) => {
                 const el = document.querySelector(target);
                 if (el) {
@@ -674,6 +968,7 @@
                     window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
                 }
             });
+
             return (
                 <ScrollContext.Provider value={effectiveScrollTo}>{children}</ScrollContext.Provider>
             );
@@ -705,28 +1000,47 @@
             );
         }
 
-        // ─── NAVBAR ──────────────────────────────────────────────────────
+        // ─── NAVBAR – Search on the far right ──────────────────────────
         function Navbar() {
             const [scrolled, setScrolled] = useState(false);
             const [mobileOpen, setMobileOpen] = useState(false);
+            const [searchOpen, setSearchOpen] = useState(false);
             const scrollTo = useScrollTo();
             const menuRef = useRef(null);
             const buttonRef = useRef(null);
+            const searchRef = useRef(null);
+            const inputRef = useRef(null);
+
             useEffect(() => {
                 const onScroll = () => setScrolled(window.scrollY > 50);
                 window.addEventListener('scroll', onScroll);
                 return () => window.removeEventListener('scroll', onScroll);
             }, []);
+
             useEffect(() => {
                 const handleClickOutside = (e) => {
-                    if (mobileOpen && menuRef.current && !menuRef.current.contains(e.target) && !buttonRef.current?.contains(e.target)) setMobileOpen(false);
+                    if (mobileOpen && menuRef.current && !menuRef.current.contains(e.target) && !buttonRef.current?.contains(e.target)) {
+                        setMobileOpen(false);
+                    }
+                    if (searchOpen && searchRef.current && !searchRef.current.contains(e.target)) {
+                        setSearchOpen(false);
+                    }
                 };
-                const handleEscape = (e) => { if (e.key === 'Escape') setMobileOpen(false); };
+                const handleEscape = (e) => {
+                    if (e.key === 'Escape') {
+                        setMobileOpen(false);
+                        setSearchOpen(false);
+                    }
+                };
                 document.addEventListener('mousedown', handleClickOutside);
                 document.addEventListener('keydown', handleEscape);
-                return () => { document.removeEventListener('mousedown', handleClickOutside); document.removeEventListener('keydown', handleEscape); };
-            }, [mobileOpen]);
-            const links = [
+                return () => {
+                    document.removeEventListener('mousedown', handleClickOutside);
+                    document.removeEventListener('keydown', handleEscape);
+                };
+            }, [mobileOpen, searchOpen]);
+
+            const navLinks = [
                 { label: 'Home', href: '#home' },
                 { label: 'About', href: '#about' },
                 { label: 'Programmes', href: '#programmes' },
@@ -738,46 +1052,122 @@
                 { label: 'Why Choose Us', href: '#why-choose-us' },
                 { label: 'Partners', href: '#partners' },
                 { label: 'FAQ', href: '#faq' },
-                { label: 'Contact', href: '#contact' }
+                { label: 'Contact', href: '#contact' },
+                { label: 'Apply Now', href: '#apply' },
             ];
+
             const handleNavClick = (e, href) => {
                 e.preventDefault();
-                scrollTo(href);
+                if (scrollTo) {
+                    scrollTo(href);
+                } else {
+                    const el = document.querySelector(href);
+                    if (el) {
+                        const headerOffset = 80;
+                        const elementPosition = el.getBoundingClientRect().top;
+                        const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+                        window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
+                    }
+                }
+                setSearchOpen(false);
                 setMobileOpen(false);
                 if (window.history) window.history.pushState(null, '', href);
             };
+
+            const toggleSearch = () => {
+                setSearchOpen(!searchOpen);
+                if (!searchOpen) {
+                    setTimeout(() => inputRef.current?.focus(), 100);
+                }
+            };
+
             return (
                 <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${scrolled ? 'glass py-3' : 'bg-transparent py-6'}`}>
                     <a href="#main-content" className="skip-link">Skip to main content</a>
                     <div className="mx-auto max-w-7xl flex items-center justify-between px-6 lg:px-8">
-                        <a href="#home" className="flex items-center gap-3" onClick={(e) => handleNavClick(e, '#home')} aria-label="Go to home">
-                            <img src={defaultMedia.logo} alt="Elite Global Pathways" className="h-10 w-10 rounded-full object-cover" />
-                            <span className="text-lg font-bold text-white hidden sm:block">Elite Global Pathways</span>
-                        </a>
-                        <nav className="hidden lg:flex items-center gap-6" aria-label="Main navigation">
-                            {links.map(link => (
-                                <a key={link.href} href={link.href} onClick={(e) => handleNavClick(e, link.href)} className="text-sm font-medium text-white/80 hover:text-sky transition-colors cursor-pointer">{link.label}</a>
-                            ))}
-                            <WaterfillButton href="#apply" onClick={(e) => handleNavClick(e, '#apply')} className="rounded-full px-6 py-2.5 text-sm font-semibold text-white bg-transparent border border-red" ariaLabel="Apply Now">Apply Now</WaterfillButton>
-                        </nav>
-                        <button ref={buttonRef} className="lg:hidden text-white text-2xl focus:outline-none focus:ring-2 focus:ring-sky rounded-md p-1" onClick={() => setMobileOpen(!mobileOpen)} aria-label={mobileOpen ? 'Close menu' : 'Open menu'} aria-expanded={mobileOpen}>
-                            {mobileOpen ? '✕' : '☰'}
-                        </button>
+                        {/* Logo – left */}
+                        <div className="flex items-center gap-3">
+                            <a href="#home" onClick={(e) => handleNavClick(e, '#home')} aria-label="Go to home">
+                                <img src={defaultMedia.logo} alt="Elite Global Pathways" className="h-10 w-10 rounded-full object-cover" />
+                            </a>
+                            <span className="text-lg font-bold text-black hidden sm:block">Elite Global Pathways</span>
+                        </div>
+
+                        {/* Search – far right */}
+                        <div className="flex items-center gap-4">
+                            <div className="hidden lg:block" ref={searchRef}>
+                                <div className="search-wrapper">
+                                    <input
+                                        ref={inputRef}
+                                        type="text"
+                                        className="search-input"
+                                        placeholder="Explore..."
+                                        onClick={toggleSearch}
+                                        onFocus={() => setSearchOpen(true)}
+                                        readOnly
+                                        aria-label="Open navigation menu"
+                                    />
+                                    <div className={`search-dropdown ${searchOpen ? 'open' : ''}`}>
+                                        {navLinks.map(link => (
+                                            <a
+                                                key={link.href}
+                                                href={link.href}
+                                                onClick={(e) => handleNavClick(e, link.href)}
+                                                className="flex items-center gap-2"
+                                            >
+                                                <span className="text-sky">•</span>
+                                                {link.label}
+                                            </a>
+                                        ))}
+                                    </div>
+                                </div>
+                            </div>
+
+                            {/* Mobile menu toggle */}
+                            <button
+                                ref={buttonRef}
+                                className="lg:hidden text-black text-2xl focus:outline-none focus:ring-2 focus:ring-sky rounded-md p-1"
+                                onClick={() => setMobileOpen(!mobileOpen)}
+                                aria-label={mobileOpen ? 'Close menu' : 'Open menu'}
+                                aria-expanded={mobileOpen}
+                            >
+                                {mobileOpen ? '✕' : '☰'}
+                            </button>
+                        </div>
                     </div>
+
+                    {/* Mobile navigation */}
                     {mobileOpen && (
                         <div ref={menuRef} className="lg:hidden glass mt-4 mx-4 rounded-2xl p-6" role="dialog" aria-label="Mobile navigation">
-                            <nav className="flex flex-col gap-4">
-                                {links.map(link => (
-                                    <a key={link.href} href={link.href} onClick={(e) => handleNavClick(e, link.href)} className="text-lg font-medium text-white/90 hover:text-sky">{link.label}</a>
-                                ))}
-                                <WaterfillButton href="#apply" onClick={(e) => handleNavClick(e, '#apply')} className="rounded-full px-6 py-2.5 text-sm font-semibold text-white bg-transparent border border-red" ariaLabel="Apply Now">Apply Now</WaterfillButton>
-                                <div className="text-sm text-white/70 pt-4 border-t border-white/10">
-                                    <p>Email: eliteglobalpathwaysltd2025@gmail.com</p>
-                                    <p>WhatsApp India: +91 73593 20928</p>
-                                    <p>WhatsApp Uganda: +256 779 989906</p>
-                                    <p>WhatsApp Myanmar: +95 3787 5184</p>
+                            <div className="relative mb-4">
+                                <input
+                                    type="text"
+                                    className="search-input w-full bg-white/10 border-sky/40"
+                                    placeholder="Search menu..."
+                                    onClick={() => setSearchOpen(!searchOpen)}
+                                    onFocus={() => setSearchOpen(true)}
+                                    readOnly
+                                />
+                                <div className={`search-dropdown open relative static mt-2 w-full border-sky/30 ${searchOpen ? 'open' : ''}`}>
+                                    {navLinks.map(link => (
+                                        <a
+                                            key={link.href}
+                                            href={link.href}
+                                            onClick={(e) => handleNavClick(e, link.href)}
+                                            className="flex items-center gap-2 py-2"
+                                        >
+                                            <span className="text-sky">•</span>
+                                            {link.label}
+                                        </a>
+                                    ))}
                                 </div>
-                            </nav>
+                            </div>
+                            <div className="text-sm text-black/70 pt-4 border-t border-black/10">
+                                <p>Email: eliteglobalpathwaysltd2025@gmail.com</p>
+                                <p>WhatsApp India: +91 73593 20928</p>
+                                <p>WhatsApp Uganda: +256 779 989906</p>
+                                <p>WhatsApp Myanmar: +95 3787 5184</p>
+                            </div>
                         </div>
                     )}
                 </header>
@@ -820,7 +1210,7 @@
                     if (promise !== undefined) {
                         promise.catch(err => {
                             console.warn('Autoplay prevented:', err);
-                            const retry = () => { video.play().catch(() => {}); document.removeEventListener('click', retry); document.removeEventListener('touchstart', retry); };
+                            const retry = () => { video.play().catch(() => {}); };
                             document.addEventListener('click', retry, { once: true });
                             document.addEventListener('touchstart', retry, { once: true });
                         });
@@ -850,32 +1240,35 @@
             const heroVideoUrl = defaultMedia.heroVideo;
 
             return (
-                <section id="home" ref={heroRef} className="relative h-screen overflow-hidden bg-navy" aria-label="Hero">
+                <section id="home" ref={heroRef} className="relative h-screen overflow-hidden bg-white" aria-label="Hero">
                     {!videoError ? (
                         <video ref={videoRef} className="hero-video" autoPlay muted loop playsInline preload="auto" poster="" onError={() => setVideoError(true)}>
                             <source src={heroVideoUrl} type="video/mp4" />
                             Your browser does not support the video tag.
                         </video>
                     ) : (
-                        <div className="hero-video" style={{ background: 'linear-gradient(135deg, #071A2B 0%, #0B2239 50%, #071A2B 100%)' }}></div>
+                        <div className="hero-video" style={{ background: 'linear-gradient(135deg, #FFFFFF 0%, #F5F5F5 100%)' }}></div>
                     )}
                     <div className="hero-overlay"></div>
-                    <div className="absolute inset-0 layer-foreground" style={{ background: 'radial-gradient(circle at 70% 80%, rgba(56,189,248,0.2) 0%, transparent 50%)', zIndex: 2, pointerEvents: 'none' }}></div>
+                    <div className="absolute inset-0 layer-foreground" style={{ background: 'radial-gradient(circle at 70% 80%, rgba(46,125,50,0.1) 0%, rgba(56,189,248,0.05) 60%, transparent 70%)', zIndex: 2, pointerEvents: 'none' }}></div>
                     <div className="absolute inset-0 flex items-center justify-center layer-typography z-10" style={{ pointerEvents: 'none' }}>
                         <div className="text-center px-6" style={{ pointerEvents: 'auto' }}>
-                            <Reveal delay={0.2}><p className="text-sm font-semibold uppercase tracking-[0.4em] text-sky mb-2">Elite Global Pathways</p></Reveal>
-                            <Reveal delay={0.3}><p className="text-lg md:text-xl text-white/90 italic">{heroContent.motto}</p></Reveal>
-                            <Reveal delay={0.5}><h1 className="text-5xl md:text-7xl lg:text-8xl font-bold text-white mt-6">{heroContent.title}</h1></Reveal>
-                            <Reveal delay={0.7}><p className="mt-6 text-xl md:text-2xl text-sky-100/90">{heroContent.subtitle}</p></Reveal>
-                            <Reveal delay={0.9} className="mt-10 flex flex-wrap items-center justify-center gap-4">
-                                <WaterfillButton href="#apply" onClick={(e) => { e.preventDefault(); scrollTo('#apply'); }} className="rounded-full px-8 py-4 text-base font-semibold text-white bg-transparent border border-red" ariaLabel="Apply Now">Apply Now</WaterfillButton>
-                                <WaterfillButton href="#programmes" onClick={(e) => { e.preventDefault(); scrollTo('#programmes'); }} className="rounded-full px-8 py-4 text-base font-semibold text-white bg-transparent border border-red" ariaLabel="Explore Our Programmes">Explore Our Programmes</WaterfillButton>
+                            <div className="hero-logo-wrap">
+                                <img src={defaultMedia.logo} alt="Elite Global Pathways" className="hero-logo" />
+                            </div>
+                            <Reveal delay={0.1}><p className="text-sm font-semibold uppercase tracking-[0.4em] text-sky mb-2">Elite Global Pathways</p></Reveal>
+                            <Reveal delay={0.2}><p className="text-lg md:text-xl text-black/80 italic">{heroContent.motto}</p></Reveal>
+                            <Reveal delay={0.4}><h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-black mt-4">{heroContent.title}</h1></Reveal>
+                            <Reveal delay={0.6}><p className="mt-4 text-lg md:text-xl text-black/70">{heroContent.subtitle}</p></Reveal>
+                            <Reveal delay={0.8} className="mt-8 flex flex-wrap items-center justify-center gap-4">
+                                <button onClick={(e) => { e.preventDefault(); if (scrollTo) scrollTo('#apply'); else { const el = document.querySelector('#apply'); if (el) { const headerOffset = 80; const elementPosition = el.getBoundingClientRect().top; const offsetPosition = elementPosition + window.pageYOffset - headerOffset; window.scrollTo({ top: offsetPosition, behavior: 'smooth' }); } } }} className="btn-yellow">Apply Now</button>
+                                <button onClick={(e) => { e.preventDefault(); if (scrollTo) scrollTo('#programmes'); else { const el = document.querySelector('#programmes'); if (el) { const headerOffset = 80; const elementPosition = el.getBoundingClientRect().top; const offsetPosition = elementPosition + window.pageYOffset - headerOffset; window.scrollTo({ top: offsetPosition, behavior: 'smooth' }); } } }} className="btn-yellow">Explore Programmes</button>
                             </Reveal>
                         </div>
                     </div>
-                    <div className="absolute rounded-full filter blur-2xl opacity-30 floating-shape" style={{ width: 300, height: 300, background: 'rgba(56,189,248,0.15)', top: '-5%', left: '-5%', zIndex: 3, pointerEvents: 'none' }}></div>
-                    <div className="absolute rounded-full filter blur-2xl opacity-30 floating-shape" style={{ width: 200, height: 200, background: 'rgba(34,211,238,0.1)', bottom: '-10%', right: '-5%', zIndex: 3, pointerEvents: 'none' }}></div>
-                    <div className="absolute rounded-full filter blur-2xl opacity-30 floating-shape" style={{ width: 400, height: 400, background: 'rgba(7,26,43,0.3)', border: '2px solid rgba(255,255,255,0.05)', top: '30%', left: '60%', zIndex: 3, pointerEvents: 'none' }}></div>
+                    <div className="absolute rounded-full filter blur-2xl opacity-30 floating-shape" style={{ width: 300, height: 300, background: 'rgba(56,189,248,0.1)', top: '-5%', left: '-5%', zIndex: 3, pointerEvents: 'none' }}></div>
+                    <div className="absolute rounded-full filter blur-2xl opacity-30 floating-shape" style={{ width: 200, height: 200, background: 'rgba(46,125,50,0.1)', bottom: '-10%', right: '-5%', zIndex: 3, pointerEvents: 'none' }}></div>
+                    <div className="absolute rounded-full filter blur-2xl opacity-30 floating-shape" style={{ width: 400, height: 400, background: 'rgba(0,0,0,0.03)', border: '2px solid rgba(0,0,0,0.05)', top: '30%', left: '60%', zIndex: 3, pointerEvents: 'none' }}></div>
                 </section>
             );
         }
@@ -907,11 +1300,20 @@
                 } catch (err) { console.warn('Destinations fetch failed:', err); return []; }
             }, []);
 
-            if (loading) return <MorphSection id="destinations" className="section-padding bg-navy"><div className="text-center text-white/70">Loading destinations...</div></MorphSection>;
-            if (error && (!destinations || destinations.length === 0)) return <MorphSection id="destinations" className="section-padding bg-navy"><div className="text-center text-white/70">Destinations temporarily unavailable. <button onClick={retry} className="underline ml-2">Retry</button></div></MorphSection>;
+            if (loading) {
+                return (
+                    <MorphSection id="destinations" className="section-padding bg-white">
+                        <div className="mx-auto max-w-6xl px-6 text-center">
+                            <SectionHeading eyebrow="DESTINATIONS" title="Where Will Your Journey Take You?" subtitle="Explore potential study destinations, subject to programme availability and admission requirements." />
+                            <SkeletonGrid count={4} />
+                        </div>
+                    </MorphSection>
+                );
+            }
+            if (error && (!destinations || destinations.length === 0)) return <MorphSection id="destinations" className="section-padding bg-white"><div className="text-center text-black/70">Destinations temporarily unavailable. <button onClick={retry} className="underline ml-2">Retry</button></div></MorphSection>;
             const list = destinations || [];
             return (
-                <MorphSection id="destinations" className="section-padding bg-navy">
+                <MorphSection id="destinations" className="section-padding bg-white">
                     <div className="mx-auto max-w-6xl px-6 text-center">
                         <SectionHeading eyebrow="DESTINATIONS" title="Where Will Your Journey Take You?" subtitle="Explore potential study destinations, subject to programme availability and admission requirements." />
                         <div className="mt-16 grid gap-6 sm:grid-cols-2 lg:grid-cols-4 grid-equal">
@@ -919,13 +1321,13 @@
                                 <Reveal key={d.id} delay={i * 0.07} className="h-full">
                                     <div className="card-premium rounded-2xl p-6 text-center h-full w-full">
                                         {d.imageUrl ? <img src={d.imageUrl} alt={`${d.name} destination`} className="flag-img" loading="lazy" onError={(e) => { e.target.style.display = 'none'; }} /> : <div className="flag-img" style={{ background: 'var(--navy-2)' }}></div>}
-                                        <h3 className="text-xl font-semibold text-white">{d.name}</h3>
-                                        {d.description && <p className="mt-2 text-sm text-white/60 line-clamp-2">{d.description}</p>}
+                                        <h3 className="text-xl font-semibold text-black">{d.name}</h3>
+                                        {d.description && <p className="mt-2 text-sm text-black/60 line-clamp-2">{d.description}</p>}
                                     </div>
                                 </Reveal>
                             ))}
                         </div>
-                        <Reveal delay={0.5}><p className="mt-8 text-sm text-white/60">Programme availability varies by destination. We help you explore options that match your profile.</p></Reveal>
+                        <Reveal delay={0.5}><p className="mt-8 text-sm text-black/60">Programme availability varies by destination. We help you explore options that match your profile.</p></Reveal>
                     </div>
                 </MorphSection>
             );
@@ -943,11 +1345,20 @@
                 return mapMediaToProgrammes(progData, media);
             }, []);
             const scrollTo = useScrollTo();
-            if (loading) return <MorphSection id="programmes" className="section-padding bg-navy-2"><div className="text-center text-white/70">Loading academic programmes...</div></MorphSection>;
+            if (loading) {
+                return (
+                    <MorphSection id="programmes" className="section-padding bg-gray-50">
+                        <div className="mx-auto max-w-7xl px-6 lg:px-8">
+                            <SectionHeading eyebrow="PROGRAMMES" title="Explore Academic Programmes" subtitle="A curated catalogue of programmes across multiple disciplines. Click any card for details." />
+                            <SkeletonGrid count={4} />
+                        </div>
+                    </MorphSection>
+                );
+            }
             if (error) {
                 return (
-                    <MorphSection id="programmes" className="section-padding bg-navy-2">
-                        <div className="text-center text-white/70">
+                    <MorphSection id="programmes" className="section-padding bg-gray-50">
+                        <div className="text-center text-black/70">
                             <p>Unable to load academic programmes.</p>
                             <button onClick={retry} className="btn-waterfill rounded-full px-6 py-2 mt-4 text-sm font-semibold text-white bg-transparent border border-red">Retry</button>
                         </div>
@@ -956,46 +1367,46 @@
             }
             const list = programmes || [];
             return (
-                <MorphSection id="programmes" className="section-padding bg-navy-2">
+                <MorphSection id="programmes" className="section-padding bg-gray-50">
                     <div className="mx-auto max-w-7xl px-6 lg:px-8">
                         <SectionHeading eyebrow="PROGRAMMES" title="Explore Academic Programmes" subtitle="A curated catalogue of programmes across multiple disciplines. Click any card for details." />
                         <div className="mt-16 grid gap-6 sm:grid-cols-2 lg:grid-cols-4 grid-equal">
                             {list.map((p, i) => (
                                 <Reveal key={p.id} delay={i * 0.1} className="h-full">
-                                    <button onClick={() => setSelectedProgramme(p)} className="programme-card card-premium rounded-2xl p-6 h-full w-full text-left cursor-pointer focus:outline-none focus:ring-2 focus:ring-yellow" aria-label={`View details for ${p.title}`}>
+                                    <button onClick={() => setSelectedProgramme(p)} className="programme-card card-premium rounded-2xl p-6 h-full w-full text-left cursor-pointer focus:outline-none focus:ring-2 focus:ring-sky" aria-label={`View details for ${p.title}`}>
                                         {p.imageUrl ? (
                                             <img src={p.imageUrl} alt={p.title} className="programme-image mb-4 rounded-lg" loading="lazy" onError={(e) => { e.target.style.display = 'none'; }} />
                                         ) : (
-                                            <div className="programme-image mb-4 rounded-lg bg-gradient-to-br from-sky/20 to-navy-2 flex items-center justify-center">
+                                            <div className="programme-image mb-4 rounded-lg bg-gradient-to-br from-sky/20 to-gray-100 flex items-center justify-center">
                                                 <span className="text-4xl">🎓</span>
                                             </div>
                                         )}
                                         <div className="programme-info p-4">
-                                            <h3 className="programme-title text-white font-bold text-xl">{p.title}</h3>
-                                            {p.category && <p className="programme-meta text-xs uppercase tracking-wider text-yellow mb-1">{p.category}</p>}
-                                            <p className="programme-desc text-sm text-white/75">{p.description || 'Click to view programme details.'}</p>
-                                            <span className="mt-3 inline-block text-xs text-white/50">View Details →</span>
+                                            <h3 className="programme-title text-black font-bold text-xl">{p.title}</h3>
+                                            {p.category && <p className="programme-meta text-xs uppercase tracking-wider text-sky mb-1">{p.category}</p>}
+                                            <p className="programme-desc text-sm text-black/75">{p.description || 'Click to view programme details.'}</p>
+                                            <span className="mt-3 inline-block text-xs text-black/50">View Details →</span>
                                         </div>
                                     </button>
                                 </Reveal>
                             ))}
                         </div>
-                        {list.length === 0 && <div className="text-center mt-10 text-white/70">No published programmes are currently available.</div>}
+                        {list.length === 0 && <div className="text-center mt-10 text-black/70">No published programmes are currently available.</div>}
                     </div>
                     {selectedProgramme && (
                         <div className="modal-overlay" role="dialog" aria-modal="true" aria-label={`${selectedProgramme.title} details`}>
                             <div className="modal-content">
                                 <button className="modal-close" onClick={() => setSelectedProgramme(null)} aria-label="Close programme details">✕</button>
-                                <h3 className="text-2xl font-bold text-white mb-2">{selectedProgramme.title}</h3>
-                                {selectedProgramme.category && <p className="text-sm uppercase tracking-wider text-yellow mb-4">{selectedProgramme.category}</p>}
-                                {selectedProgramme.level && <p className="text-sm text-white/70 mb-2"><strong>Level:</strong> {selectedProgramme.level}</p>}
-                                {selectedProgramme.description && <p className="text-white/80 mt-4 leading-relaxed">{selectedProgramme.description}</p>}
-                                {selectedProgramme.pathway_description && <div className="mt-4"><h4 className="text-lg font-semibold text-white mb-2">Pathway Description</h4><p className="text-white/70 leading-relaxed">{selectedProgramme.pathway_description}</p></div>}
-                                {selectedProgramme.academic_direction && <div className="mt-4"><h4 className="text-lg font-semibold text-white mb-2">Academic Direction</h4><p className="text-white/70 leading-relaxed">{selectedProgramme.academic_direction}</p></div>}
-                                {selectedProgramme.next_steps && <div className="mt-4"><h4 className="text-lg font-semibold text-white mb-2">Next Steps</h4><p className="text-white/70 leading-relaxed">{selectedProgramme.next_steps}</p></div>}
+                                <h3 className="text-2xl font-bold text-black mb-2">{selectedProgramme.title}</h3>
+                                {selectedProgramme.category && <p className="text-sm uppercase tracking-wider text-sky mb-4">{selectedProgramme.category}</p>}
+                                {selectedProgramme.level && <p className="text-sm text-black/70 mb-2"><strong>Level:</strong> {selectedProgramme.level}</p>}
+                                {selectedProgramme.description && <p className="text-black/80 mt-4 leading-relaxed">{selectedProgramme.description}</p>}
+                                {selectedProgramme.pathway_description && <div className="mt-4"><h4 className="text-lg font-semibold text-black mb-2">Pathway Description</h4><p className="text-black/70 leading-relaxed">{selectedProgramme.pathway_description}</p></div>}
+                                {selectedProgramme.academic_direction && <div className="mt-4"><h4 className="text-lg font-semibold text-black mb-2">Academic Direction</h4><p className="text-black/70 leading-relaxed">{selectedProgramme.academic_direction}</p></div>}
+                                {selectedProgramme.next_steps && <div className="mt-4"><h4 className="text-lg font-semibold text-black mb-2">Next Steps</h4><p className="text-black/70 leading-relaxed">{selectedProgramme.next_steps}</p></div>}
                                 {selectedProgramme.imageUrl && <img src={selectedProgramme.imageUrl} alt={selectedProgramme.title} className="mt-4 w-full h-48 object-cover rounded-lg" loading="lazy" onError={(e) => { e.target.style.display = 'none'; }} />}
                                 <div className="mt-6">
-                                    <WaterfillButton href="#apply" onClick={(e) => { e.preventDefault(); setSelectedProgramme(null); scrollTo('#apply'); }} className="rounded-full px-8 py-3 text-base font-semibold text-white bg-transparent border border-red w-full text-center" ariaLabel="Apply for this programme">Apply for This Programme</WaterfillButton>
+                                    <WaterfillButton href="#apply" onClick={(e) => { e.preventDefault(); setSelectedProgramme(null); if (scrollTo) scrollTo('#apply'); }} className="rounded-full px-8 py-3 text-base font-semibold text-white bg-transparent border border-green w-full text-center" ariaLabel="Apply for this programme">Apply for This Programme</WaterfillButton>
                                 </div>
                             </div>
                         </div>
@@ -1017,18 +1428,29 @@
                 { id: 'pre-departure', icon: '✈️', title: 'Pre-Departure Readiness', description: 'Practical preparation for your journey, including accommodation and travel tips.' }
             ];
             const displayServices = (services && services.length > 0) ? services : defaultServices;
-            if (loading) return <MorphSection id="support" className="section-padding bg-navy"><div className="text-center text-white/70">Loading support services...</div></MorphSection>;
+            if (loading) {
+                return (
+                    <MorphSection id="support" className="section-padding bg-white">
+                        <div className="mx-auto max-w-7xl px-6 lg:px-8">
+                            <SectionHeading eyebrow="STUDENT SUPPORT" title="Support Every Step of the Way" subtitle="From first consultation to pre-departure readiness." />
+                            <div className="mt-16 grid gap-6 md:grid-cols-2 lg:grid-cols-4 grid-equal">
+                                {Array.from({ length: 4 }).map((_, i) => <SkeletonService key={i} />)}
+                            </div>
+                        </div>
+                    </MorphSection>
+                );
+            }
             return (
-                <MorphSection id="support" className="section-padding bg-navy">
+                <MorphSection id="support" className="section-padding bg-white">
                     <div className="mx-auto max-w-7xl px-6 lg:px-8">
                         <SectionHeading eyebrow="STUDENT SUPPORT" title="Support Every Step of the Way" subtitle="From first consultation to pre-departure readiness." />
                         <div className="mt-16 grid gap-6 md:grid-cols-2 lg:grid-cols-4 grid-equal">
                             {displayServices.map((s, i) => (
                                 <Reveal key={s.id} delay={i * 0.1} className="h-full">
                                     <div className="card-premium rounded-2xl p-6 text-center h-full w-full">
-                                        <div className="mx-auto h-20 w-20 rounded-full bg-gradient-to-br from-sky/20 to-cyan/20 flex items-center justify-center text-4xl mb-4">{s.icon || '🎓'}</div>
-                                        <h3 className="text-lg font-semibold text-white">{s.title}</h3>
-                                        <p className="mt-3 text-white/70 text-sm leading-relaxed">{s.description || s.desc || ''}</p>
+                                        <div className="mx-auto h-20 w-20 rounded-full bg-gradient-to-br from-sky/20 to-green/20 flex items-center justify-center text-4xl mb-4">{s.icon || '🎓'}</div>
+                                        <h3 className="text-lg font-semibold text-black">{s.title}</h3>
+                                        <p className="mt-3 text-black/70 text-sm leading-relaxed">{s.description || s.desc || ''}</p>
                                     </div>
                                 </Reveal>
                             ))}
@@ -1055,19 +1477,33 @@
                 { id: '08', step_number: 8, title: 'Begin Your Journey', description: 'Arrive and start your global education.' }
             ];
             const displaySteps = (steps && steps.length > 0) ? steps : defaultSteps;
-            if (loading) return <MorphSection id="how-it-works" className="section-padding bg-navy-2"><div className="text-center text-white/70">Loading process steps...</div></MorphSection>;
+            if (loading) {
+                return (
+                    <MorphSection id="how-it-works" className="section-padding bg-gray-50">
+                        <div className="mx-auto max-w-5xl px-6 lg:px-8">
+                            <SectionHeading eyebrow="HOW IT WORKS" title="Your Journey, Step by Step" subtitle="Clear steps to your global education future." />
+                            <div className="mt-16 relative">
+                                <div className="absolute left-8 top-0 bottom-0 w-px bg-black/10"></div>
+                                <div className="space-y-10">
+                                    {Array.from({ length: 6 }).map((_, i) => <SkeletonStep key={i} />)}
+                                </div>
+                            </div>
+                        </div>
+                    </MorphSection>
+                );
+            }
             return (
-                <MorphSection id="how-it-works" className="section-padding bg-navy-2">
+                <MorphSection id="how-it-works" className="section-padding bg-gray-50">
                     <div className="mx-auto max-w-5xl px-6 lg:px-8">
                         <SectionHeading eyebrow="HOW IT WORKS" title="Your Journey, Step by Step" subtitle="Clear steps to your global education future." />
                         <div className="mt-16 relative">
-                            <div className="absolute left-8 top-0 bottom-0 w-px bg-white/10"></div>
+                            <div className="absolute left-8 top-0 bottom-0 w-px bg-black/10"></div>
                             <div className="space-y-10">
                                 {displaySteps.map((s, i) => (
                                     <Reveal key={s.id} delay={i * 0.05}>
                                         <div className="flex gap-6 items-start">
                                             <div className="relative z-10 flex h-16 w-16 flex-shrink-0 items-center justify-center rounded-full border-2 border-sky bg-sky/10 text-xl font-bold text-sky">{String(s.step_number || i + 1).padStart(2, '0')}</div>
-                                            <div className="pt-1"><h3 className="text-xl font-bold text-white">{s.title}</h3><p className="mt-2 text-white/70 text-sm leading-relaxed">{s.description || s.desc || ''}</p></div>
+                                            <div className="pt-1"><h3 className="text-xl font-bold text-black">{s.title}</h3><p className="mt-2 text-black/70 text-sm leading-relaxed">{s.description || s.desc || ''}</p></div>
                                         </div>
                                     </Reveal>
                                 ))}
@@ -1092,9 +1528,18 @@
                 { id: 'guidance', icon: '🤝', title: 'End-to-End Guidance', description: 'From first call to arrival, we are with you.' }
             ];
             const displayPoints = (points && points.length > 0) ? points : defaultPoints;
-            if (loading) return <MorphSection className="section-padding bg-navy"><div className="text-center text-white/70">Loading...</div></MorphSection>;
+            if (loading) {
+                return (
+                    <MorphSection className="section-padding bg-white">
+                        <div className="mx-auto max-w-6xl px-6 lg:px-8">
+                            <SectionHeading eyebrow="WHY CHOOSE US" title="A Partner You Can Trust" subtitle="We provide honest, transparent guidance for African students." />
+                            <SkeletonGrid count={4} />
+                        </div>
+                    </MorphSection>
+                );
+            }
             return (
-                <MorphSection className="section-padding bg-navy">
+                <MorphSection className="section-padding bg-white">
                     <div className="mx-auto max-w-6xl px-6 lg:px-8">
                         <SectionHeading eyebrow="WHY CHOOSE US" title="A Partner You Can Trust" subtitle="We provide honest, transparent guidance for African students." />
                         <div className="mt-16 grid gap-6 sm:grid-cols-2 lg:grid-cols-4 grid-equal">
@@ -1102,8 +1547,8 @@
                                 <Reveal key={p.id} delay={i * 0.1} className="h-full">
                                     <div className="card-premium rounded-2xl p-6 text-center h-full w-full">
                                         <div className="text-4xl mb-4">{p.icon || '⭐'}</div>
-                                        <h3 className="text-lg font-semibold text-white">{p.title}</h3>
-                                        <p className="mt-2 text-sm text-white/70 leading-relaxed">{p.description || p.desc || ''}</p>
+                                        <h3 className="text-lg font-semibold text-black">{p.title}</h3>
+                                        <p className="mt-2 text-sm text-black/70 leading-relaxed">{p.description || p.desc || ''}</p>
                                     </div>
                                 </Reveal>
                             ))}
@@ -1128,21 +1573,32 @@
                 { id: '5', question: 'Do you provide visa services?', answer: 'We provide general pre-departure guidance and information. Official visa applications must be handled through the relevant embassy or authorised visa service.' }
             ];
             const displayFaqs = (faqs && faqs.length > 0) ? faqs : defaultFaqs;
-            if (loading) return <MorphSection id="faq" className="section-padding bg-navy"><div className="text-center text-white/70">Loading FAQs...</div></MorphSection>;
+            if (loading) {
+                return (
+                    <MorphSection id="faq" className="section-padding bg-white">
+                        <div className="mx-auto max-w-3xl px-6 lg:px-8">
+                            <SectionHeading eyebrow="FAQ" title="Frequently Asked Questions" />
+                            <div className="mt-12 space-y-4">
+                                {Array.from({ length: 4 }).map((_, i) => <SkeletonFaq key={i} />)}
+                            </div>
+                        </div>
+                    </MorphSection>
+                );
+            }
             return (
-                <MorphSection id="faq" className="section-padding bg-navy">
+                <MorphSection id="faq" className="section-padding bg-white">
                     <div className="mx-auto max-w-3xl px-6 lg:px-8">
                         <SectionHeading eyebrow="FAQ" title="Frequently Asked Questions" />
                         <div className="mt-12 space-y-4">
                             {displayFaqs.map(faq => {
                                 const isOpen = openId === faq.id;
                                 return (
-                                    <div key={faq.id} className="border border-yellow/20 rounded-2xl overflow-hidden">
-                                        <button className="flex w-full items-center justify-between gap-4 p-6 text-left text-white hover:bg-white/5 transition-colors" onClick={() => setOpenId(isOpen ? null : faq.id)} aria-expanded={isOpen} aria-controls={`faq-answer-${faq.id}`}>
+                                    <div key={faq.id} className="border border-sky/20 rounded-2xl overflow-hidden glass-card">
+                                        <button className="flex w-full items-center justify-between gap-4 p-6 text-left text-black hover:bg-black/5 transition-colors" onClick={() => setOpenId(isOpen ? null : faq.id)} aria-expanded={isOpen} aria-controls={`faq-answer-${faq.id}`}>
                                             <span className="text-lg font-semibold">{faq.question}</span>
-                                            <span className="text-2xl" aria-hidden="true">{isOpen ? '−' : '+'}</span>
+                                            <span className="text-2xl text-sky" aria-hidden="true">{isOpen ? '−' : '+'}</span>
                                         </button>
-                                        {isOpen && <div id={`faq-answer-${faq.id}`} className="px-6 pb-6 text-white/70 leading-relaxed">{faq.answer}</div>}
+                                        {isOpen && <div id={`faq-answer-${faq.id}`} className="px-6 pb-6 text-black/70 leading-relaxed">{faq.answer}</div>}
                                     </div>
                                 );
                             })}
@@ -1158,10 +1614,21 @@
                 if (!supabaseClient) return [];
                 try { return await fetchTestimonials() || []; } catch (err) { console.warn('Testimonials fetch failed:', err); return []; }
             }, []);
-            if (loading) return <MorphSection className="section-padding bg-navy-2"><div className="text-center text-white/70">Loading testimonials...</div></MorphSection>;
+            if (loading) {
+                return (
+                    <MorphSection className="section-padding bg-gray-50">
+                        <div className="mx-auto max-w-6xl px-6 lg:px-8">
+                            <SectionHeading eyebrow="TESTIMONIALS" title="What Our Students Say" />
+                            <div className="mt-16 grid gap-6 md:grid-cols-2 lg:grid-cols-3 grid-equal">
+                                {Array.from({ length: 3 }).map((_, i) => <SkeletonTestimonial key={i} />)}
+                            </div>
+                        </div>
+                    </MorphSection>
+                );
+            }
             if (testimonials && testimonials.length > 0) {
                 return (
-                    <MorphSection className="section-padding bg-navy-2">
+                    <MorphSection className="section-padding bg-gray-50">
                         <div className="mx-auto max-w-6xl px-6 lg:px-8">
                             <SectionHeading eyebrow="TESTIMONIALS" title="What Our Students Say" />
                             <div className="mt-16 grid gap-6 md:grid-cols-2 lg:grid-cols-3 grid-equal">
@@ -1169,8 +1636,8 @@
                                     <Reveal key={t.id} delay={i * 0.1} className="h-full">
                                         <div className="card-premium rounded-2xl p-6 h-full w-full">
                                             {t.image_url && <img src={t.image_url} alt={`${t.name || 'Student'} photo`} className="w-16 h-16 rounded-full object-cover mb-4" loading="lazy" onError={(e) => { e.target.style.display = 'none'; }} />}
-                                            <p className="text-white/80 italic leading-relaxed">"{t.quote || t.testimonial}"</p>
-                                            {t.name && <p className="mt-4 font-semibold text-white">{t.name}</p>}
+                                            <p className="text-black/80 italic leading-relaxed">"{t.quote || t.testimonial}"</p>
+                                            {t.name && <p className="mt-4 font-semibold text-black">{t.name}</p>}
                                             {t.destination && <p className="text-sm text-sky">{t.destination}</p>}
                                         </div>
                                     </Reveal>
@@ -1193,12 +1660,12 @@
             }, []);
             const defaultContent = { title: 'About Elite Global Pathways', subtitle: 'Connecting African students to global education.', body: 'Elite Global Pathways Limited is dedicated to helping African students explore international higher-education opportunities. We provide guidance, application support, and scholarship information to help you achieve your academic dreams.' };
             const content = sections || defaultContent;
-            if (loading) return <MorphSection id="about" className="section-padding bg-navy-2"><div className="text-center text-white/70">Loading about...</div></MorphSection>;
+            if (loading) return <MorphSection id="about" className="section-padding bg-gray-50"><div className="text-center text-black/70">Loading about...</div></MorphSection>;
             return (
-                <MorphSection id="about" className="section-padding bg-navy-2">
+                <MorphSection id="about" className="section-padding bg-gray-50">
                     <div className="mx-auto max-w-5xl px-6 lg:px-8">
                         <SectionHeading eyebrow="ABOUT" title={content.title || 'About Elite Global Pathways'} subtitle={content.subtitle} />
-                        {content.body && <Reveal delay={0.2}><p className="mt-6 text-lg text-white/70 leading-relaxed text-center">{content.body}</p></Reveal>}
+                        {content.body && <Reveal delay={0.2}><p className="mt-6 text-lg text-black/70 leading-relaxed text-center">{content.body}</p></Reveal>}
                     </div>
                 </MorphSection>
             );
@@ -1214,12 +1681,12 @@
             }, []);
             const defaultContent = { title: 'Scholarship Opportunities', subtitle: 'Explore tuition-reduction and scholarship options.', body: 'We help students identify and apply for scholarship opportunities that match their academic profile and financial needs.' };
             const content = sections || defaultContent;
-            if (loading) return <MorphSection id="scholarships" className="section-padding bg-navy"><div className="text-center text-white/70">Loading scholarships...</div></MorphSection>;
+            if (loading) return <MorphSection id="scholarships" className="section-padding bg-white"><div className="text-center text-black/70">Loading scholarships...</div></MorphSection>;
             return (
-                <MorphSection id="scholarships" className="section-padding bg-navy">
+                <MorphSection id="scholarships" className="section-padding bg-white">
                     <div className="mx-auto max-w-5xl px-6 lg:px-8">
                         <SectionHeading eyebrow="SCHOLARSHIPS" title={content.title || 'Scholarship Opportunities'} subtitle={content.subtitle} />
-                        {content.body && <Reveal delay={0.2}><p className="mt-6 text-lg text-white/70 leading-relaxed text-center">{content.body}</p></Reveal>}
+                        {content.body && <Reveal delay={0.2}><p className="mt-6 text-lg text-black/70 leading-relaxed text-center">{content.body}</p></Reveal>}
                     </div>
                 </MorphSection>
             );
@@ -1235,12 +1702,12 @@
             }, []);
             const defaultContent = { title: 'Information for Parents', subtitle: 'We support families throughout the journey.', body: 'We understand that parents play a vital role in educational decisions. Our team provides clear information and ongoing support to help families make informed choices.' };
             const content = sections || defaultContent;
-            if (loading) return <MorphSection id="parents" className="section-padding bg-navy-2"><div className="text-center text-white/70">Loading parents information...</div></MorphSection>;
+            if (loading) return <MorphSection id="parents" className="section-padding bg-gray-50"><div className="text-center text-black/70">Loading parents information...</div></MorphSection>;
             return (
-                <MorphSection id="parents" className="section-padding bg-navy-2">
+                <MorphSection id="parents" className="section-padding bg-gray-50">
                     <div className="mx-auto max-w-5xl px-6 lg:px-8">
                         <SectionHeading eyebrow="PARENTS" title={content.title || 'Information for Parents'} subtitle={content.subtitle} />
-                        {content.body && <Reveal delay={0.2}><p className="mt-6 text-lg text-white/70 leading-relaxed text-center">{content.body}</p></Reveal>}
+                        {content.body && <Reveal delay={0.2}><p className="mt-6 text-lg text-black/70 leading-relaxed text-center">{content.body}</p></Reveal>}
                     </div>
                 </MorphSection>
             );
@@ -1256,12 +1723,12 @@
             }, []);
             const defaultContent = { title: 'Our Partners', subtitle: 'Collaborating with institutions worldwide.', body: 'We work with a network of reputable universities and educational institutions to provide diverse opportunities for students.' };
             const content = sections || defaultContent;
-            if (loading) return <MorphSection id="partners" className="section-padding bg-navy"><div className="text-center text-white/70">Loading partners...</div></MorphSection>;
+            if (loading) return <MorphSection id="partners" className="section-padding bg-white"><div className="text-center text-black/70">Loading partners...</div></MorphSection>;
             return (
-                <MorphSection id="partners" className="section-padding bg-navy">
+                <MorphSection id="partners" className="section-padding bg-white">
                     <div className="mx-auto max-w-5xl px-6 lg:px-8">
                         <SectionHeading eyebrow="PARTNERS" title={content.title || 'Our Partners'} subtitle={content.subtitle} />
-                        {content.body && <Reveal delay={0.2}><p className="mt-6 text-lg text-white/70 leading-relaxed text-center">{content.body}</p></Reveal>}
+                        {content.body && <Reveal delay={0.2}><p className="mt-6 text-lg text-black/70 leading-relaxed text-center">{content.body}</p></Reveal>}
                     </div>
                 </MorphSection>
             );
@@ -1279,19 +1746,19 @@
             }, []);
             const defaultContact = { email: 'eliteglobalpathwaysltd2025@gmail.com', whatsapp_india: '+91 73593 20928', whatsapp_uganda: '+256 779 989906', whatsapp_myanmar: '+95 3787 5184' };
             const contact = settings || defaultContact;
-            if (loading) return <MorphSection id="contact" className="section-padding bg-navy-2"><div className="text-center text-white/70">Loading contact information...</div></MorphSection>;
+            if (loading) return <MorphSection id="contact" className="section-padding bg-gray-50"><div className="text-center text-black/70">Loading contact information...</div></MorphSection>;
             return (
-                <MorphSection id="contact" className="section-padding bg-navy-2">
+                <MorphSection id="contact" className="section-padding bg-gray-50">
                     <div className="mx-auto max-w-5xl px-6 lg:px-8">
                         <SectionHeading eyebrow="CONTACT" title="Get in Touch" subtitle="We are here to help you with your international education journey." />
                         <div className="mt-16 grid gap-8 md:grid-cols-2">
-                            <div className="glass rounded-2xl p-6 border border-yellow/20">
-                                <h3 className="text-xl font-semibold text-white mb-4">Email</h3>
-                                <p className="text-white/70"><a href={`mailto:${contact.email}`} className="hover:text-sky">{contact.email}</a></p>
+                            <div className="glass rounded-2xl p-6 border border-sky/20">
+                                <h3 className="text-xl font-semibold text-black mb-4">Email</h3>
+                                <p className="text-black/70"><a href={`mailto:${contact.email}`} className="hover:text-sky">{contact.email}</a></p>
                             </div>
-                            <div className="glass rounded-2xl p-6 border border-yellow/20">
-                                <h3 className="text-xl font-semibold text-white mb-4">WhatsApp</h3>
-                                <ul className="space-y-2 text-white/70">
+                            <div className="glass rounded-2xl p-6 border border-sky/20">
+                                <h3 className="text-xl font-semibold text-black mb-4">WhatsApp</h3>
+                                <ul className="space-y-2 text-black/70">
                                     <li><a href={`https://wa.me/${contact.whatsapp_india?.replace(/\D/g,'')}`} className="hover:text-sky">India: {contact.whatsapp_india}</a></li>
                                     <li><a href={`https://wa.me/${contact.whatsapp_uganda?.replace(/\D/g,'')}`} className="hover:text-sky">Uganda: {contact.whatsapp_uganda}</a></li>
                                     <li><a href={`https://wa.me/${contact.whatsapp_myanmar?.replace(/\D/g,'')}`} className="hover:text-sky">Myanmar: {contact.whatsapp_myanmar}</a></li>
@@ -1333,7 +1800,7 @@
             const handleSubmit = async (e) => { e.preventDefault(); setError(''); const errors = validate(); if (Object.keys(errors).length > 0) { setFieldErrors(errors); return; } setSubmitting(true); try { if (!supabaseClient) throw new Error('Supabase not initialized'); const ref = generateReference(); const { error: submitError } = await supabaseClient.from('enquiries').insert([{ ...form, status: 'new', source: 'website', reference: ref }]); if (submitError) { console.error('Submission error:', submitError); setError('We couldn\'t submit your application right now. Your information has not been lost. Please try again.'); return; } setReference(ref); setSuccess(true); setForm({ full_name: '', email: '', phone: '', country: '', academic_level: '', preferred_destination: '', preferred_programme: '', message: '', consent: false }); } catch (err) { console.error('Unexpected error:', err); setError('Network error. Please check your connection and try again.'); } finally { setSubmitting(false); } };
             const resetForm = () => { setSuccess(false); setReference(''); setError(''); setFieldErrors({}); };
             return (
-                <MorphSection id="apply" className="section-padding bg-navy">
+                <MorphSection id="apply" className="section-padding bg-white">
                     <div className="mx-auto max-w-5xl px-6 lg:px-8">
                         <SectionHeading eyebrow="CONTACT & APPLICATION" title="Ready to Go Global?" subtitle="Tell us what you want to study and where you want to go." />
                         <div className="mt-16 grid gap-8 md:grid-cols-3">
@@ -1341,10 +1808,10 @@
                                 {success ? (
                                     <div ref={successRef} tabIndex={-1} className="rounded-3xl border border-green/30 bg-green/10 p-12 text-center" role="alert" aria-live="polite">
                                         <div className="text-6xl mb-4">✅</div>
-                                        <h3 className="text-2xl font-bold text-white">Application Received!</h3>
-                                        <p className="mt-2 text-white/70">Thank you for your enquiry.</p>
-                                        {reference && <p className="mt-4 text-lg font-semibold text-yellow">Reference: {reference}</p>}
-                                        <p className="mt-2 text-white/60">Our admissions guidance team will contact you soon.</p>
+                                        <h3 className="text-2xl font-bold text-black">Application Received!</h3>
+                                        <p className="mt-2 text-black/70">Thank you for your enquiry.</p>
+                                        {reference && <p className="mt-4 text-lg font-semibold text-sky">Reference: {reference}</p>}
+                                        <p className="mt-2 text-black/60">Our admissions guidance team will contact you soon.</p>
                                         <div className="mt-8 flex flex-wrap gap-4 justify-center">
                                             <button onClick={resetForm} className="btn-waterfill rounded-full px-6 py-3 text-sm font-semibold text-white bg-transparent border border-red">Submit Another Enquiry</button>
                                             <a href="https://wa.me/256779989906" target="_blank" rel="noopener noreferrer" className="btn-waterfill rounded-full px-6 py-3 text-sm font-semibold text-white bg-transparent border border-green">WhatsApp Our Team</a>
@@ -1354,24 +1821,24 @@
                                     <form onSubmit={handleSubmit} className="space-y-6" noValidate>
                                         {error && <div className="rounded-xl border border-red-500/30 bg-red-500/10 p-4 text-red-200" role="alert">{error} <button onClick={() => setError('')} className="ml-2 underline">Dismiss</button></div>}
                                         <div className="grid gap-6 md:grid-cols-2">
-                                            <div><label htmlFor="full_name" className="block text-sm font-medium text-white/80 mb-2">Full Name *</label><input type="text" id="full_name" name="full_name" value={form.full_name} onChange={handleChange} required className="input-gold w-full rounded-xl px-5 py-3 text-white placeholder-white/40 focus:outline-none" placeholder="Your full name" aria-invalid={!!fieldErrors.full_name} />{fieldErrors.full_name && <p className="mt-1 text-sm text-red-400">{fieldErrors.full_name}</p>}</div>
-                                            <div><label htmlFor="email" className="block text-sm font-medium text-white/80 mb-2">Email *</label><input type="email" id="email" name="email" value={form.email} onChange={handleChange} required className="input-gold w-full rounded-xl px-5 py-3 text-white placeholder-white/40 focus:outline-none" placeholder="you@example.com" aria-invalid={!!fieldErrors.email} />{fieldErrors.email && <p className="mt-1 text-sm text-red-400">{fieldErrors.email}</p>}</div>
-                                            <div><label htmlFor="phone" className="block text-sm font-medium text-white/80 mb-2">Phone Number</label><input type="tel" id="phone" name="phone" value={form.phone} onChange={handleChange} className="input-gold w-full rounded-xl px-5 py-3 text-white placeholder-white/40 focus:outline-none" placeholder="+256 700 000 000" /></div>
-                                            <div><label htmlFor="country" className="block text-sm font-medium text-white/80 mb-2">Country</label><input type="text" id="country" name="country" value={form.country} onChange={handleChange} className="input-gold w-full rounded-xl px-5 py-3 text-white placeholder-white/40 focus:outline-none" placeholder="Your country" /></div>
-                                            <div><label htmlFor="academic_level" className="block text-sm font-medium text-white/80 mb-2">Academic Level</label><select id="academic_level" name="academic_level" value={form.academic_level} onChange={handleChange} className="select-gold w-full rounded-xl px-5 py-3 text-white focus:outline-none"><option value="" disabled>Select level</option>{levels.map(l => <option key={l} value={l}>{l}</option>)}</select></div>
-                                            <div><label htmlFor="preferred_destination" className="block text-sm font-medium text-white/80 mb-2">Preferred Destination</label><select id="preferred_destination" name="preferred_destination" value={form.preferred_destination} onChange={handleChange} className="select-gold w-full rounded-xl px-5 py-3 text-white focus:outline-none"><option value="" disabled>Select destination</option>{destinations.map(d => <option key={d} value={d}>{d}</option>)}</select></div>
-                                            <div><label htmlFor="preferred_programme" className="block text-sm font-medium text-white/80 mb-2">Preferred Programme</label><select id="preferred_programme" name="preferred_programme" value={form.preferred_programme} onChange={handleChange} className="select-gold w-full rounded-xl px-5 py-3 text-white focus:outline-none"><option value="" disabled>Select programme</option>{programmes.map(p => <option key={p} value={p}>{p}</option>)}</select></div>
+                                            <div><label htmlFor="full_name" className="block text-sm font-medium text-black/80 mb-2">Full Name *</label><input type="text" id="full_name" name="full_name" value={form.full_name} onChange={handleChange} required className="input-gold w-full rounded-xl px-5 py-3 text-black placeholder-black/40 focus:outline-none" placeholder="Your full name" aria-invalid={!!fieldErrors.full_name} />{fieldErrors.full_name && <p className="mt-1 text-sm text-red-400">{fieldErrors.full_name}</p>}</div>
+                                            <div><label htmlFor="email" className="block text-sm font-medium text-black/80 mb-2">Email *</label><input type="email" id="email" name="email" value={form.email} onChange={handleChange} required className="input-gold w-full rounded-xl px-5 py-3 text-black placeholder-black/40 focus:outline-none" placeholder="you@example.com" aria-invalid={!!fieldErrors.email} />{fieldErrors.email && <p className="mt-1 text-sm text-red-400">{fieldErrors.email}</p>}</div>
+                                            <div><label htmlFor="phone" className="block text-sm font-medium text-black/80 mb-2">Phone Number</label><input type="tel" id="phone" name="phone" value={form.phone} onChange={handleChange} className="input-gold w-full rounded-xl px-5 py-3 text-black placeholder-black/40 focus:outline-none" placeholder="+256 700 000 000" /></div>
+                                            <div><label htmlFor="country" className="block text-sm font-medium text-black/80 mb-2">Country</label><input type="text" id="country" name="country" value={form.country} onChange={handleChange} className="input-gold w-full rounded-xl px-5 py-3 text-black placeholder-black/40 focus:outline-none" placeholder="Your country" /></div>
+                                            <div><label htmlFor="academic_level" className="block text-sm font-medium text-black/80 mb-2">Academic Level</label><select id="academic_level" name="academic_level" value={form.academic_level} onChange={handleChange} className="select-gold w-full rounded-xl px-5 py-3 text-black focus:outline-none"><option value="" disabled>Select level</option>{levels.map(l => <option key={l} value={l}>{l}</option>)}</select></div>
+                                            <div><label htmlFor="preferred_destination" className="block text-sm font-medium text-black/80 mb-2">Preferred Destination</label><select id="preferred_destination" name="preferred_destination" value={form.preferred_destination} onChange={handleChange} className="select-gold w-full rounded-xl px-5 py-3 text-black focus:outline-none"><option value="" disabled>Select destination</option>{destinations.map(d => <option key={d} value={d}>{d}</option>)}</select></div>
+                                            <div><label htmlFor="preferred_programme" className="block text-sm font-medium text-black/80 mb-2">Preferred Programme</label><select id="preferred_programme" name="preferred_programme" value={form.preferred_programme} onChange={handleChange} className="select-gold w-full rounded-xl px-5 py-3 text-black focus:outline-none"><option value="" disabled>Select programme</option>{programmes.map(p => <option key={p} value={p}>{p}</option>)}</select></div>
                                         </div>
-                                        <div><label htmlFor="message" className="block text-sm font-medium text-white/80 mb-2">Message</label><textarea id="message" name="message" rows={4} value={form.message} onChange={handleChange} className="input-gold w-full rounded-xl px-5 py-3 text-white placeholder-white/40 focus:outline-none" placeholder="Tell us more..."></textarea></div>
-                                        <label className="flex items-start gap-3 text-sm text-white/80"><input type="checkbox" name="consent" checked={form.consent} onChange={handleChange} className="mt-1 h-5 w-5 rounded border-yellow bg-white/5 text-sky focus:ring-sky" aria-invalid={!!fieldErrors.consent} /><span>I consent to Elite Global Pathways processing my enquiry and understand that admission, scholarship, and visa outcomes are not guaranteed.</span></label>
+                                        <div><label htmlFor="message" className="block text-sm font-medium text-black/80 mb-2">Message</label><textarea id="message" name="message" rows={4} value={form.message} onChange={handleChange} className="input-gold w-full rounded-xl px-5 py-3 text-black placeholder-black/40 focus:outline-none" placeholder="Tell us more..."></textarea></div>
+                                        <label className="flex items-start gap-3 text-sm text-black/80"><input type="checkbox" name="consent" checked={form.consent} onChange={handleChange} className="mt-1 h-5 w-5 rounded border-sky bg-white/5 text-sky focus:ring-sky" aria-invalid={!!fieldErrors.consent} /><span>I consent to Elite Global Pathways processing my enquiry and understand that admission, scholarship, and visa outcomes are not guaranteed.</span></label>
                                         {fieldErrors.consent && <p className="text-sm text-red-400">{fieldErrors.consent}</p>}
-                                        <button type="submit" disabled={submitting} className="w-full rounded-xl px-8 py-3 text-lg font-semibold btn-waterfill bg-transparent border border-red text-white hover:shadow-lg hover:shadow-red/30 transition-shadow disabled:opacity-50 disabled:cursor-not-allowed" aria-label="Submit application">{submitting ? <span className="flex items-center justify-center gap-2"><svg className="animate-spin h-5 w-5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" strokeDasharray="60" strokeDashoffset="20" /></svg>Submitting...</span> : <>Submit Application <span className="ml-2">➤</span></>}</button>
+                                        <button type="submit" disabled={submitting} className="w-full rounded-xl px-8 py-3 text-lg font-semibold btn-waterfill bg-transparent border border-green text-white hover:shadow-lg hover:shadow-green/30 transition-shadow disabled:opacity-50 disabled:cursor-not-allowed" aria-label="Submit application">{submitting ? <span className="flex items-center justify-center gap-2"><svg className="animate-spin h-5 w-5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" strokeDasharray="60" strokeDashoffset="20" /></svg>Submitting...</span> : <>Submit Application <span className="ml-2">➤</span></>}</button>
                                     </form>
                                 )}
                             </div>
                             <div className="space-y-6">
-                                <div className="glass rounded-2xl p-6 border border-yellow/20"><h3 className="text-xl font-semibold text-white mb-4">Direct Contact</h3><ul className="space-y-3 text-sm text-white/80"><li><a href="mailto:eliteglobalpathwaysltd2025@gmail.com" className="hover:text-sky">📧 eliteglobalpathwaysltd2025@gmail.com</a></li><li><a href="https://wa.me/917359320928" className="hover:text-sky">💬 WhatsApp India: +91 73593 20928</a></li><li><a href="https://wa.me/256779989906" className="hover:text-sky">💬 WhatsApp Uganda: +256 779 989906</a></li><li><a href="https://wa.me/9537875184" className="hover:text-sky">💬 WhatsApp Myanmar: +95 3787 5184</a></li></ul></div>
-                                <div className="glass rounded-2xl p-6 border border-yellow/20"><h3 className="text-xl font-semibold text-white mb-4">Important</h3><p className="text-sm text-white/70 leading-relaxed">Elite Global Pathways does not guarantee admission, scholarship awards, or visa approval. All opportunities are subject to eligibility and institutional terms.</p></div>
+                                <div className="glass rounded-2xl p-6 border border-sky/20"><h3 className="text-xl font-semibold text-black mb-4">Direct Contact</h3><ul className="space-y-3 text-sm text-black/80"><li><a href="mailto:eliteglobalpathwaysltd2025@gmail.com" className="hover:text-sky">📧 eliteglobalpathwaysltd2025@gmail.com</a></li><li><a href="https://wa.me/917359320928" className="hover:text-sky">💬 WhatsApp India: +91 73593 20928</a></li><li><a href="https://wa.me/256779989906" className="hover:text-sky">💬 WhatsApp Uganda: +256 779 989906</a></li><li><a href="https://wa.me/9537875184" className="hover:text-sky">💬 WhatsApp Myanmar: +95 3787 5184</a></li></ul></div>
+                                <div className="glass rounded-2xl p-6 border border-sky/20"><h3 className="text-xl font-semibold text-black mb-4">Important</h3><p className="text-sm text-black/70 leading-relaxed">Elite Global Pathways does not guarantee admission, scholarship awards, or visa approval. All opportunities are subject to eligibility and institutional terms.</p></div>
                             </div>
                         </div>
                     </div>
@@ -1385,16 +1852,16 @@
             const [showPrivacy, setShowPrivacy] = useState(false);
             const [showTerms, setShowTerms] = useState(false);
             return (
-                <footer className="bg-navy py-14 text-white/70 border-t border-yellow/20">
+                <footer className="bg-gray-100 py-14 text-black/70 border-t border-sky/20">
                     <div className="mx-auto max-w-7xl px-6 lg:px-8">
                         <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-4">
                             <div>
-                                <div className="flex items-center gap-3 mb-4"><img src={defaultMedia.logo} alt="Elite Global Pathways" className="h-10 w-10 rounded-full object-cover" /><span className="text-lg font-bold text-white">Elite Global Pathways</span></div>
+                                <div className="flex items-center gap-3 mb-4"><img src={defaultMedia.logo} alt="Elite Global Pathways" className="h-10 w-10 rounded-full object-cover" /><span className="text-lg font-bold text-black">Elite Global Pathways</span></div>
                                 <p className="text-sm leading-relaxed">Connecting African Students to Global Education.</p>
                                 <p className="mt-2 italic text-sky">Your Dreams. Our Pathway. Your Global Future.</p>
                             </div>
                             <div>
-                                <h3 className="text-sm font-semibold uppercase tracking-wider text-white mb-4">Contact</h3>
+                                <h3 className="text-sm font-semibold uppercase tracking-wider text-black mb-4">Contact</h3>
                                 <ul className="space-y-2 text-sm">
                                     <li><a href="mailto:eliteglobalpathwaysltd2025@gmail.com" className="hover:text-sky">eliteglobalpathwaysltd2025@gmail.com</a></li>
                                     <li>+91 73593 20928 (India)</li>
@@ -1403,36 +1870,36 @@
                                 </ul>
                             </div>
                             <div>
-                                <h3 className="text-sm font-semibold uppercase tracking-wider text-white mb-4">Quick Links</h3>
+                                <h3 className="text-sm font-semibold uppercase tracking-wider text-black mb-4">Quick Links</h3>
                                 <ul className="space-y-2 text-sm">
-                                    <li><a href="#home" onClick={(e)=>{e.preventDefault(); scrollTo('#home');}} className="hover:text-sky cursor-pointer">Home</a></li>
-                                    <li><a href="#about" onClick={(e)=>{e.preventDefault(); scrollTo('#about');}} className="hover:text-sky cursor-pointer">About</a></li>
-                                    <li><a href="#programmes" onClick={(e)=>{e.preventDefault(); scrollTo('#programmes');}} className="hover:text-sky cursor-pointer">Programmes</a></li>
-                                    <li><a href="#destinations" onClick={(e)=>{e.preventDefault(); scrollTo('#destinations');}} className="hover:text-sky cursor-pointer">Destinations</a></li>
-                                    <li><a href="#support" onClick={(e)=>{e.preventDefault(); scrollTo('#support');}} className="hover:text-sky cursor-pointer">Support</a></li>
-                                    <li><a href="#how-it-works" onClick={(e)=>{e.preventDefault(); scrollTo('#how-it-works');}} className="hover:text-sky cursor-pointer">How It Works</a></li>
-                                    <li><a href="#faq" onClick={(e)=>{e.preventDefault(); scrollTo('#faq');}} className="hover:text-sky cursor-pointer">FAQ</a></li>
-                                    <li><a href="#contact" onClick={(e)=>{e.preventDefault(); scrollTo('#contact');}} className="hover:text-sky cursor-pointer">Contact</a></li>
-                                    <li><a href="#apply" onClick={(e)=>{e.preventDefault(); scrollTo('#apply');}} className="hover:text-sky cursor-pointer">Apply Now</a></li>
+                                    <li><a href="#home" onClick={(e)=>{e.preventDefault(); if (scrollTo) scrollTo('#home');}} className="hover:text-sky cursor-pointer">Home</a></li>
+                                    <li><a href="#about" onClick={(e)=>{e.preventDefault(); if (scrollTo) scrollTo('#about');}} className="hover:text-sky cursor-pointer">About</a></li>
+                                    <li><a href="#programmes" onClick={(e)=>{e.preventDefault(); if (scrollTo) scrollTo('#programmes');}} className="hover:text-sky cursor-pointer">Programmes</a></li>
+                                    <li><a href="#destinations" onClick={(e)=>{e.preventDefault(); if (scrollTo) scrollTo('#destinations');}} className="hover:text-sky cursor-pointer">Destinations</a></li>
+                                    <li><a href="#support" onClick={(e)=>{e.preventDefault(); if (scrollTo) scrollTo('#support');}} className="hover:text-sky cursor-pointer">Support</a></li>
+                                    <li><a href="#how-it-works" onClick={(e)=>{e.preventDefault(); if (scrollTo) scrollTo('#how-it-works');}} className="hover:text-sky cursor-pointer">How It Works</a></li>
+                                    <li><a href="#faq" onClick={(e)=>{e.preventDefault(); if (scrollTo) scrollTo('#faq');}} className="hover:text-sky cursor-pointer">FAQ</a></li>
+                                    <li><a href="#contact" onClick={(e)=>{e.preventDefault(); if (scrollTo) scrollTo('#contact');}} className="hover:text-sky cursor-pointer">Contact</a></li>
+                                    <li><a href="#apply" onClick={(e)=>{e.preventDefault(); if (scrollTo) scrollTo('#apply');}} className="hover:text-sky cursor-pointer">Apply Now</a></li>
                                 </ul>
                             </div>
                             <div>
-                                <h3 className="text-sm font-semibold uppercase tracking-wider text-white mb-4">Legal</h3>
+                                <h3 className="text-sm font-semibold uppercase tracking-wider text-black mb-4">Legal</h3>
                                 <ul className="space-y-2 text-sm">
                                     <li><button onClick={() => setShowPrivacy(true)} className="hover:text-sky cursor-pointer">Privacy Policy</button></li>
                                     <li><button onClick={() => setShowTerms(true)} className="hover:text-sky cursor-pointer">Terms & Conditions</button></li>
-                                    <li className="text-xs text-white/50 leading-relaxed">Elite Global Pathways does not guarantee admission, scholarship awards, or visa approval.</li>
+                                    <li className="text-xs text-black/50 leading-relaxed">Elite Global Pathways does not guarantee admission, scholarship awards, or visa approval.</li>
                                 </ul>
                             </div>
                         </div>
-                        <div className="mt-8 border-t border-yellow/20 pt-6 text-center text-xs text-white/50">© {new Date().getFullYear()} Elite Global Pathways Limited. All rights reserved.</div>
+                        <div className="mt-8 border-t border-sky/20 pt-6 text-center text-xs text-black/50">© {new Date().getFullYear()} Elite Global Pathways Limited. All rights reserved.</div>
                     </div>
                     {showPrivacy && (
                         <div className="modal-overlay" role="dialog" aria-modal="true" aria-label="Privacy Policy">
                             <div className="modal-content">
                                 <button className="modal-close" onClick={() => setShowPrivacy(false)} aria-label="Close privacy policy">✕</button>
-                                <h3 className="text-2xl font-bold text-white mb-4">Privacy Policy</h3>
-                                <div className="text-white/70 space-y-3 text-sm">
+                                <h3 className="text-2xl font-bold text-black mb-4">Privacy Policy</h3>
+                                <div className="text-black/70 space-y-3 text-sm">
                                     <p>Elite Global Pathways Limited respects your privacy and is committed to protecting your personal information.</p>
                                     <p>We collect information you provide through our enquiry forms, including your name, email, phone number, and academic preferences. This information is used solely for the purpose of responding to your enquiry and providing educational guidance.</p>
                                     <p>We do not sell or share your personal information with third parties except as necessary to process your enquiry or as required by law.</p>
@@ -1445,8 +1912,8 @@
                         <div className="modal-overlay" role="dialog" aria-modal="true" aria-label="Terms and Conditions">
                             <div className="modal-content">
                                 <button className="modal-close" onClick={() => setShowTerms(false)} aria-label="Close terms and conditions">✕</button>
-                                <h3 className="text-2xl font-bold text-white mb-4">Terms & Conditions</h3>
-                                <div className="text-white/70 space-y-3 text-sm">
+                                <h3 className="text-2xl font-bold text-black mb-4">Terms & Conditions</h3>
+                                <div className="text-black/70 space-y-3 text-sm">
                                     <p>By using this website and submitting an enquiry, you agree to these terms and conditions.</p>
                                     <p>Elite Global Pathways Limited provides educational guidance and application support services. We do not guarantee admission to any institution, scholarship awards, or visa approval.</p>
                                     <p>All information provided on this website is for general informational purposes only and is subject to change without notice.</p>
@@ -1469,9 +1936,8 @@
         }
 
         // ═══════════════════════════════════════════════════════════════════
-        //  ADMIN PANEL – FULL CMS CONTROLLABLE
+        //  ADMIN PANEL – FULL CMS CONTROLLABLE (updated with white theme)
         // ═══════════════════════════════════════════════════════════════════
-
         // ─── ADMIN LOGIN ──────────────────────────────────────────────────
         function AdminLogin({ onLogin }) {
             const [email, setEmail] = useState('');
@@ -1495,14 +1961,14 @@
                 }
             };
             return (
-                <div className="min-h-screen flex items-center justify-center bg-navy px-4">
+                <div className="min-h-screen flex items-center justify-center bg-white px-4">
                     <div className="glass rounded-2xl p-8 w-full max-w-md">
-                        <h1 className="text-2xl font-bold text-white mb-6">Admin Login</h1>
+                        <h1 className="text-2xl font-bold text-black mb-6">Admin Login</h1>
                         {error && <div className="mb-4 rounded-lg bg-red-500/20 p-3 text-red-200" role="alert">{error}</div>}
                         <form onSubmit={handleSubmit} className="space-y-4">
-                            <div><label htmlFor="admin_email" className="block text-sm text-white/80 mb-2">Email</label><input type="email" id="admin_email" value={email} onChange={e => setEmail(e.target.value)} required className="input-gold w-full rounded-xl px-4 py-2" /></div>
-                            <div><label htmlFor="admin_password" className="block text-sm text-white/80 mb-2">Password</label><input type="password" id="admin_password" value={password} onChange={e => setPassword(e.target.value)} required className="input-gold w-full rounded-xl px-4 py-2" /></div>
-                            <button type="submit" disabled={loading} className="btn-waterfill w-full rounded-xl px-6 py-3 border border-red text-white font-semibold">{loading ? 'Logging in...' : 'Login'}</button>
+                            <div><label htmlFor="admin_email" className="block text-sm text-black/80 mb-2">Email</label><input type="email" id="admin_email" value={email} onChange={e => setEmail(e.target.value)} required className="input-gold w-full rounded-xl px-4 py-2" /></div>
+                            <div><label htmlFor="admin_password" className="block text-sm text-black/80 mb-2">Password</label><input type="password" id="admin_password" value={password} onChange={e => setPassword(e.target.value)} required className="input-gold w-full rounded-xl px-4 py-2" /></div>
+                            <button type="submit" disabled={loading} className="btn-waterfill w-full rounded-xl px-6 py-3 border border-green text-white font-semibold">{loading ? 'Logging in...' : 'Login'}</button>
                         </form>
                     </div>
                 </div>
@@ -1574,14 +2040,15 @@
                     case '#/admin/leads': return <AdminLeads />;
                     case '#/admin/media': return <AdminMedia />;
                     case '#/admin/settings': return <AdminSettings />;
+                    case '#/admin/profile': return <AdminProfile user={session.user} onLogout={handleLogout} />;
                     default: return <AdminDashboard onLogout={handleLogout} />;
                 }
             };
 
             return (
-                <div className="admin-layout">
+                <div className="admin-layout bg-white">
                     <nav className="admin-sidebar" aria-label="Admin navigation">
-                        <div className="mb-6"><span className="text-xs uppercase tracking-wider text-white/30">CMS</span></div>
+                        <div className="mb-6"><span className="text-xs uppercase tracking-wider text-black/30">CMS</span></div>
                         <a href="#/admin/dashboard" className={route === '#/admin/dashboard' ? 'active' : ''}>📊 Dashboard</a>
                         <a href="#/admin/programmes" className={route === '#/admin/programmes' ? 'active' : ''}>📚 Programmes</a>
                         <a href="#/admin/destinations" className={route === '#/admin/destinations' ? 'active' : ''}>🌍 Destinations</a>
@@ -1592,8 +2059,9 @@
                         <a href="#/admin/leads" className={route === '#/admin/leads' ? 'active' : ''}>📋 Leads</a>
                         <a href="#/admin/media" className={route === '#/admin/media' ? 'active' : ''}>🖼️ Media</a>
                         <a href="#/admin/settings" className={route === '#/admin/settings' ? 'active' : ''}>⚙️ Settings</a>
-                        <div className="mt-6 pt-6 border-t border-white/10">
-                            <button onClick={handleLogout} className="text-sm text-white/50 hover:text-white w-full text-left">🚪 Logout</button>
+                        <a href="#/admin/profile" className={route === '#/admin/profile' ? 'active' : ''}>👤 Profile</a>
+                        <div className="mt-6 pt-6 border-t border-black/10">
+                            <button onClick={handleLogout} className="text-sm text-black/50 hover:text-black w-full text-left">🚪 Logout</button>
                         </div>
                     </nav>
                     <div className="admin-main">{renderRoute()}</div>
@@ -1646,35 +2114,63 @@
             return (
                 <div>
                     <div className="flex justify-between items-center mb-8">
-                        <h1 className="text-3xl font-bold text-white">Dashboard</h1>
+                        <h1 className="text-3xl font-bold text-black">Dashboard</h1>
                         <button onClick={onLogout} className="px-4 py-2 bg-red-500/20 text-red-200 rounded-lg hover:bg-red-500/30">Logout</button>
                     </div>
                     {loading ? (
-                        <p className="text-white/70">Loading dashboard...</p>
+                        <p className="text-black/70">Loading dashboard...</p>
                     ) : (
                         <div className="grid gap-4 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-7">
                             {stats.map(stat => (
                                 <div key={stat.label} className="glass rounded-2xl p-5 text-center">
                                     <div className="text-2xl mb-1">{stat.icon}</div>
-                                    <div className="text-2xl font-bold text-white">{stat.count}</div>
-                                    <div className="text-xs text-white/60 mt-1">{stat.label}</div>
+                                    <div className="text-2xl font-bold text-black">{stat.count}</div>
+                                    <div className="text-xs text-black/60 mt-1">{stat.label}</div>
                                 </div>
                             ))}
                         </div>
                     )}
                     <div className="mt-8 grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-                        <a href="#/admin/programmes" className="glass rounded-2xl p-5 text-center hover:border-yellow/40 transition-colors">
-                            <div className="text-3xl mb-2">📚</div><p className="text-sm text-white/80">Manage Programmes</p>
+                        <a href="#/admin/programmes" className="glass rounded-2xl p-5 text-center hover:border-sky/40 transition-colors">
+                            <div className="text-3xl mb-2">📚</div><p className="text-sm text-black/80">Manage Programmes</p>
                         </a>
-                        <a href="#/admin/destinations" className="glass rounded-2xl p-5 text-center hover:border-yellow/40 transition-colors">
-                            <div className="text-3xl mb-2">🌍</div><p className="text-sm text-white/80">Manage Destinations</p>
+                        <a href="#/admin/destinations" className="glass rounded-2xl p-5 text-center hover:border-sky/40 transition-colors">
+                            <div className="text-3xl mb-2">🌍</div><p className="text-sm text-black/80">Manage Destinations</p>
                         </a>
-                        <a href="#/admin/leads" className="glass rounded-2xl p-5 text-center hover:border-yellow/40 transition-colors">
-                            <div className="text-3xl mb-2">📋</div><p className="text-sm text-white/80">View Leads</p>
+                        <a href="#/admin/leads" className="glass rounded-2xl p-5 text-center hover:border-sky/40 transition-colors">
+                            <div className="text-3xl mb-2">📋</div><p className="text-sm text-black/80">View Leads</p>
                         </a>
-                        <a href="#/admin/settings" className="glass rounded-2xl p-5 text-center hover:border-yellow/40 transition-colors">
-                            <div className="text-3xl mb-2">⚙️</div><p className="text-sm text-white/80">Site Settings</p>
+                        <a href="#/admin/settings" className="glass rounded-2xl p-5 text-center hover:border-sky/40 transition-colors">
+                            <div className="text-3xl mb-2">⚙️</div><p className="text-sm text-black/80">Site Settings</p>
                         </a>
+                    </div>
+                </div>
+            );
+        }
+
+        // ─── ADMIN PROFILE ──────────────────────────────────────────────
+        function AdminProfile({ user, onLogout }) {
+            return (
+                <div>
+                    <h1 className="text-3xl font-bold text-black mb-6">Profile</h1>
+                    <div className="glass rounded-2xl p-8 max-w-md">
+                        <div className="flex items-center gap-4 mb-6">
+                            <div className="h-16 w-16 rounded-full bg-sky/20 flex items-center justify-center text-3xl text-sky">
+                                {user?.email?.charAt(0).toUpperCase() || 'U'}
+                            </div>
+                            <div>
+                                <p className="text-sm text-black/50">Logged in as</p>
+                                <p className="text-xl font-semibold text-black">{user?.email || 'User'}</p>
+                            </div>
+                        </div>
+                        <div className="space-y-3 text-sm text-black/70">
+                            <p><strong className="text-black">User ID:</strong> {user?.id || 'N/A'}</p>
+                            <p><strong className="text-black">Email confirmed:</strong> {user?.email_confirmed_at ? 'Yes' : 'No'}</p>
+                            <p><strong className="text-black">Last sign in:</strong> {user?.last_sign_in_at ? new Date(user.last_sign_in_at).toLocaleString() : 'N/A'}</p>
+                        </div>
+                        <div className="mt-6 pt-6 border-t border-black/10">
+                            <button onClick={onLogout} className="btn-waterfill rounded-full px-6 py-2 text-sm font-semibold text-white bg-transparent border border-red">Sign Out</button>
+                        </div>
                     </div>
                 </div>
             );
@@ -1764,25 +2260,25 @@
         // ─── ADMIN PROGRAMMES ──────────────────────────────────────────
         function AdminProgrammes() {
             const crud = useAdminCrud('programmes', { title: '', category: '', level: '', description: '', is_published: true, order_index: 0 });
-            if (crud.loading) return <AdminSection title="Programmes" onBack={() => window.location.hash = '#/admin/dashboard'}><p className="text-white/70">Loading...</p></AdminSection>;
+            if (crud.loading) return <AdminSection title="Programmes" onBack={() => window.location.hash = '#/admin/dashboard'}><p className="text-black/70">Loading...</p></AdminSection>;
             return (
                 <AdminSection title="Programmes" onBack={() => window.location.hash = '#/admin/dashboard'}>
-                    <button onClick={crud.openNew} className="btn-waterfill rounded-full px-6 py-2 text-sm font-semibold text-white bg-transparent border border-red mb-4">+ Add Programme</button>
+                    <button onClick={crud.openNew} className="btn-waterfill rounded-full px-6 py-2 text-sm font-semibold text-white bg-transparent border border-green mb-4">+ Add Programme</button>
                     {crud.error && <p className="text-red-400 mb-4">Error: {crud.error.message}</p>}
                     <div className="space-y-3">
                         {crud.items.map(p => (
                             <div key={p.id} className="admin-card flex items-center justify-between">
                                 <div>
-                                    <h4 className="text-white font-semibold">{p.title}</h4>
-                                    <p className="text-xs text-white/50">{p.category || 'Uncategorized'} {p.level && `• ${p.level}`} {p.is_published ? <span className="ml-2 badge badge-green">Published</span> : <span className="ml-2 badge badge-gray">Draft</span>}</p>
+                                    <h4 className="text-black font-semibold">{p.title}</h4>
+                                    <p className="text-xs text-black/50">{p.category || 'Uncategorized'} {p.level && `• ${p.level}`} {p.is_published ? <span className="ml-2 badge badge-green">Published</span> : <span className="ml-2 badge badge-gray">Draft</span>}</p>
                                 </div>
                                 <div className="flex gap-2">
-                                    <button onClick={() => crud.openEdit(p)} className="text-sky hover:text-white text-sm">Edit</button>
+                                    <button onClick={() => crud.openEdit(p)} className="text-sky hover:text-black text-sm">Edit</button>
                                     <button onClick={() => crud.handleDelete(p.id)} className="text-red-400 hover:text-red-200 text-sm">Delete</button>
                                 </div>
                             </div>
                         ))}
-                        {crud.items.length === 0 && <p className="text-white/50">No programmes yet.</p>}
+                        {crud.items.length === 0 && <p className="text-black/50">No programmes yet.</p>}
                     </div>
                     {crud.showForm && (
                         <AdminModal title={crud.editing ? 'Edit Programme' : 'Add Programme'} onClose={() => { crud.setShowForm(false); crud.setEditing(null); }} onSave={crud.handleSave} isSubmitting={crud.isSubmitting}>
@@ -1792,8 +2288,8 @@
                                 <input type="text" placeholder="Level (e.g. Undergraduate, Postgraduate)" value={crud.formData.level || ''} onChange={(e) => crud.setFormData({...crud.formData, level: e.target.value})} className="input-gold w-full rounded-xl px-4 py-2" />
                                 <textarea placeholder="Description" rows={4} value={crud.formData.description || ''} onChange={(e) => crud.setFormData({...crud.formData, description: e.target.value})} className="input-gold w-full rounded-xl px-4 py-2"></textarea>
                                 <input type="number" placeholder="Order Index" value={crud.formData.order_index || 0} onChange={(e) => crud.setFormData({...crud.formData, order_index: parseInt(e.target.value) || 0})} className="input-gold w-full rounded-xl px-4 py-2" />
-                                <label className="flex items-center gap-2 text-white/70 text-sm">
-                                    <input type="checkbox" checked={crud.formData.is_published !== false} onChange={(e) => crud.setFormData({...crud.formData, is_published: e.target.checked})} className="rounded border-yellow bg-white/5 text-sky" /> Published
+                                <label className="flex items-center gap-2 text-black/70 text-sm">
+                                    <input type="checkbox" checked={crud.formData.is_published !== false} onChange={(e) => crud.setFormData({...crud.formData, is_published: e.target.checked})} className="rounded border-sky bg-white/5 text-sky" /> Published
                                 </label>
                             </div>
                         </AdminModal>
@@ -1805,28 +2301,28 @@
         // ─── ADMIN DESTINATIONS ────────────────────────────────────────
         function AdminDestinations() {
             const crud = useAdminCrud('destinations', { name: '', description: '', image_url: '', is_published: true, order_index: 0 });
-            if (crud.loading) return <AdminSection title="Destinations" onBack={() => window.location.hash = '#/admin/dashboard'}><p className="text-white/70">Loading...</p></AdminSection>;
+            if (crud.loading) return <AdminSection title="Destinations" onBack={() => window.location.hash = '#/admin/dashboard'}><p className="text-black/70">Loading...</p></AdminSection>;
             return (
                 <AdminSection title="Destinations" onBack={() => window.location.hash = '#/admin/dashboard'}>
-                    <button onClick={crud.openNew} className="btn-waterfill rounded-full px-6 py-2 text-sm font-semibold text-white bg-transparent border border-red mb-4">+ Add Destination</button>
+                    <button onClick={crud.openNew} className="btn-waterfill rounded-full px-6 py-2 text-sm font-semibold text-white bg-transparent border border-green mb-4">+ Add Destination</button>
                     {crud.error && <p className="text-red-400 mb-4">Error: {crud.error.message}</p>}
                     <div className="space-y-3">
                         {crud.items.map(d => (
                             <div key={d.id} className="admin-card flex items-center justify-between">
                                 <div className="flex items-center gap-4">
-                                    {d.image_url ? <img src={d.image_url} alt={d.name} className="w-12 h-8 object-cover rounded" /> : <div className="w-12 h-8 bg-navy-2 rounded"></div>}
+                                    {d.image_url ? <img src={d.image_url} alt={d.name} className="w-12 h-8 object-cover rounded" /> : <div className="w-12 h-8 bg-gray-100 rounded"></div>}
                                     <div>
-                                        <h4 className="text-white font-semibold">{d.name}</h4>
-                                        <p className="text-xs text-white/50">{d.description || 'No description'} {d.is_published ? <span className="ml-2 badge badge-green">Published</span> : <span className="ml-2 badge badge-gray">Draft</span>}</p>
+                                        <h4 className="text-black font-semibold">{d.name}</h4>
+                                        <p className="text-xs text-black/50">{d.description || 'No description'} {d.is_published ? <span className="ml-2 badge badge-green">Published</span> : <span className="ml-2 badge badge-gray">Draft</span>}</p>
                                     </div>
                                 </div>
                                 <div className="flex gap-2">
-                                    <button onClick={() => crud.openEdit(d)} className="text-sky hover:text-white text-sm">Edit</button>
+                                    <button onClick={() => crud.openEdit(d)} className="text-sky hover:text-black text-sm">Edit</button>
                                     <button onClick={() => crud.handleDelete(d.id)} className="text-red-400 hover:text-red-200 text-sm">Delete</button>
                                 </div>
                             </div>
                         ))}
-                        {crud.items.length === 0 && <p className="text-white/50">No destinations yet.</p>}
+                        {crud.items.length === 0 && <p className="text-black/50">No destinations yet.</p>}
                     </div>
                     {crud.showForm && (
                         <AdminModal title={crud.editing ? 'Edit Destination' : 'Add Destination'} onClose={() => { crud.setShowForm(false); crud.setEditing(null); }} onSave={crud.handleSave} isSubmitting={crud.isSubmitting}>
@@ -1835,8 +2331,8 @@
                                 <textarea placeholder="Description" rows={3} value={crud.formData.description || ''} onChange={(e) => crud.setFormData({...crud.formData, description: e.target.value})} className="input-gold w-full rounded-xl px-4 py-2"></textarea>
                                 <input type="text" placeholder="Image URL (or leave empty for fallback)" value={crud.formData.image_url || ''} onChange={(e) => crud.setFormData({...crud.formData, image_url: e.target.value})} className="input-gold w-full rounded-xl px-4 py-2" />
                                 <input type="number" placeholder="Order Index" value={crud.formData.order_index || 0} onChange={(e) => crud.setFormData({...crud.formData, order_index: parseInt(e.target.value) || 0})} className="input-gold w-full rounded-xl px-4 py-2" />
-                                <label className="flex items-center gap-2 text-white/70 text-sm">
-                                    <input type="checkbox" checked={crud.formData.is_published !== false} onChange={(e) => crud.setFormData({...crud.formData, is_published: e.target.checked})} className="rounded border-yellow bg-white/5 text-sky" /> Published
+                                <label className="flex items-center gap-2 text-black/70 text-sm">
+                                    <input type="checkbox" checked={crud.formData.is_published !== false} onChange={(e) => crud.setFormData({...crud.formData, is_published: e.target.checked})} className="rounded border-sky bg-white/5 text-sky" /> Published
                                 </label>
                             </div>
                         </AdminModal>
@@ -1848,25 +2344,25 @@
         // ─── ADMIN SERVICES ─────────────────────────────────────────────
         function AdminServices() {
             const crud = useAdminCrud('support_services', { title: '', icon: '🎓', description: '', is_published: true, order_index: 0 });
-            if (crud.loading) return <AdminSection title="Support Services" onBack={() => window.location.hash = '#/admin/dashboard'}><p className="text-white/70">Loading...</p></AdminSection>;
+            if (crud.loading) return <AdminSection title="Support Services" onBack={() => window.location.hash = '#/admin/dashboard'}><p className="text-black/70">Loading...</p></AdminSection>;
             return (
                 <AdminSection title="Support Services" onBack={() => window.location.hash = '#/admin/dashboard'}>
-                    <button onClick={crud.openNew} className="btn-waterfill rounded-full px-6 py-2 text-sm font-semibold text-white bg-transparent border border-red mb-4">+ Add Service</button>
+                    <button onClick={crud.openNew} className="btn-waterfill rounded-full px-6 py-2 text-sm font-semibold text-white bg-transparent border border-green mb-4">+ Add Service</button>
                     {crud.error && <p className="text-red-400 mb-4">Error: {crud.error.message}</p>}
                     <div className="space-y-3">
                         {crud.items.map(s => (
                             <div key={s.id} className="admin-card flex items-center justify-between">
                                 <div>
-                                    <h4 className="text-white font-semibold">{s.icon || '🎓'} {s.title}</h4>
-                                    <p className="text-xs text-white/50">{s.description || 'No description'} {s.is_published ? <span className="ml-2 badge badge-green">Published</span> : <span className="ml-2 badge badge-gray">Draft</span>}</p>
+                                    <h4 className="text-black font-semibold">{s.icon || '🎓'} {s.title}</h4>
+                                    <p className="text-xs text-black/50">{s.description || 'No description'} {s.is_published ? <span className="ml-2 badge badge-green">Published</span> : <span className="ml-2 badge badge-gray">Draft</span>}</p>
                                 </div>
                                 <div className="flex gap-2">
-                                    <button onClick={() => crud.openEdit(s)} className="text-sky hover:text-white text-sm">Edit</button>
+                                    <button onClick={() => crud.openEdit(s)} className="text-sky hover:text-black text-sm">Edit</button>
                                     <button onClick={() => crud.handleDelete(s.id)} className="text-red-400 hover:text-red-200 text-sm">Delete</button>
                                 </div>
                             </div>
                         ))}
-                        {crud.items.length === 0 && <p className="text-white/50">No support services yet.</p>}
+                        {crud.items.length === 0 && <p className="text-black/50">No support services yet.</p>}
                     </div>
                     {crud.showForm && (
                         <AdminModal title={crud.editing ? 'Edit Service' : 'Add Service'} onClose={() => { crud.setShowForm(false); crud.setEditing(null); }} onSave={crud.handleSave} isSubmitting={crud.isSubmitting}>
@@ -1875,8 +2371,8 @@
                                 <input type="text" placeholder="Icon (emoji)" value={crud.formData.icon || '🎓'} onChange={(e) => crud.setFormData({...crud.formData, icon: e.target.value})} className="input-gold w-full rounded-xl px-4 py-2" />
                                 <textarea placeholder="Description" rows={3} value={crud.formData.description || ''} onChange={(e) => crud.setFormData({...crud.formData, description: e.target.value})} className="input-gold w-full rounded-xl px-4 py-2"></textarea>
                                 <input type="number" placeholder="Order Index" value={crud.formData.order_index || 0} onChange={(e) => crud.setFormData({...crud.formData, order_index: parseInt(e.target.value) || 0})} className="input-gold w-full rounded-xl px-4 py-2" />
-                                <label className="flex items-center gap-2 text-white/70 text-sm">
-                                    <input type="checkbox" checked={crud.formData.is_published !== false} onChange={(e) => crud.setFormData({...crud.formData, is_published: e.target.checked})} className="rounded border-yellow bg-white/5 text-sky" /> Published
+                                <label className="flex items-center gap-2 text-black/70 text-sm">
+                                    <input type="checkbox" checked={crud.formData.is_published !== false} onChange={(e) => crud.setFormData({...crud.formData, is_published: e.target.checked})} className="rounded border-sky bg-white/5 text-sky" /> Published
                                 </label>
                             </div>
                         </AdminModal>
@@ -1888,25 +2384,25 @@
         // ─── ADMIN JOURNEY ─────────────────────────────────────────────
         function AdminJourney() {
             const crud = useAdminCrud('process_steps', { title: '', description: '', step_number: 1, is_published: true, order_index: 0 });
-            if (crud.loading) return <AdminSection title="Journey Steps" onBack={() => window.location.hash = '#/admin/dashboard'}><p className="text-white/70">Loading...</p></AdminSection>;
+            if (crud.loading) return <AdminSection title="Journey Steps" onBack={() => window.location.hash = '#/admin/dashboard'}><p className="text-black/70">Loading...</p></AdminSection>;
             return (
                 <AdminSection title="Journey Steps" onBack={() => window.location.hash = '#/admin/dashboard'}>
-                    <button onClick={crud.openNew} className="btn-waterfill rounded-full px-6 py-2 text-sm font-semibold text-white bg-transparent border border-red mb-4">+ Add Step</button>
+                    <button onClick={crud.openNew} className="btn-waterfill rounded-full px-6 py-2 text-sm font-semibold text-white bg-transparent border border-green mb-4">+ Add Step</button>
                     {crud.error && <p className="text-red-400 mb-4">Error: {crud.error.message}</p>}
                     <div className="space-y-3">
                         {crud.items.map(s => (
                             <div key={s.id} className="admin-card flex items-center justify-between">
                                 <div>
-                                    <h4 className="text-white font-semibold">Step {s.step_number || 0}: {s.title}</h4>
-                                    <p className="text-xs text-white/50">{s.description || 'No description'} {s.is_published ? <span className="ml-2 badge badge-green">Published</span> : <span className="ml-2 badge badge-gray">Draft</span>}</p>
+                                    <h4 className="text-black font-semibold">Step {s.step_number || 0}: {s.title}</h4>
+                                    <p className="text-xs text-black/50">{s.description || 'No description'} {s.is_published ? <span className="ml-2 badge badge-green">Published</span> : <span className="ml-2 badge badge-gray">Draft</span>}</p>
                                 </div>
                                 <div className="flex gap-2">
-                                    <button onClick={() => crud.openEdit(s)} className="text-sky hover:text-white text-sm">Edit</button>
+                                    <button onClick={() => crud.openEdit(s)} className="text-sky hover:text-black text-sm">Edit</button>
                                     <button onClick={() => crud.handleDelete(s.id)} className="text-red-400 hover:text-red-200 text-sm">Delete</button>
                                 </div>
                             </div>
                         ))}
-                        {crud.items.length === 0 && <p className="text-white/50">No journey steps yet.</p>}
+                        {crud.items.length === 0 && <p className="text-black/50">No journey steps yet.</p>}
                     </div>
                     {crud.showForm && (
                         <AdminModal title={crud.editing ? 'Edit Step' : 'Add Step'} onClose={() => { crud.setShowForm(false); crud.setEditing(null); }} onSave={crud.handleSave} isSubmitting={crud.isSubmitting}>
@@ -1915,8 +2411,8 @@
                                 <textarea placeholder="Description" rows={3} value={crud.formData.description || ''} onChange={(e) => crud.setFormData({...crud.formData, description: e.target.value})} className="input-gold w-full rounded-xl px-4 py-2"></textarea>
                                 <input type="number" placeholder="Step Number" value={crud.formData.step_number || 1} onChange={(e) => crud.setFormData({...crud.formData, step_number: parseInt(e.target.value) || 1})} className="input-gold w-full rounded-xl px-4 py-2" />
                                 <input type="number" placeholder="Order Index" value={crud.formData.order_index || 0} onChange={(e) => crud.setFormData({...crud.formData, order_index: parseInt(e.target.value) || 0})} className="input-gold w-full rounded-xl px-4 py-2" />
-                                <label className="flex items-center gap-2 text-white/70 text-sm">
-                                    <input type="checkbox" checked={crud.formData.is_published !== false} onChange={(e) => crud.setFormData({...crud.formData, is_published: e.target.checked})} className="rounded border-yellow bg-white/5 text-sky" /> Published
+                                <label className="flex items-center gap-2 text-black/70 text-sm">
+                                    <input type="checkbox" checked={crud.formData.is_published !== false} onChange={(e) => crud.setFormData({...crud.formData, is_published: e.target.checked})} className="rounded border-sky bg-white/5 text-sky" /> Published
                                 </label>
                             </div>
                         </AdminModal>
@@ -1928,27 +2424,27 @@
         // ─── ADMIN FAQS ─────────────────────────────────────────────────
         function AdminFaqs() {
             const crud = useAdminCrud('faqs', { question: '', answer: '', is_published: true, order_index: 0 });
-            if (crud.loading) return <AdminSection title="FAQs" onBack={() => window.location.hash = '#/admin/dashboard'}><p className="text-white/70">Loading...</p></AdminSection>;
+            if (crud.loading) return <AdminSection title="FAQs" onBack={() => window.location.hash = '#/admin/dashboard'}><p className="text-black/70">Loading...</p></AdminSection>;
             return (
                 <AdminSection title="FAQs" onBack={() => window.location.hash = '#/admin/dashboard'}>
-                    <button onClick={crud.openNew} className="btn-waterfill rounded-full px-6 py-2 text-sm font-semibold text-white bg-transparent border border-red mb-4">+ Add FAQ</button>
+                    <button onClick={crud.openNew} className="btn-waterfill rounded-full px-6 py-2 text-sm font-semibold text-white bg-transparent border border-green mb-4">+ Add FAQ</button>
                     {crud.error && <p className="text-red-400 mb-4">Error: {crud.error.message}</p>}
                     <div className="space-y-3">
                         {crud.items.map(f => (
                             <div key={f.id} className="admin-card">
                                 <div className="flex items-center justify-between">
                                     <div>
-                                        <h4 className="text-white font-semibold">{f.question}</h4>
-                                        <p className="text-xs text-white/50 line-clamp-2">{f.answer} {f.is_published ? <span className="ml-2 badge badge-green">Published</span> : <span className="ml-2 badge badge-gray">Draft</span>}</p>
+                                        <h4 className="text-black font-semibold">{f.question}</h4>
+                                        <p className="text-xs text-black/50 line-clamp-2">{f.answer} {f.is_published ? <span className="ml-2 badge badge-green">Published</span> : <span className="ml-2 badge badge-gray">Draft</span>}</p>
                                     </div>
                                     <div className="flex gap-2">
-                                        <button onClick={() => crud.openEdit(f)} className="text-sky hover:text-white text-sm">Edit</button>
+                                        <button onClick={() => crud.openEdit(f)} className="text-sky hover:text-black text-sm">Edit</button>
                                         <button onClick={() => crud.handleDelete(f.id)} className="text-red-400 hover:text-red-200 text-sm">Delete</button>
                                     </div>
                                 </div>
                             </div>
                         ))}
-                        {crud.items.length === 0 && <p className="text-white/50">No FAQs yet.</p>}
+                        {crud.items.length === 0 && <p className="text-black/50">No FAQs yet.</p>}
                     </div>
                     {crud.showForm && (
                         <AdminModal title={crud.editing ? 'Edit FAQ' : 'Add FAQ'} onClose={() => { crud.setShowForm(false); crud.setEditing(null); }} onSave={crud.handleSave} isSubmitting={crud.isSubmitting}>
@@ -1956,8 +2452,8 @@
                                 <input type="text" placeholder="Question *" value={crud.formData.question || ''} onChange={(e) => crud.setFormData({...crud.formData, question: e.target.value})} className="input-gold w-full rounded-xl px-4 py-2" required />
                                 <textarea placeholder="Answer *" rows={4} value={crud.formData.answer || ''} onChange={(e) => crud.setFormData({...crud.formData, answer: e.target.value})} className="input-gold w-full rounded-xl px-4 py-2" required></textarea>
                                 <input type="number" placeholder="Order Index" value={crud.formData.order_index || 0} onChange={(e) => crud.setFormData({...crud.formData, order_index: parseInt(e.target.value) || 0})} className="input-gold w-full rounded-xl px-4 py-2" />
-                                <label className="flex items-center gap-2 text-white/70 text-sm">
-                                    <input type="checkbox" checked={crud.formData.is_published !== false} onChange={(e) => crud.setFormData({...crud.formData, is_published: e.target.checked})} className="rounded border-yellow bg-white/5 text-sky" /> Published
+                                <label className="flex items-center gap-2 text-black/70 text-sm">
+                                    <input type="checkbox" checked={crud.formData.is_published !== false} onChange={(e) => crud.setFormData({...crud.formData, is_published: e.target.checked})} className="rounded border-sky bg-white/5 text-sky" /> Published
                                 </label>
                             </div>
                         </AdminModal>
@@ -1969,25 +2465,25 @@
         // ─── ADMIN TESTIMONIALS ────────────────────────────────────────
         function AdminTestimonials() {
             const crud = useAdminCrud('testimonials', { name: '', quote: '', destination: '', image_url: '', is_published: true, order_index: 0 });
-            if (crud.loading) return <AdminSection title="Testimonials" onBack={() => window.location.hash = '#/admin/dashboard'}><p className="text-white/70">Loading...</p></AdminSection>;
+            if (crud.loading) return <AdminSection title="Testimonials" onBack={() => window.location.hash = '#/admin/dashboard'}><p className="text-black/70">Loading...</p></AdminSection>;
             return (
                 <AdminSection title="Testimonials" onBack={() => window.location.hash = '#/admin/dashboard'}>
-                    <button onClick={crud.openNew} className="btn-waterfill rounded-full px-6 py-2 text-sm font-semibold text-white bg-transparent border border-red mb-4">+ Add Testimonial</button>
+                    <button onClick={crud.openNew} className="btn-waterfill rounded-full px-6 py-2 text-sm font-semibold text-white bg-transparent border border-green mb-4">+ Add Testimonial</button>
                     {crud.error && <p className="text-red-400 mb-4">Error: {crud.error.message}</p>}
                     <div className="space-y-3">
                         {crud.items.map(t => (
                             <div key={t.id} className="admin-card flex items-center justify-between">
                                 <div>
-                                    <h4 className="text-white font-semibold">{t.name || 'Anonymous'}</h4>
-                                    <p className="text-xs text-white/50 line-clamp-2">"{t.quote}" {t.destination && <span>• {t.destination}</span>} {t.is_published ? <span className="ml-2 badge badge-green">Published</span> : <span className="ml-2 badge badge-gray">Draft</span>}</p>
+                                    <h4 className="text-black font-semibold">{t.name || 'Anonymous'}</h4>
+                                    <p className="text-xs text-black/50 line-clamp-2">"{t.quote}" {t.destination && <span>• {t.destination}</span>} {t.is_published ? <span className="ml-2 badge badge-green">Published</span> : <span className="ml-2 badge badge-gray">Draft</span>}</p>
                                 </div>
                                 <div className="flex gap-2">
-                                    <button onClick={() => crud.openEdit(t)} className="text-sky hover:text-white text-sm">Edit</button>
+                                    <button onClick={() => crud.openEdit(t)} className="text-sky hover:text-black text-sm">Edit</button>
                                     <button onClick={() => crud.handleDelete(t.id)} className="text-red-400 hover:text-red-200 text-sm">Delete</button>
                                 </div>
                             </div>
                         ))}
-                        {crud.items.length === 0 && <p className="text-white/50">No testimonials yet.</p>}
+                        {crud.items.length === 0 && <p className="text-black/50">No testimonials yet.</p>}
                     </div>
                     {crud.showForm && (
                         <AdminModal title={crud.editing ? 'Edit Testimonial' : 'Add Testimonial'} onClose={() => { crud.setShowForm(false); crud.setEditing(null); }} onSave={crud.handleSave} isSubmitting={crud.isSubmitting}>
@@ -1997,8 +2493,8 @@
                                 <input type="text" placeholder="Destination" value={crud.formData.destination || ''} onChange={(e) => crud.setFormData({...crud.formData, destination: e.target.value})} className="input-gold w-full rounded-xl px-4 py-2" />
                                 <input type="text" placeholder="Image URL" value={crud.formData.image_url || ''} onChange={(e) => crud.setFormData({...crud.formData, image_url: e.target.value})} className="input-gold w-full rounded-xl px-4 py-2" />
                                 <input type="number" placeholder="Order Index" value={crud.formData.order_index || 0} onChange={(e) => crud.setFormData({...crud.formData, order_index: parseInt(e.target.value) || 0})} className="input-gold w-full rounded-xl px-4 py-2" />
-                                <label className="flex items-center gap-2 text-white/70 text-sm">
-                                    <input type="checkbox" checked={crud.formData.is_published !== false} onChange={(e) => crud.setFormData({...crud.formData, is_published: e.target.checked})} className="rounded border-yellow bg-white/5 text-sky" /> Published
+                                <label className="flex items-center gap-2 text-black/70 text-sm">
+                                    <input type="checkbox" checked={crud.formData.is_published !== false} onChange={(e) => crud.setFormData({...crud.formData, is_published: e.target.checked})} className="rounded border-sky bg-white/5 text-sky" /> Published
                                 </label>
                             </div>
                         </AdminModal>
@@ -2015,7 +2511,7 @@
                 if (error) throw error;
                 return data || [];
             }, []);
-            if (loading) return <AdminSection title="Leads" onBack={() => window.location.hash = '#/admin/dashboard'}><p className="text-white/70">Loading...</p></AdminSection>;
+            if (loading) return <AdminSection title="Leads" onBack={() => window.location.hash = '#/admin/dashboard'}><p className="text-black/70">Loading...</p></AdminSection>;
             return (
                 <AdminSection title="Leads" onBack={() => window.location.hash = '#/admin/dashboard'}>
                     <div className="space-y-3">
@@ -2023,17 +2519,17 @@
                             <div key={lead.id} className="admin-card">
                                 <div className="flex justify-between items-start">
                                     <div>
-                                        <h4 className="text-white font-semibold">{lead.full_name}</h4>
-                                        <p className="text-xs text-white/50">{lead.email} {lead.phone && `• ${lead.phone}`}</p>
-                                        <p className="text-xs text-white/50">{lead.preferred_destination || 'No destination'} {lead.preferred_programme && `• ${lead.preferred_programme}`}</p>
-                                        {lead.reference && <p className="text-xs text-yellow mt-1">Ref: {lead.reference}</p>}
+                                        <h4 className="text-black font-semibold">{lead.full_name}</h4>
+                                        <p className="text-xs text-black/50">{lead.email} {lead.phone && `• ${lead.phone}`}</p>
+                                        <p className="text-xs text-black/50">{lead.preferred_destination || 'No destination'} {lead.preferred_programme && `• ${lead.preferred_programme}`}</p>
+                                        {lead.reference && <p className="text-xs text-sky mt-1">Ref: {lead.reference}</p>}
                                     </div>
-                                    <span className={`badge ${lead.status === 'new' ? 'badge-blue' : lead.status === 'contacted' ? 'badge-yellow' : 'badge-green'}`}>{lead.status || 'new'}</span>
+                                    <span className={`badge ${lead.status === 'new' ? 'badge-sky' : lead.status === 'contacted' ? 'badge-yellow' : 'badge-green'}`}>{lead.status || 'new'}</span>
                                 </div>
-                                {lead.message && <p className="mt-2 text-sm text-white/70">{lead.message}</p>}
+                                {lead.message && <p className="mt-2 text-sm text-black/70">{lead.message}</p>}
                             </div>
                         ))}
-                        {(!leads || leads.length === 0) && <p className="text-white/50">No leads yet.</p>}
+                        {(!leads || leads.length === 0) && <p className="text-black/50">No leads yet.</p>}
                     </div>
                 </AdminSection>
             );
@@ -2107,12 +2603,12 @@
                 }
             };
 
-            if (loading) return <AdminSection title="Media" onBack={() => window.location.hash = '#/admin/dashboard'}><p className="text-white/70">Loading...</p></AdminSection>;
+            if (loading) return <AdminSection title="Media" onBack={() => window.location.hash = '#/admin/dashboard'}><p className="text-black/70">Loading...</p></AdminSection>;
 
             return (
                 <AdminSection title="Media Assets" onBack={() => window.location.hash = '#/admin/dashboard'}>
                     <div className="flex items-center gap-4 mb-4">
-                        <label className="btn-waterfill rounded-full px-6 py-2 text-sm font-semibold text-white bg-transparent border border-red cursor-pointer">
+                        <label className="btn-waterfill rounded-full px-6 py-2 text-sm font-semibold text-white bg-transparent border border-green cursor-pointer">
                             {uploading ? 'Uploading...' : '+ Upload Media'}
                             <input type="file" onChange={handleUpload} className="hidden" disabled={uploading} />
                         </label>
@@ -2121,13 +2617,13 @@
                     <div className="grid gap-4 md:grid-cols-3 lg:grid-cols-4">
                         {mediaItems.map(m => (
                             <div key={m.id} className="admin-card">
-                                {m.public_url ? <img src={m.public_url} alt={m.name} className="w-full h-32 object-cover rounded-lg mb-2" /> : <div className="w-full h-32 bg-navy-2 rounded-lg mb-2 flex items-center justify-center text-white/30">🖼️</div>}
-                                <p className="text-xs text-white/70 truncate">{m.name}</p>
-                                <p className="text-xs text-white/30">{(m.size / 1024).toFixed(1)} KB</p>
+                                {m.public_url ? <img src={m.public_url} alt={m.name} className="w-full h-32 object-cover rounded-lg mb-2" /> : <div className="w-full h-32 bg-gray-100 rounded-lg mb-2 flex items-center justify-center text-black/30">🖼️</div>}
+                                <p className="text-xs text-black/70 truncate">{m.name}</p>
+                                <p className="text-xs text-black/30">{(m.size / 1024).toFixed(1)} KB</p>
                                 <button onClick={() => handleDelete(m.id, m.storage_path)} className="text-red-400 hover:text-red-200 text-xs mt-1">Delete</button>
                             </div>
                         ))}
-                        {mediaItems.length === 0 && <p className="text-white/50 col-span-full">No media assets uploaded yet.</p>}
+                        {mediaItems.length === 0 && <p className="text-black/50 col-span-full">No media assets uploaded yet.</p>}
                     </div>
                 </AdminSection>
             );
@@ -2168,7 +2664,7 @@
                 }
             };
 
-            if (loading) return <AdminSection title="Settings" onBack={() => window.location.hash = '#/admin/dashboard'}><p className="text-white/70">Loading...</p></AdminSection>;
+            if (loading) return <AdminSection title="Settings" onBack={() => window.location.hash = '#/admin/dashboard'}><p className="text-black/70">Loading...</p></AdminSection>;
 
             const commonKeys = ['hero_title', 'hero_subtitle', 'motto', 'email', 'whatsapp_india', 'whatsapp_uganda', 'whatsapp_myanmar'];
             const displayKeys = Object.keys(formData).filter(k => commonKeys.includes(k) || !k.startsWith('_')).sort();
@@ -2178,11 +2674,11 @@
                     <div className="max-w-2xl space-y-4">
                         {displayKeys.map(key => (
                             <div key={key}>
-                                <label className="block text-sm text-white/70 mb-1">{key.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase())}</label>
+                                <label className="block text-sm text-black/70 mb-1">{key.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase())}</label>
                                 <input type="text" value={formData[key] || ''} onChange={(e) => setFormData({...formData, [key]: e.target.value})} className="input-gold w-full rounded-xl px-4 py-2" />
                             </div>
                         ))}
-                        <button onClick={handleSave} disabled={saving} className="btn-waterfill rounded-xl px-8 py-3 border border-red text-white font-semibold w-full disabled:opacity-50">{saving ? 'Saving...' : 'Save Settings'}</button>
+                        <button onClick={handleSave} disabled={saving} className="btn-waterfill rounded-xl px-8 py-3 border border-green text-white font-semibold w-full disabled:opacity-50">{saving ? 'Saving...' : 'Save Settings'}</button>
                         {error && <p className="text-red-400">Error: {error.message}</p>}
                     </div>
                 </AdminSection>
@@ -2195,12 +2691,12 @@
                 <div className="modal-overlay" role="dialog" aria-modal="true" aria-label={title}>
                     <div className="modal-content">
                         <button className="modal-close" onClick={onClose} aria-label="Close modal">✕</button>
-                        <h3 className="text-xl font-bold text-white mb-4">{title}</h3>
+                        <h3 className="text-xl font-bold text-black mb-4">{title}</h3>
                         <div className="space-y-4">
                             {children}
                             <div className="flex gap-3 pt-2">
-                                <button onClick={onSave} disabled={isSubmitting} className="flex-1 btn-waterfill rounded-xl px-6 py-2 border border-red text-white font-semibold disabled:opacity-50">{isSubmitting ? 'Saving...' : 'Save'}</button>
-                                <button onClick={onClose} className="flex-1 rounded-xl px-6 py-2 border border-white/20 text-white/60 hover:text-white">Cancel</button>
+                                <button onClick={onSave} disabled={isSubmitting} className="flex-1 btn-waterfill rounded-xl px-6 py-2 border border-green text-white font-semibold disabled:opacity-50">{isSubmitting ? 'Saving...' : 'Save'}</button>
+                                <button onClick={onClose} className="flex-1 rounded-xl px-6 py-2 border border-black/20 text-black/60 hover:text-black">Cancel</button>
                             </div>
                         </div>
                     </div>
@@ -2213,8 +2709,8 @@
             return (
                 <div>
                     <div className="flex items-center gap-4 mb-6">
-                        <button onClick={onBack} className="text-white/50 hover:text-white">← Back</button>
-                        <h1 className="text-2xl font-bold text-white">{title}</h1>
+                        <button onClick={onBack} className="text-black/50 hover:text-black">← Back</button>
+                        <h1 className="text-2xl font-bold text-black">{title}</h1>
                     </div>
                     {children}
                 </div>
@@ -2277,4 +2773,4 @@
         }
     </script>
 </body>
-</html>
+    </html>
