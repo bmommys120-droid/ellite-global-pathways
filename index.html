@@ -40,79 +40,41 @@
         }
     </script>
     <style>
-        /* ===== ROOT – Blue & White Theme with Wavy Designs ===== */
+        /* ===== ROOT – Blue Theme with Glassmorphism ===== */
         :root {
-            --white: #FFFFFF;
-            --off-white: #F8FAFF;
-            --light-blue: #E8F4FD;
+            --deep-blue: #0A1628;
+            --dark-blue: #0F1F3A;
             --sky-blue: #38BDF8;
             --sky-blue-dark: #0EA5E9;
-            --deep-blue: #0A1A3A;
-            --navy-blue: #0B1F4A;
-            --red: #E53935;
-            --red-light: #F87171;
-            --dark-text: #0A1A3A;
+            --sky-blue-light: #7DD3FC;
+            --white: #FFFFFF;
+            --off-white: #F0F7FF;
             --glass-bg: rgba(255,255,255,0.08);
-            --glass-border: rgba(255,255,255,0.15);
+            --glass-border: rgba(255,255,255,0.12);
+            --text-light: #FFFFFF;
+            --text-dark: #0A1628;
+            --red: #EF4444;
+            --red-dark: #DC2626;
         }
 
-        /* Override Tailwind classes */
+        /* Override Tailwind */
         .text-sky { color: var(--sky-blue) !important; }
         .border-sky { border-color: var(--sky-blue) !important; }
         .bg-sky { background-color: var(--sky-blue) !important; }
         .bg-sky\/10 { background-color: rgba(56,189,248,0.1) !important; }
         .bg-sky\/20 { background-color: rgba(56,189,248,0.2) !important; }
         .from-sky { --tw-gradient-from: var(--sky-blue) !important; }
-        .to-cyan { --tw-gradient-to: var(--sky-blue-dark) !important; }
+        .to-cyan { --tw-gradient-to: var(--sky-blue-light) !important; }
         .ring-sky { --tw-ring-color: var(--sky-blue) !important; }
         .hover\:text-sky:hover { color: var(--sky-blue) !important; }
         .hover\:border-sky:hover { border-color: var(--sky-blue) !important; }
         .focus\:ring-sky:focus { --tw-ring-color: var(--sky-blue) !important; }
 
-        /* Button styles */
-        .btn-primary {
-            background: linear-gradient(135deg, var(--sky-blue), var(--sky-blue-dark));
-            color: white;
-            border: none;
-            padding: 0.75rem 2rem;
-            border-radius: 9999px;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(56,189,248,0.4);
-            text-decoration: none;
-            display: inline-block;
-            cursor: pointer;
-        }
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(56,189,248,0.6);
-        }
-        .btn-primary:active { transform: scale(0.97); }
-
-        .btn-red {
-            background: linear-gradient(135deg, var(--red), var(--red-light));
-            color: white;
-            border: none;
-            padding: 0.75rem 2rem;
-            border-radius: 9999px;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(229,57,53,0.4);
-            text-decoration: none;
-            display: inline-block;
-            cursor: pointer;
-        }
-        .btn-red:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(229,57,53,0.6);
-        }
-        .btn-red:active { transform: scale(0.97); }
-
         * { margin: 0; padding: 0; box-sizing: border-box; }
         html { scroll-behavior: auto; }
         body {
-            background: var(--white);
-            color: var(--dark-text);
+            background: var(--deep-blue);
+            color: var(--text-light);
             font-family: 'Inter', sans-serif;
             overflow-x: hidden;
             -webkit-font-smoothing: antialiased;
@@ -120,8 +82,10 @@
         h1, h2, h3, h4, h5, h6 {
             font-family: 'Sora', sans-serif;
             letter-spacing: -0.02em;
-            color: var(--dark-text);
+            color: var(--text-light);
         }
+
+        /* Glassmorphism Core */
         .glass {
             background: var(--glass-bg);
             backdrop-filter: blur(16px);
@@ -129,28 +93,65 @@
             border: 1px solid var(--glass-border);
         }
         .glass-card {
-            background: rgba(255,255,255,0.6);
+            background: rgba(255,255,255,0.06);
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(56,189,248,0.15);
+            border: 1px solid rgba(255,255,255,0.08);
             border-radius: 1.25rem;
             transition: all 0.3s ease;
         }
         .glass-card:hover {
-            border-color: rgba(56,189,248,0.4);
-            box-shadow: 0 8px 30px rgba(56,189,248,0.1);
+            border-color: rgba(56,189,248,0.3);
+            box-shadow: 0 8px 30px rgba(56,189,248,0.05);
+        }
+        .glass-card-dark {
+            background: rgba(10,22,40,0.6);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 1.25rem;
+            transition: all 0.3s ease;
+        }
+        .glass-card-dark:hover {
+            border-color: rgba(56,189,248,0.2);
         }
 
-        /* Wavy background decorations */
-        .wave-decoration {
+        /* Wavy & Patterned Backgrounds */
+        .bg-wave-pattern {
+            position: relative;
+            overflow: hidden;
+        }
+        .bg-wave-pattern::before {
+            content: '';
             position: absolute;
+            inset: 0;
+            background-image:
+                radial-gradient(circle at 20% 50%, rgba(56,189,248,0.03) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(56,189,248,0.02) 0%, transparent 40%),
+                radial-gradient(circle at 50% 80%, rgba(56,189,248,0.03) 0%, transparent 50%),
+                url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%2338BDF8' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            background-repeat: repeat;
             pointer-events: none;
-            opacity: 0.06;
             z-index: 0;
         }
-        .wave-decoration svg {
-            width: 100%;
-            height: auto;
+        .bg-wave-pattern>* {
+            position: relative;
+            z-index: 1;
+        }
+
+        .bg-wavy-top {
+            position: relative;
+        }
+        .bg-wavy-top::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: 0;
+            right: 0;
+            height: 100px;
+            background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 100' preserveAspectRatio='none'%3E%3Cpath d='M0,50 C300,0 600,100 900,50 C1050,25 1150,40 1200,50 L1200,0 L0,0 Z' fill='%2338BDF8' opacity='0.05'/%3E%3C/svg%3E") no-repeat top;
+            background-size: 100% 100px;
+            pointer-events: none;
+            z-index: 1;
         }
 
         .morph-section {
@@ -172,8 +173,77 @@
             * { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
         }
         :focus-visible { outline: 3px solid var(--sky-blue); outline-offset: 4px; }
-        .section-padding { padding: 7rem 0; }
-        @media (max-width: 768px) { .section-padding { padding: 5rem 0; } }
+        .section-padding { padding: 6rem 0; }
+        @media (max-width: 768px) { .section-padding { padding: 4rem 0; } }
+
+        /* Buttons */
+        .btn-primary {
+            background: linear-gradient(135deg, var(--sky-blue), var(--sky-blue-dark));
+            color: white;
+            border: none;
+            padding: 0.75rem 2rem;
+            border-radius: 9999px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(56,189,248,0.3);
+            text-decoration: none;
+            display: inline-block;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+        .btn-primary::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, var(--sky-blue-light), var(--sky-blue));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(56,189,248,0.4);
+        }
+        .btn-primary:hover::after { opacity: 1; }
+        .btn-primary>* { position: relative; z-index: 1; }
+        .btn-primary:active { transform: scale(0.97); }
+
+        .btn-red {
+            background: linear-gradient(135deg, var(--red), var(--red-dark));
+            color: white;
+            border: none;
+            padding: 0.75rem 2rem;
+            border-radius: 9999px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(239,68,68,0.3);
+            text-decoration: none;
+            display: inline-block;
+            cursor: pointer;
+        }
+        .btn-red:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(239,68,68,0.4);
+        }
+        .btn-red:active { transform: scale(0.97); }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--text-light);
+            border: 1px solid rgba(255,255,255,0.2);
+            padding: 0.75rem 2rem;
+            border-radius: 9999px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            cursor: pointer;
+        }
+        .btn-outline:hover {
+            background: rgba(255,255,255,0.05);
+            border-color: var(--sky-blue);
+            color: var(--sky-blue);
+        }
 
         .card-premium {
             position: relative;
@@ -181,16 +251,16 @@
             transition: transform 0.4s cubic-bezier(0.22,1,0.36,1),
                         box-shadow 0.4s cubic-bezier(0.22,1,0.36,1),
                         border-color 0.4s;
-            background: rgba(255,255,255,0.7);
+            background: rgba(255,255,255,0.05);
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
-            border: 1px solid rgba(56,189,248,0.15);
+            border: 1px solid rgba(255,255,255,0.06);
             display: flex;
             flex-direction: column;
             height: 100%;
             cursor: pointer;
             text-align: left;
-            color: var(--dark-text);
+            color: var(--text-light);
             border-radius: 1.25rem;
         }
         .card-premium::before {
@@ -200,7 +270,7 @@
             left: -50%;
             width: 200%;
             height: 200%;
-            background: radial-gradient(circle at 50% 50%, rgba(56,189,248,0.1) 0%, transparent 60%);
+            background: radial-gradient(circle at 50% 50%, rgba(56,189,248,0.08) 0%, transparent 60%);
             opacity: 0;
             transition: opacity 0.4s ease;
             pointer-events: none;
@@ -208,28 +278,9 @@
         .card-premium:hover::before { opacity: 1; }
         .card-premium:hover {
             transform: translateY(-6px);
-            box-shadow: 0 25px 50px -10px rgba(0,0,0,0.1), 0 0 0 1px var(--sky-blue), 0 0 30px rgba(56,189,248,0.15);
-            border-color: var(--sky-blue);
+            box-shadow: 0 25px 50px -10px rgba(0,0,0,0.3), 0 0 0 1px rgba(56,189,248,0.3);
+            border-color: rgba(56,189,248,0.3);
         }
-
-        .input-sky {
-            border: 1px solid var(--sky-blue) !important;
-            background-color: var(--white) !important;
-            color: var(--dark-text) !important;
-        }
-        .select-sky {
-            border: 1px solid var(--sky-blue) !important;
-            background-color: var(--white) !important;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%230A1A3A' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E") !important;
-            background-repeat: no-repeat !important;
-            background-position: right 1rem center !important;
-            background-size: 1.2em !important;
-            color: var(--dark-text) !important;
-            -webkit-appearance: none;
-            -moz-appearance: none;
-            appearance: none;
-        }
-        .select-sky option { background: var(--white); color: var(--dark-text); }
 
         .flag-img {
             width: 60px;
@@ -237,7 +288,7 @@
             object-fit: cover;
             border-radius: 4px;
             margin: 0 auto 10px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.3);
         }
         .whatsapp-float {
             position: fixed;
@@ -269,7 +320,7 @@
         .hero-overlay {
             position: absolute;
             inset: 0;
-            background: linear-gradient(to bottom, rgba(10,26,58,0.4), rgba(10,26,58,0.6));
+            background: linear-gradient(to bottom, rgba(10,22,40,0.5), rgba(10,22,40,0.7));
             z-index: 1;
             pointer-events: none;
         }
@@ -291,7 +342,7 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
-            opacity: 0.8;
+            opacity: 0.6;
         }
         .splash-content {
             position: relative;
@@ -306,22 +357,23 @@
             object-fit: cover;
             margin: 0 auto 20px;
             border: 4px solid var(--sky-blue);
-            box-shadow: 0 0 60px rgba(56,189,248,0.5);
+            box-shadow: 0 0 60px rgba(56,189,248,0.4);
         }
         .splash-tagline {
             font-size: 1.8rem;
             font-weight: 700;
-            color: var(--white);
+            color: var(--text-light);
             margin-top: 10px;
             letter-spacing: 0.05em;
             text-shadow: 0 2px 20px rgba(0,0,0,0.3);
         }
+
         .skip-link {
             position: absolute;
             top: -40px;
             left: 0;
             background: var(--sky-blue);
-            color: var(--white);
+            color: var(--deep-blue);
             padding: 8px 16px;
             z-index: 10000;
             transition: top 0.3s;
@@ -332,15 +384,16 @@
             position: fixed;
             inset: 0;
             z-index: 2000;
-            background: rgba(0,0,0,0.5);
+            background: rgba(0,0,0,0.6);
+            backdrop-filter: blur(8px);
             display: flex;
             align-items: center;
             justify-content: center;
             padding: 20px;
         }
         .modal-content {
-            background: var(--white);
-            border: 1px solid var(--sky-blue);
+            background: var(--dark-blue);
+            border: 1px solid rgba(56,189,248,0.2);
             border-radius: 16px;
             padding: 2rem;
             max-width: 600px;
@@ -348,7 +401,7 @@
             max-height: 80vh;
             overflow-y: auto;
             position: relative;
-            color: var(--dark-text);
+            color: var(--text-light);
         }
         .modal-close {
             position: absolute;
@@ -356,11 +409,13 @@
             right: 1rem;
             background: none;
             border: none;
-            color: var(--dark-text);
+            color: var(--text-light);
             font-size: 1.5rem;
             cursor: pointer;
+            opacity: 0.6;
+            transition: opacity 0.3s;
         }
-        .modal-close:hover { color: var(--red); }
+        .modal-close:hover { opacity: 1; color: var(--red); }
 
         .error-boundary-fallback {
             min-height: 100vh;
@@ -368,8 +423,8 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            background: var(--white);
-            color: var(--dark-text);
+            background: var(--deep-blue);
+            color: var(--text-light);
             text-align: center;
             padding: 2rem;
         }
@@ -378,17 +433,19 @@
             position: relative;
             border-radius: 1.25rem;
             overflow: hidden;
-            box-shadow: 0 25px 50px -12px rgba(0,0,0,0.15);
+            box-shadow: 0 25px 50px -12px rgba(0,0,0,0.3);
             transition: transform 0.4s ease, box-shadow 0.4s ease;
             cursor: pointer;
             height: 100%;
             display: flex;
             flex-direction: column;
-            background: var(--white);
+            background: rgba(255,255,255,0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.06);
         }
         .programme-card:hover {
             transform: translateY(-6px);
-            box-shadow: 0 30px 60px -12px rgba(0,0,0,0.2), 0 0 0 1px var(--sky-blue);
+            box-shadow: 0 30px 60px -12px rgba(0,0,0,0.4), 0 0 0 1px rgba(56,189,248,0.3);
         }
         .programme-image {
             width: 100%;
@@ -400,7 +457,8 @@
         .programme-card:hover .programme-image { transform: scale(1.03); }
         .programme-info {
             padding: 1.25rem 1.5rem;
-            background: var(--white);
+            background: rgba(15,31,58,0.8);
+            backdrop-filter: blur(10px);
             flex: 1;
             display: flex;
             flex-direction: column;
@@ -408,7 +466,7 @@
         .programme-title {
             font-size: 1.3rem;
             font-weight: bold;
-            color: var(--dark-text);
+            color: var(--text-light);
             margin-bottom: 0.25rem;
         }
         .programme-meta {
@@ -420,7 +478,7 @@
         }
         .programme-desc {
             font-size: 0.9rem;
-            color: rgba(10,26,58,0.7);
+            color: rgba(255,255,255,0.7);
             line-height: 1.5;
         }
 
@@ -444,20 +502,20 @@
         }
         .admin-sidebar a:hover,
         .admin-sidebar a.active {
-            background: rgba(56,189,248,0.15);
+            background: rgba(56,189,248,0.12);
             color: white;
         }
         .admin-sidebar a.active { border-left: 3px solid var(--sky-blue); }
-        .admin-main { flex: 1; padding: 1.5rem 2rem; overflow-y: auto; background: var(--off-white); }
+        .admin-main { flex: 1; padding: 1.5rem 2rem; overflow-y: auto; background: var(--dark-blue); }
         .admin-layout { display: flex; min-height: 100vh; }
         .admin-card {
-            background: var(--white);
-            border: 1px solid rgba(0,0,0,0.06);
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.06);
             border-radius: 1rem;
             padding: 1.25rem;
             transition: border-color 0.2s;
         }
-        .admin-card:hover { border-color: rgba(0,0,0,0.12); }
+        .admin-card:hover { border-color: rgba(255,255,255,0.12); }
         .badge {
             display: inline-block;
             padding: 0.15rem 0.6rem;
@@ -466,10 +524,10 @@
             font-weight: 600;
             text-transform: uppercase;
         }
-        .badge-green { background: rgba(46,125,50,0.15); color: #2E7D32; }
-        .badge-sky { background: rgba(56,189,248,0.15); color: var(--sky-blue); }
-        .badge-gray { background: rgba(0,0,0,0.06); color: rgba(0,0,0,0.5); }
-        .badge-red { background: rgba(229,57,53,0.15); color: var(--red); }
+        .badge-green { background: rgba(46,125,50,0.2); color: #4CAF50; }
+        .badge-sky { background: rgba(56,189,248,0.2); color: var(--sky-blue); }
+        .badge-gray { background: rgba(255,255,255,0.06); color: rgba(255,255,255,0.5); }
+        .badge-red { background: rgba(239,68,68,0.2); color: var(--red); }
         @media (max-width: 768px) {
             .admin-layout { flex-direction: column; }
             .admin-sidebar {
@@ -488,7 +546,7 @@
 
         /* Skeleton loading */
         .skeleton {
-            background: linear-gradient(90deg, rgba(56,189,248,0.05) 25%, rgba(56,189,248,0.12) 50%, rgba(56,189,248,0.05) 75%);
+            background: linear-gradient(90deg, rgba(255,255,255,0.04) 25%, rgba(255,255,255,0.08) 50%, rgba(255,255,255,0.04) 75%);
             background-size: 200% 100%;
             animation: shimmer 1.6s infinite;
             border-radius: 0.75rem;
@@ -500,10 +558,10 @@
         .skeleton-text { height: 0.8rem; width: 100%; margin-bottom: 0.5rem; }
         .skeleton-title { height: 1.4rem; width: 70%; margin-bottom: 0.75rem; }
         .skeleton-card {
-            background: rgba(255,255,255,0.6);
+            background: rgba(255,255,255,0.04);
             border-radius: 1.25rem;
             padding: 1.5rem;
-            border: 1px solid rgba(56,189,248,0.1);
+            border: 1px solid rgba(255,255,255,0.05);
         }
 
         /* Hero logo */
@@ -520,12 +578,12 @@
             border-radius: 50%;
             object-fit: cover;
             border: 4px solid var(--sky-blue);
-            box-shadow: 0 0 60px rgba(56,189,248,0.4);
+            box-shadow: 0 0 60px rgba(56,189,248,0.3);
             transition: transform 0.5s ease, box-shadow 0.5s ease;
         }
         .hero-logo:hover {
             transform: scale(1.05);
-            box-shadow: 0 0 80px rgba(56,189,248,0.6);
+            box-shadow: 0 0 80px rgba(56,189,248,0.5);
         }
         @media (max-width: 640px) {
             .hero-logo { width: 110px; height: 110px; }
@@ -537,12 +595,12 @@
             top: calc(100% + 8px);
             right: 0;
             min-width: 220px;
-            background: var(--white);
+            background: var(--dark-blue);
             backdrop-filter: blur(20px);
-            border: 1px solid rgba(56,189,248,0.2);
+            border: 1px solid rgba(56,189,248,0.15);
             border-radius: 0.75rem;
             padding: 0.5rem;
-            box-shadow: 0 20px 40px -12px rgba(0,0,0,0.15);
+            box-shadow: 0 20px 40px -12px rgba(0,0,0,0.5);
             transition: all 0.3s cubic-bezier(0.22,1,0.36,1);
             z-index: 60;
             pointer-events: none;
@@ -559,87 +617,103 @@
             display: block;
             padding: 0.6rem 1rem;
             border-radius: 0.5rem;
-            color: rgba(10,26,58,0.8);
+            color: rgba(255,255,255,0.8);
             transition: all 0.2s;
             font-size: 0.9rem;
             text-decoration: none;
         }
         .search-dropdown a:hover {
             background: rgba(56,189,248,0.1);
-            color: var(--dark-text);
+            color: white;
             padding-left: 1.5rem;
         }
+
         .search-input {
-            background: rgba(255,255,255,0.9);
-            border: 1px solid rgba(56,189,248,0.3);
+            background: rgba(255,255,255,0.06);
+            border: 1px solid rgba(255,255,255,0.1);
             border-radius: 2rem;
             padding: 0.5rem 1.2rem;
-            color: var(--dark-text);
+            color: var(--text-light);
             width: 200px;
             transition: all 0.3s ease;
             font-size: 0.9rem;
             cursor: pointer;
         }
+        .search-input::placeholder { color: rgba(255,255,255,0.4); }
         .search-input:focus {
             outline: none;
             border-color: var(--sky-blue);
-            box-shadow: 0 0 0 3px rgba(56,189,248,0.15);
+            box-shadow: 0 0 0 3px rgba(56,189,248,0.1);
             width: 220px;
         }
-        .search-input::placeholder {
-            color: rgba(10,26,58,0.4);
-        }
-        .search-wrapper {
-            position: relative;
-            display: inline-block;
-        }
+        .search-wrapper { position: relative; display: inline-block; }
         @media (max-width: 768px) {
             .search-input { width: 150px; font-size: 0.8rem; padding: 0.4rem 1rem; }
             .search-input:focus { width: 170px; }
             .search-dropdown { right: 0; min-width: 180px; }
         }
 
-        /* Wavy section backgrounds */
-        .section-wavy-top {
+        /* Liquid fill effect for buttons */
+        .liquid-fill {
             position: relative;
             overflow: hidden;
-        }
-        .section-wavy-top::before {
-            content: '';
-            position: absolute;
-            top: -2px;
-            left: 0;
-            right: 0;
-            height: 80px;
-            background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 80' preserveAspectRatio='none'%3E%3Cpath d='M0,40 C300,0 600,80 900,40 C1050,20 1150,30 1200,40 L1200,0 L0,0 Z' fill='%23E8F4FD' opacity='0.5'/%3E%3C/svg%3E") no-repeat top;
-            background-size: 100% 80px;
-            pointer-events: none;
             z-index: 1;
         }
-        .section-wavy-bottom {
-            position: relative;
-            overflow: hidden;
-        }
-        .section-wavy-bottom::after {
+        .liquid-fill::before {
             content: '';
             position: absolute;
-            bottom: -2px;
-            left: 0;
-            right: 0;
-            height: 80px;
-            background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 80' preserveAspectRatio='none'%3E%3Cpath d='M0,40 C300,0 600,80 900,40 C1050,20 1150,30 1200,40 L1200,80 L0,80 Z' fill='%23F8FAFF' opacity='0.5'/%3E%3C/svg%3E") no-repeat bottom;
-            background-size: 100% 80px;
-            pointer-events: none;
-            z-index: 1;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.15);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s ease, height 0.6s ease;
+            z-index: 0;
         }
+        .liquid-fill:hover::before {
+            width: 400px;
+            height: 400px;
+        }
+        .liquid-fill>* { position: relative; z-index: 1; }
 
-        /* Wave dots background */
-        .bg-wave-dots {
-            background-image: radial-gradient(circle at 20% 50%, rgba(56,189,248,0.03) 0%, transparent 50%),
-                              radial-gradient(circle at 80% 20%, rgba(56,189,248,0.02) 0%, transparent 40%),
-                              radial-gradient(circle at 50% 80%, rgba(56,189,248,0.03) 0%, transparent 50%);
-            background-size: 100% 100%;
+        .input-sky {
+            background: rgba(255,255,255,0.06);
+            border: 1px solid rgba(255,255,255,0.1);
+            color: var(--text-light);
+            padding: 0.75rem 1.25rem;
+            border-radius: 0.75rem;
+            width: 100%;
+            transition: all 0.3s ease;
         }
+        .input-sky:focus {
+            outline: none;
+            border-color: var(--sky-blue);
+            box-shadow: 0 0 0 3px rgba(56,189,248,0.1);
+        }
+        .input-sky::placeholder { color: rgba(255,255,255,0.4); }
+
+        .select-sky {
+            background: rgba(255,255,255,0.06);
+            border: 1px solid rgba(255,255,255,0.1);
+            color: var(--text-light);
+            padding: 0.75rem 1.25rem;
+            border-radius: 0.75rem;
+            width: 100%;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 1rem center;
+            background-size: 1.2em;
+            transition: all 0.3s ease;
+        }
+        .select-sky:focus {
+            outline: none;
+            border-color: var(--sky-blue);
+            box-shadow: 0 0 0 3px rgba(56,189,248,0.1);
+        }
+        .select-sky option { background: var(--dark-blue); color: var(--text-light); }
     </style>
 </head>
 <body>
@@ -770,7 +844,7 @@
                 return (
                     <div className="error-boundary-fallback" role="alert">
                         <h1 className="text-3xl font-bold mb-4">Something went wrong.</h1>
-                        <p className="text-dark/70 mb-8">The website is still available.</p>
+                        <p className="text-white/70 mb-8">The website is still available.</p>
                         <button onClick={() => { setHasError(false); window.location.reload(); }} className="btn-red">
                             Reload Website
                         </button>
@@ -822,7 +896,7 @@
         function SkeletonStep() {
             return (
                 <div className="flex gap-6 items-start py-3">
-                    <div className="skeleton skeleton-circle" style={{ width: '3.5rem', height: '3.5rem', borderRadius: '50%', flexShrink: 0 }}></div>
+                    <div className="skeleton" style={{ width: '3.5rem', height: '3.5rem', borderRadius: '50%', flexShrink: 0 }}></div>
                     <div className="flex-1">
                         <div className="skeleton skeleton-title" style={{ width: '60%' }}></div>
                         <div className="skeleton skeleton-text"></div>
@@ -895,94 +969,39 @@
             return (
                 <div className={`max-w-4xl ${align === 'center' ? 'mx-auto text-center' : ''} ${className}`}>
                     {eyebrow && <Reveal><p className="mb-4 text-sm font-semibold uppercase tracking-[0.3em] text-sky">{eyebrow}</p></Reveal>}
-                    <Reveal delay={0.1}><h2 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight text-dark">{title}</h2></Reveal>
-                    {subtitle && <Reveal delay={0.2}><p className="mt-6 text-lg md:text-xl text-dark/70">{subtitle}</p></Reveal>}
+                    <Reveal delay={0.1}><h2 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight">{title}</h2></Reveal>
+                    {subtitle && <Reveal delay={0.2}><p className="mt-6 text-lg md:text-xl text-white/70">{subtitle}</p></Reveal>}
                 </div>
             );
         }
 
-        // ─── SMOOTH SCROLL ──────────────────────────────────────────────
-        function SmoothScroll({ children }) {
-            const reduced = useReducedMotion();
-            const [scrollTo, setScrollTo] = useState(null);
-
-            useEffect(() => {
-                if (reduced) {
-                    setScrollTo(() => (target) => {
-                        const el = document.querySelector(target);
-                        if (el) {
-                            const headerOffset = 80;
-                            const elementPosition = el.getBoundingClientRect().top;
-                            const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
-                            window.scrollTo({ top: offsetPosition, behavior: 'auto' });
-                        }
-                    });
-                    return;
+        // ─── ROUTING HELPERS ──────────────────────────────────────────────
+        function navigateTo(target) {
+            const el = document.querySelector(target);
+            if (el) {
+                const headerOffset = 80;
+                const elementPosition = el.getBoundingClientRect().top;
+                const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+                window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
+                // Update URL hash without triggering scroll
+                if (window.history) {
+                    window.history.pushState(null, '', target);
                 }
+                return true;
+            }
+            return false;
+        }
 
-                let lenis = null;
-                let ticker = null;
-                try {
-                    if (typeof Lenis !== 'undefined') {
-                        lenis = new Lenis({
-                            duration: 1.2,
-                            easing: t => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-                            smoothWheel: true,
-                            touchMultiplier: 1.5
-                        });
-                        lenis.on('scroll', () => { if (typeof ScrollTrigger !== 'undefined') ScrollTrigger.update(); });
-                        ticker = (time) => { lenis.raf(time * 1000); };
-                        if (typeof gsap !== 'undefined') { gsap.ticker.add(ticker); gsap.ticker.lagSmoothing(0); }
-                    }
-                } catch (err) { console.warn('Lenis init failed:', err); }
-
-                const scrollToFn = (target) => {
-                    const el = document.querySelector(target);
-                    if (!el) {
-                        // Retry after a short delay
-                        setTimeout(() => {
-                            const el2 = document.querySelector(target);
-                            if (el2) {
-                                const headerOffset = 80;
-                                const elementPosition = el2.getBoundingClientRect().top;
-                                const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
-                                if (lenis) {
-                                    lenis.scrollTo(offsetPosition, { duration: 1.2 });
-                                } else {
-                                    window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
-                                }
-                            }
-                        }, 200);
-                        return;
-                    }
-                    const headerOffset = 80;
-                    const elementPosition = el.getBoundingClientRect().top;
-                    const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
-                    if (lenis) {
-                        lenis.scrollTo(offsetPosition, { duration: 1.2 });
-                    } else if (typeof window !== 'undefined' && 'scrollTo' in window) {
-                        window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
-                    } else {
-                        window.scrollTo(0, offsetPosition);
-                    }
-                };
-                setScrollTo(() => scrollToFn);
-                return () => { if (ticker && typeof gsap !== 'undefined') { gsap.ticker.remove(ticker); } if (lenis) lenis.destroy(); };
-            }, [reduced]);
-
-            const effectiveScrollTo = scrollTo || ((target) => {
-                const el = document.querySelector(target);
-                if (el) {
-                    const headerOffset = 80;
-                    const elementPosition = el.getBoundingClientRect().top;
-                    const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
-                    window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
+        function useNavigate() {
+            const scrollTo = useScrollTo();
+            return useCallback((target) => {
+                if (scrollTo) {
+                    scrollTo(target);
+                } else {
+                    // Fallback navigation
+                    navigateTo(target);
                 }
-            });
-
-            return (
-                <ScrollContext.Provider value={effectiveScrollTo}>{children}</ScrollContext.Provider>
-            );
+            }, [scrollTo]);
         }
 
         // ─── SPLASH SCREEN ──────────────────────────────────────────────
@@ -992,7 +1011,6 @@
             const reduced = useReducedMotion();
             useEffect(() => {
                 if (reduced) { setShow(false); onComplete(); return; }
-                // 4 seconds splash
                 const timer1 = setTimeout(() => setFadeOut(true), 3800);
                 const timer2 = setTimeout(() => { setShow(false); onComplete(); }, 4600);
                 return () => { clearTimeout(timer1); clearTimeout(timer2); };
@@ -1017,7 +1035,7 @@
             const [scrolled, setScrolled] = useState(false);
             const [mobileOpen, setMobileOpen] = useState(false);
             const [searchOpen, setSearchOpen] = useState(false);
-            const scrollTo = useScrollTo();
+            const navigate = useNavigate();
             const menuRef = useRef(null);
             const buttonRef = useRef(null);
             const searchRef = useRef(null);
@@ -1070,20 +1088,9 @@
 
             const handleNavClick = (e, href) => {
                 e.preventDefault();
-                if (scrollTo) {
-                    scrollTo(href);
-                } else {
-                    const el = document.querySelector(href);
-                    if (el) {
-                        const headerOffset = 80;
-                        const elementPosition = el.getBoundingClientRect().top;
-                        const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
-                        window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
-                    }
-                }
+                navigate(href);
                 setSearchOpen(false);
                 setMobileOpen(false);
-                if (window.history) window.history.pushState(null, '', href);
             };
 
             const toggleSearch = () => {
@@ -1097,15 +1104,13 @@
                 <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${scrolled ? 'glass py-3' : 'bg-transparent py-6'}`}>
                     <a href="#main-content" className="skip-link">Skip to main content</a>
                     <div className="mx-auto max-w-7xl flex items-center justify-between px-6 lg:px-8">
-                        {/* Logo – left */}
                         <div className="flex items-center gap-3">
                             <a href="#home" onClick={(e) => handleNavClick(e, '#home')} aria-label="Go to home">
                                 <img src={defaultMedia.logo} alt="Elite Global Pathways" className="h-10 w-10 rounded-full object-cover" />
                             </a>
-                            <span className="text-lg font-bold text-dark hidden sm:block">Elite Global Pathways</span>
+                            <span className="text-lg font-bold text-white hidden sm:block">Elite Global Pathways</span>
                         </div>
 
-                        {/* Search – far right */}
                         <div className="flex items-center gap-4">
                             <div className="hidden lg:block" ref={searchRef}>
                                 <div className="search-wrapper">
@@ -1135,10 +1140,9 @@
                                 </div>
                             </div>
 
-                            {/* Mobile menu toggle */}
                             <button
                                 ref={buttonRef}
-                                className="lg:hidden text-dark text-2xl focus:outline-none focus:ring-2 focus:ring-sky rounded-md p-1"
+                                className="lg:hidden text-white text-2xl focus:outline-none focus:ring-2 focus:ring-sky rounded-md p-1"
                                 onClick={() => setMobileOpen(!mobileOpen)}
                                 aria-label={mobileOpen ? 'Close menu' : 'Open menu'}
                                 aria-expanded={mobileOpen}
@@ -1148,19 +1152,18 @@
                         </div>
                     </div>
 
-                    {/* Mobile navigation */}
                     {mobileOpen && (
-                        <div ref={menuRef} className="lg:hidden glass mt-4 mx-4 rounded-2xl p-6 bg-white/95" role="dialog" aria-label="Mobile navigation">
+                        <div ref={menuRef} className="lg:hidden glass mt-4 mx-4 rounded-2xl p-6" role="dialog" aria-label="Mobile navigation">
                             <div className="relative mb-4">
                                 <input
                                     type="text"
-                                    className="search-input w-full bg-white/10 border-sky/40"
+                                    className="search-input w-full"
                                     placeholder="Search menu..."
                                     onClick={() => setSearchOpen(!searchOpen)}
                                     onFocus={() => setSearchOpen(true)}
                                     readOnly
                                 />
-                                <div className={`search-dropdown open relative static mt-2 w-full border-sky/30 ${searchOpen ? 'open' : ''}`}>
+                                <div className={`search-dropdown open relative static mt-2 w-full ${searchOpen ? 'open' : ''}`}>
                                     {navLinks.map(link => (
                                         <a
                                             key={link.href}
@@ -1174,7 +1177,7 @@
                                     ))}
                                 </div>
                             </div>
-                            <div className="text-sm text-dark/70 pt-4 border-t border-dark/10">
+                            <div className="text-sm text-white/70 pt-4 border-t border-white/10">
                                 <p>Email: eliteglobalpathwaysltd2025@gmail.com</p>
                                 <p>WhatsApp India: +91 73593 20928</p>
                                 <p>WhatsApp Uganda: +256 779 989906</p>
@@ -1191,7 +1194,7 @@
             const heroRef = useRef(null);
             const videoRef = useRef(null);
             const reduced = useReducedMotion();
-            const scrollTo = useScrollTo();
+            const navigate = useNavigate();
             const [videoError, setVideoError] = useState(false);
             const [heroContent, setHeroContent] = useState({
                 title: 'Your Future Starts Here',
@@ -1251,6 +1254,11 @@
 
             const heroVideoUrl = defaultMedia.heroVideo;
 
+            const handleNavigate = (target) => (e) => {
+                e.preventDefault();
+                navigate(target);
+            };
+
             return (
                 <section id="home" ref={heroRef} className="relative h-screen overflow-hidden" aria-label="Hero">
                     {!videoError ? (
@@ -1259,7 +1267,7 @@
                             Your browser does not support the video tag.
                         </video>
                     ) : (
-                        <div className="hero-video" style={{ background: 'linear-gradient(135deg, #0A1A3A 0%, #1A3A6A 50%, #0A1A3A 100%)' }}></div>
+                        <div className="hero-video" style={{ background: 'linear-gradient(135deg, #0A1628 0%, #1A3A6A 50%, #0A1628 100%)' }}></div>
                     )}
                     <div className="hero-overlay"></div>
                     <div className="absolute inset-0 layer-foreground" style={{ background: 'radial-gradient(circle at 70% 80%, rgba(56,189,248,0.15) 0%, transparent 60%)', zIndex: 2, pointerEvents: 'none' }}></div>
@@ -1273,14 +1281,14 @@
                             <Reveal delay={0.4}><h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-white mt-4">{heroContent.title}</h1></Reveal>
                             <Reveal delay={0.6}><p className="mt-4 text-lg md:text-xl text-white/80">{heroContent.subtitle}</p></Reveal>
                             <Reveal delay={0.8} className="mt-8 flex flex-wrap items-center justify-center gap-4">
-                                <button onClick={(e) => { e.preventDefault(); if (scrollTo) { scrollTo('#apply'); } else { const el = document.querySelector('#apply'); if (el) { const headerOffset = 80; const elementPosition = el.getBoundingClientRect().top; const offsetPosition = elementPosition + window.pageYOffset - headerOffset; window.scrollTo({ top: offsetPosition, behavior: 'smooth' }); } } }} className="btn-primary">Apply Now</button>
-                                <button onClick={(e) => { e.preventDefault(); if (scrollTo) { scrollTo('#programmes'); } else { const el = document.querySelector('#programmes'); if (el) { const headerOffset = 80; const elementPosition = el.getBoundingClientRect().top; const offsetPosition = elementPosition + window.pageYOffset - headerOffset; window.scrollTo({ top: offsetPosition, behavior: 'smooth' }); } } }} className="btn-primary bg-white text-dark hover:text-white" style={{ background: 'white', color: '#0A1A3A', boxShadow: '0 4px 15px rgba(255,255,255,0.3)' }}>Explore Programmes</button>
+                                <button onClick={handleNavigate('#apply')} className="btn-primary liquid-fill">Apply Now</button>
+                                <button onClick={handleNavigate('#programmes')} className="btn-outline liquid-fill">Explore Programmes</button>
                             </Reveal>
                         </div>
                     </div>
                     <div className="absolute rounded-full filter blur-2xl opacity-30 floating-shape" style={{ width: 300, height: 300, background: 'rgba(56,189,248,0.15)', top: '-5%', left: '-5%', zIndex: 3, pointerEvents: 'none' }}></div>
                     <div className="absolute rounded-full filter blur-2xl opacity-30 floating-shape" style={{ width: 200, height: 200, background: 'rgba(56,189,248,0.1)', bottom: '-10%', right: '-5%', zIndex: 3, pointerEvents: 'none' }}></div>
-                    <div className="absolute rounded-full filter blur-2xl opacity-20 floating-shape" style={{ width: 400, height: 400, background: 'rgba(10,26,58,0.3)', border: '2px solid rgba(255,255,255,0.05)', top: '30%', left: '60%', zIndex: 3, pointerEvents: 'none' }}></div>
+                    <div className="absolute rounded-full filter blur-2xl opacity-20 floating-shape" style={{ width: 400, height: 400, background: 'rgba(10,22,40,0.3)', border: '2px solid rgba(255,255,255,0.05)', top: '30%', left: '60%', zIndex: 3, pointerEvents: 'none' }}></div>
                 </section>
             );
         }
@@ -1314,32 +1322,32 @@
 
             if (loading) {
                 return (
-                    <MorphSection id="destinations" className="section-padding bg-wave-dots" style={{ background: 'var(--off-white)' }}>
-                        <div className="mx-auto max-w-6xl px-6 text-center">
+                    <MorphSection id="destinations" className="section-padding bg-wave-pattern">
+                        <div className="mx-auto max-w-6xl px-6 text-center relative z-10">
                             <SectionHeading eyebrow="DESTINATIONS" title="Where Will Your Journey Take You?" subtitle="Explore potential study destinations, subject to programme availability and admission requirements." />
                             <SkeletonGrid count={4} />
                         </div>
                     </MorphSection>
                 );
             }
-            if (error && (!destinations || destinations.length === 0)) return <MorphSection id="destinations" className="section-padding bg-off-white"><div className="text-center text-dark/70">Destinations temporarily unavailable. <button onClick={retry} className="underline ml-2 text-sky">Retry</button></div></MorphSection>;
+            if (error && (!destinations || destinations.length === 0)) return <MorphSection id="destinations" className="section-padding bg-wave-pattern"><div className="text-center text-white/70 relative z-10">Destinations temporarily unavailable. <button onClick={retry} className="underline ml-2 text-sky">Retry</button></div></MorphSection>;
             const list = destinations || [];
             return (
-                <MorphSection id="destinations" className="section-padding section-wavy-top" style={{ background: 'var(--off-white)' }}>
+                <MorphSection id="destinations" className="section-padding bg-wave-pattern">
                     <div className="mx-auto max-w-6xl px-6 text-center relative z-10">
                         <SectionHeading eyebrow="DESTINATIONS" title="Where Will Your Journey Take You?" subtitle="Explore potential study destinations, subject to programme availability and admission requirements." />
                         <div className="mt-16 grid gap-6 sm:grid-cols-2 lg:grid-cols-4 grid-equal">
                             {list.map((d, i) => (
                                 <Reveal key={d.id} delay={i * 0.07} className="h-full">
                                     <div className="card-premium rounded-2xl p-6 text-center h-full w-full">
-                                        {d.imageUrl ? <img src={d.imageUrl} alt={`${d.name} destination`} className="flag-img" loading="lazy" onError={(e) => { e.target.style.display = 'none'; }} /> : <div className="flag-img" style={{ background: 'var(--light-blue)' }}></div>}
-                                        <h3 className="text-xl font-semibold text-dark">{d.name}</h3>
-                                        {d.description && <p className="mt-2 text-sm text-dark/60 line-clamp-2">{d.description}</p>}
+                                        {d.imageUrl ? <img src={d.imageUrl} alt={`${d.name} destination`} className="flag-img" loading="lazy" onError={(e) => { e.target.style.display = 'none'; }} /> : <div className="flag-img" style={{ background: 'rgba(255,255,255,0.05)' }}></div>}
+                                        <h3 className="text-xl font-semibold">{d.name}</h3>
+                                        {d.description && <p className="mt-2 text-sm text-white/60 line-clamp-2">{d.description}</p>}
                                     </div>
                                 </Reveal>
                             ))}
                         </div>
-                        <Reveal delay={0.5}><p className="mt-8 text-sm text-dark/60">Programme availability varies by destination. We help you explore options that match your profile.</p></Reveal>
+                        <Reveal delay={0.5}><p className="mt-8 text-sm text-white/60">Programme availability varies by destination. We help you explore options that match your profile.</p></Reveal>
                     </div>
                 </MorphSection>
             );
@@ -1354,9 +1362,7 @@
                     return [];
                 }
                 try {
-                    console.log('Fetching programmes...');
                     const progData = await fetchProgrammes();
-                    console.log('Programmes fetched:', progData);
                     if (!progData || progData.length === 0) {
                         console.warn('No programmes returned from fetch');
                         return [];
@@ -1364,16 +1370,16 @@
                     let media = null;
                     try { media = await fetchMediaAssets(); } catch (mediaErr) { console.warn('PROGRAMME MEDIA QUERY FAILED', mediaErr); }
                     const mapped = mapMediaToProgrammes(progData, media);
-                    console.log('Mapped programmes:', mapped);
                     return mapped;
                 } catch (err) {
                     console.error('Error in programmes fetch:', err);
                     return [];
                 }
             }, []);
-            const scrollTo = useScrollTo();
 
-            // Hardcoded fallback programmes in case DB fetch fails
+            const navigate = useNavigate();
+
+            // Fallback programmes
             const fallbackProgrammes = [
                 { id: 'fallback-1', title: 'Engineering & Technology', category: 'STEM', description: 'Explore cutting-edge engineering and technology programmes at top international universities.', imageUrl: null },
                 { id: 'fallback-2', title: 'Health & Medical Sciences', category: 'Healthcare', description: 'Pursue your medical career with world-class health science programmes.', imageUrl: null },
@@ -1383,8 +1389,8 @@
 
             if (loading) {
                 return (
-                    <MorphSection id="programmes" className="section-padding section-wavy-top" style={{ background: 'var(--white)' }}>
-                        <div className="mx-auto max-w-7xl px-6 lg:px-8">
+                    <MorphSection id="programmes" className="section-padding bg-wave-pattern bg-wavy-top">
+                        <div className="mx-auto max-w-7xl px-6 lg:px-8 relative z-10">
                             <SectionHeading eyebrow="PROGRAMMES" title="Explore Academic Programmes" subtitle="A curated catalogue of programmes across multiple disciplines. Click any card for details." />
                             <SkeletonGrid count={4} />
                         </div>
@@ -1393,11 +1399,10 @@
             }
 
             const list = (programmes && programmes.length > 0) ? programmes : fallbackProgrammes;
-            console.log('Rendering programmes list:', list);
 
             return (
-                <MorphSection id="programmes" className="section-padding" style={{ background: 'var(--white)' }}>
-                    <div className="mx-auto max-w-7xl px-6 lg:px-8">
+                <MorphSection id="programmes" className="section-padding bg-wave-pattern bg-wavy-top">
+                    <div className="mx-auto max-w-7xl px-6 lg:px-8 relative z-10">
                         <SectionHeading eyebrow="PROGRAMMES" title="Explore Academic Programmes" subtitle="A curated catalogue of programmes across multiple disciplines. Click any card for details." />
                         <div className="mt-16 grid gap-6 sm:grid-cols-2 lg:grid-cols-4 grid-equal">
                             {list.map((p, i) => (
@@ -1420,22 +1425,22 @@
                                 </Reveal>
                             ))}
                         </div>
-                        {list.length === 0 && <div className="text-center mt-10 text-dark/70">No published programmes are currently available.</div>}
+                        {list.length === 0 && <div className="text-center mt-10 text-white/70">No published programmes are currently available.</div>}
                     </div>
                     {selectedProgramme && (
                         <div className="modal-overlay" role="dialog" aria-modal="true" aria-label={`${selectedProgramme.title} details`}>
                             <div className="modal-content">
                                 <button className="modal-close" onClick={() => setSelectedProgramme(null)} aria-label="Close programme details">✕</button>
-                                <h3 className="text-2xl font-bold text-dark mb-2">{selectedProgramme.title}</h3>
+                                <h3 className="text-2xl font-bold mb-2">{selectedProgramme.title}</h3>
                                 {selectedProgramme.category && <p className="text-sm uppercase tracking-wider text-sky mb-4">{selectedProgramme.category}</p>}
-                                {selectedProgramme.level && <p className="text-sm text-dark/70 mb-2"><strong>Level:</strong> {selectedProgramme.level}</p>}
-                                {selectedProgramme.description && <p className="text-dark/80 mt-4 leading-relaxed">{selectedProgramme.description}</p>}
-                                {selectedProgramme.pathway_description && <div className="mt-4"><h4 className="text-lg font-semibold text-dark mb-2">Pathway Description</h4><p className="text-dark/70 leading-relaxed">{selectedProgramme.pathway_description}</p></div>}
-                                {selectedProgramme.academic_direction && <div className="mt-4"><h4 className="text-lg font-semibold text-dark mb-2">Academic Direction</h4><p className="text-dark/70 leading-relaxed">{selectedProgramme.academic_direction}</p></div>}
-                                {selectedProgramme.next_steps && <div className="mt-4"><h4 className="text-lg font-semibold text-dark mb-2">Next Steps</h4><p className="text-dark/70 leading-relaxed">{selectedProgramme.next_steps}</p></div>}
+                                {selectedProgramme.level && <p className="text-sm text-white/70 mb-2"><strong>Level:</strong> {selectedProgramme.level}</p>}
+                                {selectedProgramme.description && <p className="text-white/80 mt-4 leading-relaxed">{selectedProgramme.description}</p>}
+                                {selectedProgramme.pathway_description && <div className="mt-4"><h4 className="text-lg font-semibold mb-2">Pathway Description</h4><p className="text-white/70 leading-relaxed">{selectedProgramme.pathway_description}</p></div>}
+                                {selectedProgramme.academic_direction && <div className="mt-4"><h4 className="text-lg font-semibold mb-2">Academic Direction</h4><p className="text-white/70 leading-relaxed">{selectedProgramme.academic_direction}</p></div>}
+                                {selectedProgramme.next_steps && <div className="mt-4"><h4 className="text-lg font-semibold mb-2">Next Steps</h4><p className="text-white/70 leading-relaxed">{selectedProgramme.next_steps}</p></div>}
                                 {selectedProgramme.imageUrl && <img src={selectedProgramme.imageUrl} alt={selectedProgramme.title} className="mt-4 w-full h-48 object-cover rounded-lg" loading="lazy" onError={(e) => { e.target.style.display = 'none'; }} />}
                                 <div className="mt-6">
-                                    <button onClick={() => { setSelectedProgramme(null); if (scrollTo) { scrollTo('#apply'); } else { const el = document.querySelector('#apply'); if (el) { const headerOffset = 80; const elementPosition = el.getBoundingClientRect().top; const offsetPosition = elementPosition + window.pageYOffset - headerOffset; window.scrollTo({ top: offsetPosition, behavior: 'smooth' }); } } }} className="btn-primary w-full text-center">Apply for This Programme</button>
+                                    <button onClick={() => { setSelectedProgramme(null); navigate('#apply'); }} className="btn-primary w-full text-center liquid-fill">Apply for This Programme</button>
                                 </div>
                             </div>
                         </div>
@@ -1459,8 +1464,8 @@
             const displayServices = (services && services.length > 0) ? services : defaultServices;
             if (loading) {
                 return (
-                    <MorphSection id="support" className="section-padding bg-wave-dots" style={{ background: 'var(--light-blue)' }}>
-                        <div className="mx-auto max-w-7xl px-6 lg:px-8">
+                    <MorphSection id="support" className="section-padding bg-wave-pattern">
+                        <div className="mx-auto max-w-7xl px-6 lg:px-8 relative z-10">
                             <SectionHeading eyebrow="STUDENT SUPPORT" title="Support Every Step of the Way" subtitle="From first consultation to pre-departure readiness." />
                             <div className="mt-16 grid gap-6 md:grid-cols-2 lg:grid-cols-4 grid-equal">
                                 {Array.from({ length: 4 }).map((_, i) => <SkeletonService key={i} />)}
@@ -1470,16 +1475,16 @@
                 );
             }
             return (
-                <MorphSection id="support" className="section-padding" style={{ background: 'var(--light-blue)' }}>
-                    <div className="mx-auto max-w-7xl px-6 lg:px-8">
+                <MorphSection id="support" className="section-padding bg-wave-pattern">
+                    <div className="mx-auto max-w-7xl px-6 lg:px-8 relative z-10">
                         <SectionHeading eyebrow="STUDENT SUPPORT" title="Support Every Step of the Way" subtitle="From first consultation to pre-departure readiness." />
                         <div className="mt-16 grid gap-6 md:grid-cols-2 lg:grid-cols-4 grid-equal">
                             {displayServices.map((s, i) => (
                                 <Reveal key={s.id} delay={i * 0.1} className="h-full">
                                     <div className="card-premium rounded-2xl p-6 text-center h-full w-full">
                                         <div className="mx-auto h-20 w-20 rounded-full bg-gradient-to-br from-sky/20 to-sky/5 flex items-center justify-center text-4xl mb-4">{s.icon || '🎓'}</div>
-                                        <h3 className="text-lg font-semibold text-dark">{s.title}</h3>
-                                        <p className="mt-3 text-dark/70 text-sm leading-relaxed">{s.description || s.desc || ''}</p>
+                                        <h3 className="text-lg font-semibold">{s.title}</h3>
+                                        <p className="mt-3 text-white/70 text-sm leading-relaxed">{s.description || s.desc || ''}</p>
                                     </div>
                                 </Reveal>
                             ))}
@@ -1508,11 +1513,11 @@
             const displaySteps = (steps && steps.length > 0) ? steps : defaultSteps;
             if (loading) {
                 return (
-                    <MorphSection id="how-it-works" className="section-padding" style={{ background: 'var(--white)' }}>
-                        <div className="mx-auto max-w-5xl px-6 lg:px-8">
+                    <MorphSection id="how-it-works" className="section-padding bg-wave-pattern">
+                        <div className="mx-auto max-w-5xl px-6 lg:px-8 relative z-10">
                             <SectionHeading eyebrow="HOW IT WORKS" title="Your Journey, Step by Step" subtitle="Clear steps to your global education future." />
                             <div className="mt-16 relative">
-                                <div className="absolute left-8 top-0 bottom-0 w-px bg-sky/20"></div>
+                                <div className="absolute left-8 top-0 bottom-0 w-px bg-white/10"></div>
                                 <div className="space-y-10">
                                     {Array.from({ length: 6 }).map((_, i) => <SkeletonStep key={i} />)}
                                 </div>
@@ -1522,17 +1527,17 @@
                 );
             }
             return (
-                <MorphSection id="how-it-works" className="section-padding" style={{ background: 'var(--white)' }}>
-                    <div className="mx-auto max-w-5xl px-6 lg:px-8">
+                <MorphSection id="how-it-works" className="section-padding bg-wave-pattern">
+                    <div className="mx-auto max-w-5xl px-6 lg:px-8 relative z-10">
                         <SectionHeading eyebrow="HOW IT WORKS" title="Your Journey, Step by Step" subtitle="Clear steps to your global education future." />
                         <div className="mt-16 relative">
-                            <div className="absolute left-8 top-0 bottom-0 w-px bg-sky/30"></div>
+                            <div className="absolute left-8 top-0 bottom-0 w-px bg-white/10"></div>
                             <div className="space-y-10">
                                 {displaySteps.map((s, i) => (
                                     <Reveal key={s.id} delay={i * 0.05}>
                                         <div className="flex gap-6 items-start">
                                             <div className="relative z-10 flex h-16 w-16 flex-shrink-0 items-center justify-center rounded-full border-2 border-sky bg-sky/10 text-xl font-bold text-sky">{String(s.step_number || i + 1).padStart(2, '0')}</div>
-                                            <div className="pt-1"><h3 className="text-xl font-bold text-dark">{s.title}</h3><p className="mt-2 text-dark/70 text-sm leading-relaxed">{s.description || s.desc || ''}</p></div>
+                                            <div className="pt-1"><h3 className="text-xl font-bold">{s.title}</h3><p className="mt-2 text-white/70 text-sm leading-relaxed">{s.description || s.desc || ''}</p></div>
                                         </div>
                                     </Reveal>
                                 ))}
@@ -1559,8 +1564,8 @@
             const displayPoints = (points && points.length > 0) ? points : defaultPoints;
             if (loading) {
                 return (
-                    <MorphSection className="section-padding" style={{ background: 'var(--off-white)' }}>
-                        <div className="mx-auto max-w-6xl px-6 lg:px-8">
+                    <MorphSection className="section-padding bg-wave-pattern">
+                        <div className="mx-auto max-w-6xl px-6 lg:px-8 relative z-10">
                             <SectionHeading eyebrow="WHY CHOOSE US" title="A Partner You Can Trust" subtitle="We provide honest, transparent guidance for African students." />
                             <SkeletonGrid count={4} />
                         </div>
@@ -1568,16 +1573,16 @@
                 );
             }
             return (
-                <MorphSection className="section-padding section-wavy-bottom" style={{ background: 'var(--off-white)' }}>
-                    <div className="mx-auto max-w-6xl px-6 lg:px-8">
+                <MorphSection className="section-padding bg-wave-pattern">
+                    <div className="mx-auto max-w-6xl px-6 lg:px-8 relative z-10">
                         <SectionHeading eyebrow="WHY CHOOSE US" title="A Partner You Can Trust" subtitle="We provide honest, transparent guidance for African students." />
                         <div className="mt-16 grid gap-6 sm:grid-cols-2 lg:grid-cols-4 grid-equal">
                             {displayPoints.map((p, i) => (
                                 <Reveal key={p.id} delay={i * 0.1} className="h-full">
                                     <div className="card-premium rounded-2xl p-6 text-center h-full w-full">
                                         <div className="text-4xl mb-4">{p.icon || '⭐'}</div>
-                                        <h3 className="text-lg font-semibold text-dark">{p.title}</h3>
-                                        <p className="mt-2 text-sm text-dark/70 leading-relaxed">{p.description || p.desc || ''}</p>
+                                        <h3 className="text-lg font-semibold">{p.title}</h3>
+                                        <p className="mt-2 text-sm text-white/70 leading-relaxed">{p.description || p.desc || ''}</p>
                                     </div>
                                 </Reveal>
                             ))}
@@ -1604,8 +1609,8 @@
             const displayFaqs = (faqs && faqs.length > 0) ? faqs : defaultFaqs;
             if (loading) {
                 return (
-                    <MorphSection id="faq" className="section-padding" style={{ background: 'var(--white)' }}>
-                        <div className="mx-auto max-w-3xl px-6 lg:px-8">
+                    <MorphSection id="faq" className="section-padding bg-wave-pattern">
+                        <div className="mx-auto max-w-3xl px-6 lg:px-8 relative z-10">
                             <SectionHeading eyebrow="FAQ" title="Frequently Asked Questions" />
                             <div className="mt-12 space-y-4">
                                 {Array.from({ length: 4 }).map((_, i) => <SkeletonFaq key={i} />)}
@@ -1615,19 +1620,19 @@
                 );
             }
             return (
-                <MorphSection id="faq" className="section-padding" style={{ background: 'var(--white)' }}>
-                    <div className="mx-auto max-w-3xl px-6 lg:px-8">
+                <MorphSection id="faq" className="section-padding bg-wave-pattern">
+                    <div className="mx-auto max-w-3xl px-6 lg:px-8 relative z-10">
                         <SectionHeading eyebrow="FAQ" title="Frequently Asked Questions" />
                         <div className="mt-12 space-y-4">
                             {displayFaqs.map(faq => {
                                 const isOpen = openId === faq.id;
                                 return (
-                                    <div key={faq.id} className="border border-sky/20 rounded-2xl overflow-hidden glass-card">
-                                        <button className="flex w-full items-center justify-between gap-4 p-6 text-left text-dark hover:bg-sky/5 transition-colors" onClick={() => setOpenId(isOpen ? null : faq.id)} aria-expanded={isOpen} aria-controls={`faq-answer-${faq.id}`}>
+                                    <div key={faq.id} className="border border-white/10 rounded-2xl overflow-hidden glass-card">
+                                        <button className="flex w-full items-center justify-between gap-4 p-6 text-left text-white hover:bg-white/5 transition-colors" onClick={() => setOpenId(isOpen ? null : faq.id)} aria-expanded={isOpen} aria-controls={`faq-answer-${faq.id}`}>
                                             <span className="text-lg font-semibold">{faq.question}</span>
                                             <span className="text-2xl text-sky" aria-hidden="true">{isOpen ? '−' : '+'}</span>
                                         </button>
-                                        {isOpen && <div id={`faq-answer-${faq.id}`} className="px-6 pb-6 text-dark/70 leading-relaxed">{faq.answer}</div>}
+                                        {isOpen && <div id={`faq-answer-${faq.id}`} className="px-6 pb-6 text-white/70 leading-relaxed">{faq.answer}</div>}
                                     </div>
                                 );
                             })}
@@ -1645,8 +1650,8 @@
             }, []);
             if (loading) {
                 return (
-                    <MorphSection className="section-padding" style={{ background: 'var(--light-blue)' }}>
-                        <div className="mx-auto max-w-6xl px-6 lg:px-8">
+                    <MorphSection className="section-padding bg-wave-pattern">
+                        <div className="mx-auto max-w-6xl px-6 lg:px-8 relative z-10">
                             <SectionHeading eyebrow="TESTIMONIALS" title="What Our Students Say" />
                             <div className="mt-16 grid gap-6 md:grid-cols-2 lg:grid-cols-3 grid-equal">
                                 {Array.from({ length: 3 }).map((_, i) => <SkeletonTestimonial key={i} />)}
@@ -1657,16 +1662,16 @@
             }
             if (testimonials && testimonials.length > 0) {
                 return (
-                    <MorphSection className="section-padding" style={{ background: 'var(--light-blue)' }}>
-                        <div className="mx-auto max-w-6xl px-6 lg:px-8">
+                    <MorphSection className="section-padding bg-wave-pattern">
+                        <div className="mx-auto max-w-6xl px-6 lg:px-8 relative z-10">
                             <SectionHeading eyebrow="TESTIMONIALS" title="What Our Students Say" />
                             <div className="mt-16 grid gap-6 md:grid-cols-2 lg:grid-cols-3 grid-equal">
                                 {testimonials.map((t, i) => (
                                     <Reveal key={t.id} delay={i * 0.1} className="h-full">
                                         <div className="card-premium rounded-2xl p-6 h-full w-full">
                                             {t.image_url && <img src={t.image_url} alt={`${t.name || 'Student'} photo`} className="w-16 h-16 rounded-full object-cover mb-4" loading="lazy" onError={(e) => { e.target.style.display = 'none'; }} />}
-                                            <p className="text-dark/80 italic leading-relaxed">"{t.quote || t.testimonial}"</p>
-                                            {t.name && <p className="mt-4 font-semibold text-dark">{t.name}</p>}
+                                            <p className="text-white/80 italic leading-relaxed">"{t.quote || t.testimonial}"</p>
+                                            {t.name && <p className="mt-4 font-semibold">{t.name}</p>}
                                             {t.destination && <p className="text-sm text-sky">{t.destination}</p>}
                                         </div>
                                     </Reveal>
@@ -1689,12 +1694,12 @@
             }, []);
             const defaultContent = { title: 'About Elite Global Pathways', subtitle: 'Connecting African students to global education.', body: 'Elite Global Pathways Limited is dedicated to helping African students explore international higher-education opportunities. We provide guidance, application support, and scholarship information to help you achieve your academic dreams.' };
             const content = sections || defaultContent;
-            if (loading) return <MorphSection id="about" className="section-padding" style={{ background: 'var(--white)' }}><div className="text-center text-dark/70">Loading about...</div></MorphSection>;
+            if (loading) return <MorphSection id="about" className="section-padding bg-wave-pattern"><div className="text-center text-white/70 relative z-10">Loading about...</div></MorphSection>;
             return (
-                <MorphSection id="about" className="section-padding" style={{ background: 'var(--white)' }}>
-                    <div className="mx-auto max-w-5xl px-6 lg:px-8">
+                <MorphSection id="about" className="section-padding bg-wave-pattern">
+                    <div className="mx-auto max-w-5xl px-6 lg:px-8 relative z-10">
                         <SectionHeading eyebrow="ABOUT" title={content.title || 'About Elite Global Pathways'} subtitle={content.subtitle} />
-                        {content.body && <Reveal delay={0.2}><p className="mt-6 text-lg text-dark/70 leading-relaxed text-center">{content.body}</p></Reveal>}
+                        {content.body && <Reveal delay={0.2}><p className="mt-6 text-lg text-white/70 leading-relaxed text-center">{content.body}</p></Reveal>}
                     </div>
                 </MorphSection>
             );
@@ -1710,12 +1715,12 @@
             }, []);
             const defaultContent = { title: 'Scholarship Opportunities', subtitle: 'Explore tuition-reduction and scholarship options.', body: 'We help students identify and apply for scholarship opportunities that match their academic profile and financial needs.' };
             const content = sections || defaultContent;
-            if (loading) return <MorphSection id="scholarships" className="section-padding" style={{ background: 'var(--off-white)' }}><div className="text-center text-dark/70">Loading scholarships...</div></MorphSection>;
+            if (loading) return <MorphSection id="scholarships" className="section-padding bg-wave-pattern"><div className="text-center text-white/70 relative z-10">Loading scholarships...</div></MorphSection>;
             return (
-                <MorphSection id="scholarships" className="section-padding" style={{ background: 'var(--off-white)' }}>
-                    <div className="mx-auto max-w-5xl px-6 lg:px-8">
+                <MorphSection id="scholarships" className="section-padding bg-wave-pattern">
+                    <div className="mx-auto max-w-5xl px-6 lg:px-8 relative z-10">
                         <SectionHeading eyebrow="SCHOLARSHIPS" title={content.title || 'Scholarship Opportunities'} subtitle={content.subtitle} />
-                        {content.body && <Reveal delay={0.2}><p className="mt-6 text-lg text-dark/70 leading-relaxed text-center">{content.body}</p></Reveal>}
+                        {content.body && <Reveal delay={0.2}><p className="mt-6 text-lg text-white/70 leading-relaxed text-center">{content.body}</p></Reveal>}
                     </div>
                 </MorphSection>
             );
@@ -1731,12 +1736,12 @@
             }, []);
             const defaultContent = { title: 'Information for Parents', subtitle: 'We support families throughout the journey.', body: 'We understand that parents play a vital role in educational decisions. Our team provides clear information and ongoing support to help families make informed choices.' };
             const content = sections || defaultContent;
-            if (loading) return <MorphSection id="parents" className="section-padding" style={{ background: 'var(--white)' }}><div className="text-center text-dark/70">Loading parents information...</div></MorphSection>;
+            if (loading) return <MorphSection id="parents" className="section-padding bg-wave-pattern"><div className="text-center text-white/70 relative z-10">Loading parents information...</div></MorphSection>;
             return (
-                <MorphSection id="parents" className="section-padding" style={{ background: 'var(--white)' }}>
-                    <div className="mx-auto max-w-5xl px-6 lg:px-8">
+                <MorphSection id="parents" className="section-padding bg-wave-pattern">
+                    <div className="mx-auto max-w-5xl px-6 lg:px-8 relative z-10">
                         <SectionHeading eyebrow="PARENTS" title={content.title || 'Information for Parents'} subtitle={content.subtitle} />
-                        {content.body && <Reveal delay={0.2}><p className="mt-6 text-lg text-dark/70 leading-relaxed text-center">{content.body}</p></Reveal>}
+                        {content.body && <Reveal delay={0.2}><p className="mt-6 text-lg text-white/70 leading-relaxed text-center">{content.body}</p></Reveal>}
                     </div>
                 </MorphSection>
             );
@@ -1752,12 +1757,12 @@
             }, []);
             const defaultContent = { title: 'Our Partners', subtitle: 'Collaborating with institutions worldwide.', body: 'We work with a network of reputable universities and educational institutions to provide diverse opportunities for students.' };
             const content = sections || defaultContent;
-            if (loading) return <MorphSection id="partners" className="section-padding" style={{ background: 'var(--light-blue)' }}><div className="text-center text-dark/70">Loading partners...</div></MorphSection>;
+            if (loading) return <MorphSection id="partners" className="section-padding bg-wave-pattern"><div className="text-center text-white/70 relative z-10">Loading partners...</div></MorphSection>;
             return (
-                <MorphSection id="partners" className="section-padding" style={{ background: 'var(--light-blue)' }}>
-                    <div className="mx-auto max-w-5xl px-6 lg:px-8">
+                <MorphSection id="partners" className="section-padding bg-wave-pattern">
+                    <div className="mx-auto max-w-5xl px-6 lg:px-8 relative z-10">
                         <SectionHeading eyebrow="PARTNERS" title={content.title || 'Our Partners'} subtitle={content.subtitle} />
-                        {content.body && <Reveal delay={0.2}><p className="mt-6 text-lg text-dark/70 leading-relaxed text-center">{content.body}</p></Reveal>}
+                        {content.body && <Reveal delay={0.2}><p className="mt-6 text-lg text-white/70 leading-relaxed text-center">{content.body}</p></Reveal>}
                     </div>
                 </MorphSection>
             );
@@ -1775,19 +1780,19 @@
             }, []);
             const defaultContact = { email: 'eliteglobalpathwaysltd2025@gmail.com', whatsapp_india: '+91 73593 20928', whatsapp_uganda: '+256 779 989906', whatsapp_myanmar: '+95 3787 5184' };
             const contact = settings || defaultContact;
-            if (loading) return <MorphSection id="contact" className="section-padding" style={{ background: 'var(--white)' }}><div className="text-center text-dark/70">Loading contact information...</div></MorphSection>;
+            if (loading) return <MorphSection id="contact" className="section-padding bg-wave-pattern"><div className="text-center text-white/70 relative z-10">Loading contact information...</div></MorphSection>;
             return (
-                <MorphSection id="contact" className="section-padding" style={{ background: 'var(--white)' }}>
-                    <div className="mx-auto max-w-5xl px-6 lg:px-8">
+                <MorphSection id="contact" className="section-padding bg-wave-pattern">
+                    <div className="mx-auto max-w-5xl px-6 lg:px-8 relative z-10">
                         <SectionHeading eyebrow="CONTACT" title="Get in Touch" subtitle="We are here to help you with your international education journey." />
                         <div className="mt-16 grid gap-8 md:grid-cols-2">
-                            <div className="glass-card rounded-2xl p-6 border border-sky/20">
-                                <h3 className="text-xl font-semibold text-dark mb-4">Email</h3>
-                                <p className="text-dark/70"><a href={`mailto:${contact.email}`} className="hover:text-sky">{contact.email}</a></p>
+                            <div className="glass-card rounded-2xl p-6">
+                                <h3 className="text-xl font-semibold mb-4">Email</h3>
+                                <p className="text-white/70"><a href={`mailto:${contact.email}`} className="hover:text-sky">{contact.email}</a></p>
                             </div>
-                            <div className="glass-card rounded-2xl p-6 border border-sky/20">
-                                <h3 className="text-xl font-semibold text-dark mb-4">WhatsApp</h3>
-                                <ul className="space-y-2 text-dark/70">
+                            <div className="glass-card rounded-2xl p-6">
+                                <h3 className="text-xl font-semibold mb-4">WhatsApp</h3>
+                                <ul className="space-y-2 text-white/70">
                                     <li><a href={`https://wa.me/${contact.whatsapp_india?.replace(/\D/g,'')}`} className="hover:text-sky">India: {contact.whatsapp_india}</a></li>
                                     <li><a href={`https://wa.me/${contact.whatsapp_uganda?.replace(/\D/g,'')}`} className="hover:text-sky">Uganda: {contact.whatsapp_uganda}</a></li>
                                     <li><a href={`https://wa.me/${contact.whatsapp_myanmar?.replace(/\D/g,'')}`} className="hover:text-sky">Myanmar: {contact.whatsapp_myanmar}</a></li>
@@ -1829,45 +1834,45 @@
             const handleSubmit = async (e) => { e.preventDefault(); setError(''); const errors = validate(); if (Object.keys(errors).length > 0) { setFieldErrors(errors); return; } setSubmitting(true); try { if (!supabaseClient) throw new Error('Supabase not initialized'); const ref = generateReference(); const { error: submitError } = await supabaseClient.from('enquiries').insert([{ ...form, status: 'new', source: 'website', reference: ref }]); if (submitError) { console.error('Submission error:', submitError); setError('We couldn\'t submit your application right now. Your information has not been lost. Please try again.'); return; } setReference(ref); setSuccess(true); setForm({ full_name: '', email: '', phone: '', country: '', academic_level: '', preferred_destination: '', preferred_programme: '', message: '', consent: false }); } catch (err) { console.error('Unexpected error:', err); setError('Network error. Please check your connection and try again.'); } finally { setSubmitting(false); } };
             const resetForm = () => { setSuccess(false); setReference(''); setError(''); setFieldErrors({}); };
             return (
-                <MorphSection id="apply" className="section-padding" style={{ background: 'var(--off-white)' }}>
-                    <div className="mx-auto max-w-5xl px-6 lg:px-8">
+                <MorphSection id="apply" className="section-padding bg-wave-pattern">
+                    <div className="mx-auto max-w-5xl px-6 lg:px-8 relative z-10">
                         <SectionHeading eyebrow="CONTACT & APPLICATION" title="Ready to Go Global?" subtitle="Tell us what you want to study and where you want to go." />
                         <div className="mt-16 grid gap-8 md:grid-cols-3">
                             <div className="md:col-span-2">
                                 {success ? (
-                                    <div ref={successRef} tabIndex={-1} className="rounded-3xl border border-green/30 bg-green/5 p-12 text-center" role="alert" aria-live="polite">
+                                    <div ref={successRef} tabIndex={-1} className="rounded-3xl border border-green-500/30 bg-green-500/10 p-12 text-center" role="alert" aria-live="polite">
                                         <div className="text-6xl mb-4">✅</div>
-                                        <h3 className="text-2xl font-bold text-dark">Application Received!</h3>
-                                        <p className="mt-2 text-dark/70">Thank you for your enquiry.</p>
+                                        <h3 className="text-2xl font-bold">Application Received!</h3>
+                                        <p className="mt-2 text-white/70">Thank you for your enquiry.</p>
                                         {reference && <p className="mt-4 text-lg font-semibold text-sky">Reference: {reference}</p>}
-                                        <p className="mt-2 text-dark/60">Our admissions guidance team will contact you soon.</p>
+                                        <p className="mt-2 text-white/60">Our admissions guidance team will contact you soon.</p>
                                         <div className="mt-8 flex flex-wrap gap-4 justify-center">
                                             <button onClick={resetForm} className="btn-red">Submit Another Enquiry</button>
-                                            <a href="https://wa.me/256779989906" target="_blank" rel="noopener noreferrer" className="btn-primary bg-green-500 hover:bg-green-600" style={{ background: '#22C55E' }}>WhatsApp Our Team</a>
+                                            <a href="https://wa.me/256779989906" target="_blank" rel="noopener noreferrer" className="btn-primary" style={{ background: '#22C55E' }}>WhatsApp Our Team</a>
                                         </div>
                                     </div>
                                 ) : (
                                     <form onSubmit={handleSubmit} className="space-y-6" noValidate>
-                                        {error && <div className="rounded-xl border border-red-500/30 bg-red-500/10 p-4 text-red-600" role="alert">{error} <button onClick={() => setError('')} className="ml-2 underline">Dismiss</button></div>}
+                                        {error && <div className="rounded-xl border border-red-500/30 bg-red-500/10 p-4 text-red-400" role="alert">{error} <button onClick={() => setError('')} className="ml-2 underline">Dismiss</button></div>}
                                         <div className="grid gap-6 md:grid-cols-2">
-                                            <div><label htmlFor="full_name" className="block text-sm font-medium text-dark/80 mb-2">Full Name *</label><input type="text" id="full_name" name="full_name" value={form.full_name} onChange={handleChange} required className="input-sky w-full rounded-xl px-5 py-3 text-dark placeholder-dark/40 focus:outline-none" placeholder="Your full name" aria-invalid={!!fieldErrors.full_name} />{fieldErrors.full_name && <p className="mt-1 text-sm text-red-500">{fieldErrors.full_name}</p>}</div>
-                                            <div><label htmlFor="email" className="block text-sm font-medium text-dark/80 mb-2">Email *</label><input type="email" id="email" name="email" value={form.email} onChange={handleChange} required className="input-sky w-full rounded-xl px-5 py-3 text-dark placeholder-dark/40 focus:outline-none" placeholder="you@example.com" aria-invalid={!!fieldErrors.email} />{fieldErrors.email && <p className="mt-1 text-sm text-red-500">{fieldErrors.email}</p>}</div>
-                                            <div><label htmlFor="phone" className="block text-sm font-medium text-dark/80 mb-2">Phone Number</label><input type="tel" id="phone" name="phone" value={form.phone} onChange={handleChange} className="input-sky w-full rounded-xl px-5 py-3 text-dark placeholder-dark/40 focus:outline-none" placeholder="+256 700 000 000" /></div>
-                                            <div><label htmlFor="country" className="block text-sm font-medium text-dark/80 mb-2">Country</label><input type="text" id="country" name="country" value={form.country} onChange={handleChange} className="input-sky w-full rounded-xl px-5 py-3 text-dark placeholder-dark/40 focus:outline-none" placeholder="Your country" /></div>
-                                            <div><label htmlFor="academic_level" className="block text-sm font-medium text-dark/80 mb-2">Academic Level</label><select id="academic_level" name="academic_level" value={form.academic_level} onChange={handleChange} className="select-sky w-full rounded-xl px-5 py-3 text-dark focus:outline-none"><option value="" disabled>Select level</option>{levels.map(l => <option key={l} value={l}>{l}</option>)}</select></div>
-                                            <div><label htmlFor="preferred_destination" className="block text-sm font-medium text-dark/80 mb-2">Preferred Destination</label><select id="preferred_destination" name="preferred_destination" value={form.preferred_destination} onChange={handleChange} className="select-sky w-full rounded-xl px-5 py-3 text-dark focus:outline-none"><option value="" disabled>Select destination</option>{destinations.map(d => <option key={d} value={d}>{d}</option>)}</select></div>
-                                            <div><label htmlFor="preferred_programme" className="block text-sm font-medium text-dark/80 mb-2">Preferred Programme</label><select id="preferred_programme" name="preferred_programme" value={form.preferred_programme} onChange={handleChange} className="select-sky w-full rounded-xl px-5 py-3 text-dark focus:outline-none"><option value="" disabled>Select programme</option>{programmes.map(p => <option key={p} value={p}>{p}</option>)}</select></div>
+                                            <div><label htmlFor="full_name" className="block text-sm font-medium text-white/80 mb-2">Full Name *</label><input type="text" id="full_name" name="full_name" value={form.full_name} onChange={handleChange} required className="input-sky" placeholder="Your full name" aria-invalid={!!fieldErrors.full_name} />{fieldErrors.full_name && <p className="mt-1 text-sm text-red-400">{fieldErrors.full_name}</p>}</div>
+                                            <div><label htmlFor="email" className="block text-sm font-medium text-white/80 mb-2">Email *</label><input type="email" id="email" name="email" value={form.email} onChange={handleChange} required className="input-sky" placeholder="you@example.com" aria-invalid={!!fieldErrors.email} />{fieldErrors.email && <p className="mt-1 text-sm text-red-400">{fieldErrors.email}</p>}</div>
+                                            <div><label htmlFor="phone" className="block text-sm font-medium text-white/80 mb-2">Phone Number</label><input type="tel" id="phone" name="phone" value={form.phone} onChange={handleChange} className="input-sky" placeholder="+256 700 000 000" /></div>
+                                            <div><label htmlFor="country" className="block text-sm font-medium text-white/80 mb-2">Country</label><input type="text" id="country" name="country" value={form.country} onChange={handleChange} className="input-sky" placeholder="Your country" /></div>
+                                            <div><label htmlFor="academic_level" className="block text-sm font-medium text-white/80 mb-2">Academic Level</label><select id="academic_level" name="academic_level" value={form.academic_level} onChange={handleChange} className="select-sky"><option value="" disabled>Select level</option>{levels.map(l => <option key={l} value={l}>{l}</option>)}</select></div>
+                                            <div><label htmlFor="preferred_destination" className="block text-sm font-medium text-white/80 mb-2">Preferred Destination</label><select id="preferred_destination" name="preferred_destination" value={form.preferred_destination} onChange={handleChange} className="select-sky"><option value="" disabled>Select destination</option>{destinations.map(d => <option key={d} value={d}>{d}</option>)}</select></div>
+                                            <div><label htmlFor="preferred_programme" className="block text-sm font-medium text-white/80 mb-2">Preferred Programme</label><select id="preferred_programme" name="preferred_programme" value={form.preferred_programme} onChange={handleChange} className="select-sky"><option value="" disabled>Select programme</option>{programmes.map(p => <option key={p} value={p}>{p}</option>)}</select></div>
                                         </div>
-                                        <div><label htmlFor="message" className="block text-sm font-medium text-dark/80 mb-2">Message</label><textarea id="message" name="message" rows={4} value={form.message} onChange={handleChange} className="input-sky w-full rounded-xl px-5 py-3 text-dark placeholder-dark/40 focus:outline-none" placeholder="Tell us more..."></textarea></div>
-                                        <label className="flex items-start gap-3 text-sm text-dark/80"><input type="checkbox" name="consent" checked={form.consent} onChange={handleChange} className="mt-1 h-5 w-5 rounded border-sky bg-white/5 text-sky focus:ring-sky" aria-invalid={!!fieldErrors.consent} /><span>I consent to Elite Global Pathways processing my enquiry and understand that admission, scholarship, and visa outcomes are not guaranteed.</span></label>
-                                        {fieldErrors.consent && <p className="text-sm text-red-500">{fieldErrors.consent}</p>}
-                                        <button type="submit" disabled={submitting} className="w-full rounded-xl px-8 py-3 text-lg font-semibold btn-primary disabled:opacity-50 disabled:cursor-not-allowed" aria-label="Submit application">{submitting ? <span className="flex items-center justify-center gap-2"><svg className="animate-spin h-5 w-5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" strokeDasharray="60" strokeDashoffset="20" /></svg>Submitting...</span> : <>Submit Application <span className="ml-2">➤</span></>}</button>
+                                        <div><label htmlFor="message" className="block text-sm font-medium text-white/80 mb-2">Message</label><textarea id="message" name="message" rows={4} value={form.message} onChange={handleChange} className="input-sky" placeholder="Tell us more..."></textarea></div>
+                                        <label className="flex items-start gap-3 text-sm text-white/80"><input type="checkbox" name="consent" checked={form.consent} onChange={handleChange} className="mt-1 h-5 w-5 rounded border-white/20 bg-white/5 text-sky focus:ring-sky" aria-invalid={!!fieldErrors.consent} /><span>I consent to Elite Global Pathways processing my enquiry and understand that admission, scholarship, and visa outcomes are not guaranteed.</span></label>
+                                        {fieldErrors.consent && <p className="text-sm text-red-400">{fieldErrors.consent}</p>}
+                                        <button type="submit" disabled={submitting} className="w-full rounded-xl px-8 py-3 text-lg font-semibold btn-primary liquid-fill disabled:opacity-50 disabled:cursor-not-allowed" aria-label="Submit application">{submitting ? <span className="flex items-center justify-center gap-2"><svg className="animate-spin h-5 w-5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" strokeDasharray="60" strokeDashoffset="20" /></svg>Submitting...</span> : <>Submit Application <span className="ml-2">➤</span></>}</button>
                                     </form>
                                 )}
                             </div>
                             <div className="space-y-6">
-                                <div className="glass-card rounded-2xl p-6 border border-sky/20"><h3 className="text-xl font-semibold text-dark mb-4">Direct Contact</h3><ul className="space-y-3 text-sm text-dark/80"><li><a href="mailto:eliteglobalpathwaysltd2025@gmail.com" className="hover:text-sky">📧 eliteglobalpathwaysltd2025@gmail.com</a></li><li><a href="https://wa.me/917359320928" className="hover:text-sky">💬 WhatsApp India: +91 73593 20928</a></li><li><a href="https://wa.me/256779989906" className="hover:text-sky">💬 WhatsApp Uganda: +256 779 989906</a></li><li><a href="https://wa.me/9537875184" className="hover:text-sky">💬 WhatsApp Myanmar: +95 3787 5184</a></li></ul></div>
-                                <div className="glass-card rounded-2xl p-6 border border-sky/20"><h3 className="text-xl font-semibold text-dark mb-4">Important</h3><p className="text-sm text-dark/70 leading-relaxed">Elite Global Pathways does not guarantee admission, scholarship awards, or visa approval. All opportunities are subject to eligibility and institutional terms.</p></div>
+                                <div className="glass-card rounded-2xl p-6"><h3 className="text-xl font-semibold mb-4">Direct Contact</h3><ul className="space-y-3 text-sm text-white/80"><li><a href="mailto:eliteglobalpathwaysltd2025@gmail.com" className="hover:text-sky">📧 eliteglobalpathwaysltd2025@gmail.com</a></li><li><a href="https://wa.me/917359320928" className="hover:text-sky">💬 WhatsApp India: +91 73593 20928</a></li><li><a href="https://wa.me/256779989906" className="hover:text-sky">💬 WhatsApp Uganda: +256 779 989906</a></li><li><a href="https://wa.me/9537875184" className="hover:text-sky">💬 WhatsApp Myanmar: +95 3787 5184</a></li></ul></div>
+                                <div className="glass-card rounded-2xl p-6"><h3 className="text-xl font-semibold mb-4">Important</h3><p className="text-sm text-white/70 leading-relaxed">Elite Global Pathways does not guarantee admission, scholarship awards, or visa approval. All opportunities are subject to eligibility and institutional terms.</p></div>
                             </div>
                         </div>
                     </div>
@@ -1877,11 +1882,17 @@
 
         // ─── FOOTER ──────────────────────────────────────────────────────
         function Footer() {
-            const scrollTo = useScrollTo();
+            const navigate = useNavigate();
             const [showPrivacy, setShowPrivacy] = useState(false);
             const [showTerms, setShowTerms] = useState(false);
+
+            const handleNav = (e, href) => {
+                e.preventDefault();
+                navigate(href);
+            };
+
             return (
-                <footer className="bg-deep-blue py-14 text-white/70 border-t border-sky/20">
+                <footer className="bg-dark-blue/80 py-14 text-white/70 border-t border-white/5">
                     <div className="mx-auto max-w-7xl px-6 lg:px-8">
                         <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-4">
                             <div>
@@ -1901,15 +1912,15 @@
                             <div>
                                 <h3 className="text-sm font-semibold uppercase tracking-wider text-white mb-4">Quick Links</h3>
                                 <ul className="space-y-2 text-sm">
-                                    <li><a href="#home" onClick={(e)=>{e.preventDefault(); if (scrollTo) scrollTo('#home');}} className="hover:text-sky cursor-pointer">Home</a></li>
-                                    <li><a href="#about" onClick={(e)=>{e.preventDefault(); if (scrollTo) scrollTo('#about');}} className="hover:text-sky cursor-pointer">About</a></li>
-                                    <li><a href="#programmes" onClick={(e)=>{e.preventDefault(); if (scrollTo) scrollTo('#programmes');}} className="hover:text-sky cursor-pointer">Programmes</a></li>
-                                    <li><a href="#destinations" onClick={(e)=>{e.preventDefault(); if (scrollTo) scrollTo('#destinations');}} className="hover:text-sky cursor-pointer">Destinations</a></li>
-                                    <li><a href="#support" onClick={(e)=>{e.preventDefault(); if (scrollTo) scrollTo('#support');}} className="hover:text-sky cursor-pointer">Support</a></li>
-                                    <li><a href="#how-it-works" onClick={(e)=>{e.preventDefault(); if (scrollTo) scrollTo('#how-it-works');}} className="hover:text-sky cursor-pointer">How It Works</a></li>
-                                    <li><a href="#faq" onClick={(e)=>{e.preventDefault(); if (scrollTo) scrollTo('#faq');}} className="hover:text-sky cursor-pointer">FAQ</a></li>
-                                    <li><a href="#contact" onClick={(e)=>{e.preventDefault(); if (scrollTo) scrollTo('#contact');}} className="hover:text-sky cursor-pointer">Contact</a></li>
-                                    <li><a href="#apply" onClick={(e)=>{e.preventDefault(); if (scrollTo) scrollTo('#apply');}} className="hover:text-sky cursor-pointer">Apply Now</a></li>
+                                    <li><a href="#home" onClick={(e) => handleNav(e, '#home')} className="hover:text-sky cursor-pointer">Home</a></li>
+                                    <li><a href="#about" onClick={(e) => handleNav(e, '#about')} className="hover:text-sky cursor-pointer">About</a></li>
+                                    <li><a href="#programmes" onClick={(e) => handleNav(e, '#programmes')} className="hover:text-sky cursor-pointer">Programmes</a></li>
+                                    <li><a href="#destinations" onClick={(e) => handleNav(e, '#destinations')} className="hover:text-sky cursor-pointer">Destinations</a></li>
+                                    <li><a href="#support" onClick={(e) => handleNav(e, '#support')} className="hover:text-sky cursor-pointer">Support</a></li>
+                                    <li><a href="#how-it-works" onClick={(e) => handleNav(e, '#how-it-works')} className="hover:text-sky cursor-pointer">How It Works</a></li>
+                                    <li><a href="#faq" onClick={(e) => handleNav(e, '#faq')} className="hover:text-sky cursor-pointer">FAQ</a></li>
+                                    <li><a href="#contact" onClick={(e) => handleNav(e, '#contact')} className="hover:text-sky cursor-pointer">Contact</a></li>
+                                    <li><a href="#apply" onClick={(e) => handleNav(e, '#apply')} className="hover:text-sky cursor-pointer">Apply Now</a></li>
                                 </ul>
                             </div>
                             <div>
@@ -1921,14 +1932,14 @@
                                 </ul>
                             </div>
                         </div>
-                        <div className="mt-8 border-t border-sky/20 pt-6 text-center text-xs text-white/50">© {new Date().getFullYear()} Elite Global Pathways Limited. All rights reserved.</div>
+                        <div className="mt-8 border-t border-white/5 pt-6 text-center text-xs text-white/50">© {new Date().getFullYear()} Elite Global Pathways Limited. All rights reserved.</div>
                     </div>
                     {showPrivacy && (
                         <div className="modal-overlay" role="dialog" aria-modal="true" aria-label="Privacy Policy">
                             <div className="modal-content">
                                 <button className="modal-close" onClick={() => setShowPrivacy(false)} aria-label="Close privacy policy">✕</button>
-                                <h3 className="text-2xl font-bold text-dark mb-4">Privacy Policy</h3>
-                                <div className="text-dark/70 space-y-3 text-sm">
+                                <h3 className="text-2xl font-bold mb-4">Privacy Policy</h3>
+                                <div className="text-white/70 space-y-3 text-sm">
                                     <p>Elite Global Pathways Limited respects your privacy and is committed to protecting your personal information.</p>
                                     <p>We collect information you provide through our enquiry forms, including your name, email, phone number, and academic preferences. This information is used solely for the purpose of responding to your enquiry and providing educational guidance.</p>
                                     <p>We do not sell or share your personal information with third parties except as necessary to process your enquiry or as required by law.</p>
@@ -1941,8 +1952,8 @@
                         <div className="modal-overlay" role="dialog" aria-modal="true" aria-label="Terms and Conditions">
                             <div className="modal-content">
                                 <button className="modal-close" onClick={() => setShowTerms(false)} aria-label="Close terms and conditions">✕</button>
-                                <h3 className="text-2xl font-bold text-dark mb-4">Terms & Conditions</h3>
-                                <div className="text-dark/70 space-y-3 text-sm">
+                                <h3 className="text-2xl font-bold mb-4">Terms & Conditions</h3>
+                                <div className="text-white/70 space-y-3 text-sm">
                                     <p>By using this website and submitting an enquiry, you agree to these terms and conditions.</p>
                                     <p>Elite Global Pathways Limited provides educational guidance and application support services. We do not guarantee admission to any institution, scholarship awards, or visa approval.</p>
                                     <p>All information provided on this website is for general informational purposes only and is subject to change without notice.</p>
@@ -1965,7 +1976,7 @@
         }
 
         // ═══════════════════════════════════════════════════════════════════
-        //  ADMIN PANEL – FULL CMS CONTROLLABLE
+        //  ADMIN PANEL – FULL CMS CONTROLLABLE (condensed for space)
         // ═══════════════════════════════════════════════════════════════════
         // ─── ADMIN LOGIN ──────────────────────────────────────────────────
         function AdminLogin({ onLogin }) {
@@ -1990,13 +2001,13 @@
                 }
             };
             return (
-                <div className="min-h-screen flex items-center justify-center bg-white px-4">
+                <div className="min-h-screen flex items-center justify-center bg-deep-blue px-4">
                     <div className="glass-card rounded-2xl p-8 w-full max-w-md">
-                        <h1 className="text-2xl font-bold text-dark mb-6">Admin Login</h1>
-                        {error && <div className="mb-4 rounded-lg bg-red-500/10 p-3 text-red-600" role="alert">{error}</div>}
+                        <h1 className="text-2xl font-bold mb-6">Admin Login</h1>
+                        {error && <div className="mb-4 rounded-lg bg-red-500/10 p-3 text-red-400" role="alert">{error}</div>}
                         <form onSubmit={handleSubmit} className="space-y-4">
-                            <div><label htmlFor="admin_email" className="block text-sm text-dark/80 mb-2">Email</label><input type="email" id="admin_email" value={email} onChange={e => setEmail(e.target.value)} required className="input-sky w-full rounded-xl px-4 py-2" /></div>
-                            <div><label htmlFor="admin_password" className="block text-sm text-dark/80 mb-2">Password</label><input type="password" id="admin_password" value={password} onChange={e => setPassword(e.target.value)} required className="input-sky w-full rounded-xl px-4 py-2" /></div>
+                            <div><label className="block text-sm text-white/80 mb-2">Email</label><input type="email" value={email} onChange={e => setEmail(e.target.value)} required className="input-sky" /></div>
+                            <div><label className="block text-sm text-white/80 mb-2">Password</label><input type="password" value={password} onChange={e => setPassword(e.target.value)} required className="input-sky" /></div>
                             <button type="submit" disabled={loading} className="btn-primary w-full">{loading ? 'Logging in...' : 'Login'}</button>
                         </form>
                     </div>
@@ -2015,10 +2026,7 @@
                         if (!supabaseClient) return;
                         const { data } = await supabaseClient.auth.getSession();
                         setSession(data.session);
-                    } catch (err) {
-                        console.error('Session check error:', err);
-                        setSession(null);
-                    }
+                    } catch (err) { console.error('Session check error:', err); setSession(null); }
                 };
                 checkSession();
                 if (supabaseClient) {
@@ -2100,9 +2108,7 @@
 
         // ─── ADMIN DASHBOARD ────────────────────────────────────────────
         function AdminDashboard({ onLogout }) {
-            const [counts, setCounts] = useState({
-                programmes: 0, destinations: 0, services: 0, steps: 0, faqs: 0, testimonials: 0, leads: 0
-            });
+            const [counts, setCounts] = useState({ programmes: 0, destinations: 0, services: 0, steps: 0, faqs: 0, testimonials: 0, leads: 0 });
             const [loading, setLoading] = useState(true);
             useEffect(() => {
                 const fetchCounts = async () => {
@@ -2143,34 +2149,34 @@
             return (
                 <div>
                     <div className="flex justify-between items-center mb-8">
-                        <h1 className="text-3xl font-bold text-dark">Dashboard</h1>
+                        <h1 className="text-3xl font-bold">Dashboard</h1>
                         <button onClick={onLogout} className="btn-red">Logout</button>
                     </div>
                     {loading ? (
-                        <p className="text-dark/70">Loading dashboard...</p>
+                        <p className="text-white/70">Loading dashboard...</p>
                     ) : (
                         <div className="grid gap-4 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-7">
                             {stats.map(stat => (
                                 <div key={stat.label} className="glass-card rounded-2xl p-5 text-center">
                                     <div className="text-2xl mb-1">{stat.icon}</div>
-                                    <div className="text-2xl font-bold text-dark">{stat.count}</div>
-                                    <div className="text-xs text-dark/60 mt-1">{stat.label}</div>
+                                    <div className="text-2xl font-bold">{stat.count}</div>
+                                    <div className="text-xs text-white/60 mt-1">{stat.label}</div>
                                 </div>
                             ))}
                         </div>
                     )}
                     <div className="mt-8 grid gap-4 md:grid-cols-2 lg:grid-cols-4">
                         <a href="#/admin/programmes" className="glass-card rounded-2xl p-5 text-center hover:border-sky/40 transition-colors">
-                            <div className="text-3xl mb-2">📚</div><p className="text-sm text-dark/80">Manage Programmes</p>
+                            <div className="text-3xl mb-2">📚</div><p className="text-sm text-white/80">Manage Programmes</p>
                         </a>
                         <a href="#/admin/destinations" className="glass-card rounded-2xl p-5 text-center hover:border-sky/40 transition-colors">
-                            <div className="text-3xl mb-2">🌍</div><p className="text-sm text-dark/80">Manage Destinations</p>
+                            <div className="text-3xl mb-2">🌍</div><p className="text-sm text-white/80">Manage Destinations</p>
                         </a>
                         <a href="#/admin/leads" className="glass-card rounded-2xl p-5 text-center hover:border-sky/40 transition-colors">
-                            <div className="text-3xl mb-2">📋</div><p className="text-sm text-dark/80">View Leads</p>
+                            <div className="text-3xl mb-2">📋</div><p className="text-sm text-white/80">View Leads</p>
                         </a>
                         <a href="#/admin/settings" className="glass-card rounded-2xl p-5 text-center hover:border-sky/40 transition-colors">
-                            <div className="text-3xl mb-2">⚙️</div><p className="text-sm text-dark/80">Site Settings</p>
+                            <div className="text-3xl mb-2">⚙️</div><p className="text-sm text-white/80">Site Settings</p>
                         </a>
                     </div>
                 </div>
@@ -2181,23 +2187,23 @@
         function AdminProfile({ user, onLogout }) {
             return (
                 <div>
-                    <h1 className="text-3xl font-bold text-dark mb-6">Profile</h1>
+                    <h1 className="text-3xl font-bold mb-6">Profile</h1>
                     <div className="glass-card rounded-2xl p-8 max-w-md">
                         <div className="flex items-center gap-4 mb-6">
                             <div className="h-16 w-16 rounded-full bg-sky/20 flex items-center justify-center text-3xl text-sky">
                                 {user?.email?.charAt(0).toUpperCase() || 'U'}
                             </div>
                             <div>
-                                <p className="text-sm text-dark/50">Logged in as</p>
-                                <p className="text-xl font-semibold text-dark">{user?.email || 'User'}</p>
+                                <p className="text-sm text-white/50">Logged in as</p>
+                                <p className="text-xl font-semibold">{user?.email || 'User'}</p>
                             </div>
                         </div>
-                        <div className="space-y-3 text-sm text-dark/70">
-                            <p><strong className="text-dark">User ID:</strong> {user?.id || 'N/A'}</p>
-                            <p><strong className="text-dark">Email confirmed:</strong> {user?.email_confirmed_at ? 'Yes' : 'No'}</p>
-                            <p><strong className="text-dark">Last sign in:</strong> {user?.last_sign_in_at ? new Date(user.last_sign_in_at).toLocaleString() : 'N/A'}</p>
+                        <div className="space-y-3 text-sm text-white/70">
+                            <p><strong className="text-white">User ID:</strong> {user?.id || 'N/A'}</p>
+                            <p><strong className="text-white">Email confirmed:</strong> {user?.email_confirmed_at ? 'Yes' : 'No'}</p>
+                            <p><strong className="text-white">Last sign in:</strong> {user?.last_sign_in_at ? new Date(user.last_sign_in_at).toLocaleString() : 'N/A'}</p>
                         </div>
-                        <div className="mt-6 pt-6 border-t border-dark/10">
+                        <div className="mt-6 pt-6 border-t border-white/10">
                             <button onClick={onLogout} className="btn-red">Sign Out</button>
                         </div>
                     </div>
@@ -2289,36 +2295,36 @@
         // ─── ADMIN PROGRAMMES ──────────────────────────────────────────
         function AdminProgrammes() {
             const crud = useAdminCrud('programmes', { title: '', category: '', level: '', description: '', is_published: true, order_index: 0 });
-            if (crud.loading) return <AdminSection title="Programmes" onBack={() => window.location.hash = '#/admin/dashboard'}><p className="text-dark/70">Loading...</p></AdminSection>;
+            if (crud.loading) return <AdminSection title="Programmes" onBack={() => window.location.hash = '#/admin/dashboard'}><p className="text-white/70">Loading...</p></AdminSection>;
             return (
                 <AdminSection title="Programmes" onBack={() => window.location.hash = '#/admin/dashboard'}>
-                    <button onClick={crud.openNew} className="btn-primary mb-4">+ Add Programme</button>
-                    {crud.error && <p className="text-red-500 mb-4">Error: {crud.error.message}</p>}
+                    <button onClick={crud.openNew} className="btn-primary mb-4 liquid-fill">+ Add Programme</button>
+                    {crud.error && <p className="text-red-400 mb-4">Error: {crud.error.message}</p>}
                     <div className="space-y-3">
                         {crud.items.map(p => (
                             <div key={p.id} className="admin-card flex items-center justify-between">
                                 <div>
-                                    <h4 className="text-dark font-semibold">{p.title}</h4>
-                                    <p className="text-xs text-dark/50">{p.category || 'Uncategorized'} {p.level && `• ${p.level}`} {p.is_published ? <span className="ml-2 badge badge-green">Published</span> : <span className="ml-2 badge badge-gray">Draft</span>}</p>
+                                    <h4 className="text-white font-semibold">{p.title}</h4>
+                                    <p className="text-xs text-white/50">{p.category || 'Uncategorized'} {p.level && `• ${p.level}`} {p.is_published ? <span className="ml-2 badge badge-green">Published</span> : <span className="ml-2 badge badge-gray">Draft</span>}</p>
                                 </div>
                                 <div className="flex gap-2">
-                                    <button onClick={() => crud.openEdit(p)} className="text-sky hover:text-dark text-sm">Edit</button>
-                                    <button onClick={() => crud.handleDelete(p.id)} className="text-red-500 hover:text-red-700 text-sm">Delete</button>
+                                    <button onClick={() => crud.openEdit(p)} className="text-sky hover:text-white text-sm">Edit</button>
+                                    <button onClick={() => crud.handleDelete(p.id)} className="text-red-400 hover:text-red-300 text-sm">Delete</button>
                                 </div>
                             </div>
                         ))}
-                        {crud.items.length === 0 && <p className="text-dark/50">No programmes yet.</p>}
+                        {crud.items.length === 0 && <p className="text-white/50">No programmes yet.</p>}
                     </div>
                     {crud.showForm && (
                         <AdminModal title={crud.editing ? 'Edit Programme' : 'Add Programme'} onClose={() => { crud.setShowForm(false); crud.setEditing(null); }} onSave={crud.handleSave} isSubmitting={crud.isSubmitting}>
                             <div className="space-y-3">
-                                <input type="text" placeholder="Title *" value={crud.formData.title || ''} onChange={(e) => crud.setFormData({...crud.formData, title: e.target.value})} className="input-sky w-full rounded-xl px-4 py-2" required />
-                                <input type="text" placeholder="Category" value={crud.formData.category || ''} onChange={(e) => crud.setFormData({...crud.formData, category: e.target.value})} className="input-sky w-full rounded-xl px-4 py-2" />
-                                <input type="text" placeholder="Level (e.g. Undergraduate, Postgraduate)" value={crud.formData.level || ''} onChange={(e) => crud.setFormData({...crud.formData, level: e.target.value})} className="input-sky w-full rounded-xl px-4 py-2" />
-                                <textarea placeholder="Description" rows={4} value={crud.formData.description || ''} onChange={(e) => crud.setFormData({...crud.formData, description: e.target.value})} className="input-sky w-full rounded-xl px-4 py-2"></textarea>
-                                <input type="number" placeholder="Order Index" value={crud.formData.order_index || 0} onChange={(e) => crud.setFormData({...crud.formData, order_index: parseInt(e.target.value) || 0})} className="input-sky w-full rounded-xl px-4 py-2" />
-                                <label className="flex items-center gap-2 text-dark/70 text-sm">
-                                    <input type="checkbox" checked={crud.formData.is_published !== false} onChange={(e) => crud.setFormData({...crud.formData, is_published: e.target.checked})} className="rounded border-sky bg-white/5 text-sky" /> Published
+                                <input type="text" placeholder="Title *" value={crud.formData.title || ''} onChange={(e) => crud.setFormData({...crud.formData, title: e.target.value})} className="input-sky" required />
+                                <input type="text" placeholder="Category" value={crud.formData.category || ''} onChange={(e) => crud.setFormData({...crud.formData, category: e.target.value})} className="input-sky" />
+                                <input type="text" placeholder="Level (e.g. Undergraduate, Postgraduate)" value={crud.formData.level || ''} onChange={(e) => crud.setFormData({...crud.formData, level: e.target.value})} className="input-sky" />
+                                <textarea placeholder="Description" rows={4} value={crud.formData.description || ''} onChange={(e) => crud.setFormData({...crud.formData, description: e.target.value})} className="input-sky"></textarea>
+                                <input type="number" placeholder="Order Index" value={crud.formData.order_index || 0} onChange={(e) => crud.setFormData({...crud.formData, order_index: parseInt(e.target.value) || 0})} className="input-sky" />
+                                <label className="flex items-center gap-2 text-white/70 text-sm">
+                                    <input type="checkbox" checked={crud.formData.is_published !== false} onChange={(e) => crud.setFormData({...crud.formData, is_published: e.target.checked})} className="rounded border-white/20 bg-white/5 text-sky" /> Published
                                 </label>
                             </div>
                         </AdminModal>
@@ -2330,38 +2336,38 @@
         // ─── ADMIN DESTINATIONS ────────────────────────────────────────
         function AdminDestinations() {
             const crud = useAdminCrud('destinations', { name: '', description: '', image_url: '', is_published: true, order_index: 0 });
-            if (crud.loading) return <AdminSection title="Destinations" onBack={() => window.location.hash = '#/admin/dashboard'}><p className="text-dark/70">Loading...</p></AdminSection>;
+            if (crud.loading) return <AdminSection title="Destinations" onBack={() => window.location.hash = '#/admin/dashboard'}><p className="text-white/70">Loading...</p></AdminSection>;
             return (
                 <AdminSection title="Destinations" onBack={() => window.location.hash = '#/admin/dashboard'}>
-                    <button onClick={crud.openNew} className="btn-primary mb-4">+ Add Destination</button>
-                    {crud.error && <p className="text-red-500 mb-4">Error: {crud.error.message}</p>}
+                    <button onClick={crud.openNew} className="btn-primary mb-4 liquid-fill">+ Add Destination</button>
+                    {crud.error && <p className="text-red-400 mb-4">Error: {crud.error.message}</p>}
                     <div className="space-y-3">
                         {crud.items.map(d => (
                             <div key={d.id} className="admin-card flex items-center justify-between">
                                 <div className="flex items-center gap-4">
-                                    {d.image_url ? <img src={d.image_url} alt={d.name} className="w-12 h-8 object-cover rounded" /> : <div className="w-12 h-8 bg-gray-100 rounded"></div>}
+                                    {d.image_url ? <img src={d.image_url} alt={d.name} className="w-12 h-8 object-cover rounded" /> : <div className="w-12 h-8 bg-white/5 rounded"></div>}
                                     <div>
-                                        <h4 className="text-dark font-semibold">{d.name}</h4>
-                                        <p className="text-xs text-dark/50">{d.description || 'No description'} {d.is_published ? <span className="ml-2 badge badge-green">Published</span> : <span className="ml-2 badge badge-gray">Draft</span>}</p>
+                                        <h4 className="text-white font-semibold">{d.name}</h4>
+                                        <p className="text-xs text-white/50">{d.description || 'No description'} {d.is_published ? <span className="ml-2 badge badge-green">Published</span> : <span className="ml-2 badge badge-gray">Draft</span>}</p>
                                     </div>
                                 </div>
                                 <div className="flex gap-2">
-                                    <button onClick={() => crud.openEdit(d)} className="text-sky hover:text-dark text-sm">Edit</button>
-                                    <button onClick={() => crud.handleDelete(d.id)} className="text-red-500 hover:text-red-700 text-sm">Delete</button>
+                                    <button onClick={() => crud.openEdit(d)} className="text-sky hover:text-white text-sm">Edit</button>
+                                    <button onClick={() => crud.handleDelete(d.id)} className="text-red-400 hover:text-red-300 text-sm">Delete</button>
                                 </div>
                             </div>
                         ))}
-                        {crud.items.length === 0 && <p className="text-dark/50">No destinations yet.</p>}
+                        {crud.items.length === 0 && <p className="text-white/50">No destinations yet.</p>}
                     </div>
                     {crud.showForm && (
                         <AdminModal title={crud.editing ? 'Edit Destination' : 'Add Destination'} onClose={() => { crud.setShowForm(false); crud.setEditing(null); }} onSave={crud.handleSave} isSubmitting={crud.isSubmitting}>
                             <div className="space-y-3">
-                                <input type="text" placeholder="Name *" value={crud.formData.name || ''} onChange={(e) => crud.setFormData({...crud.formData, name: e.target.value})} className="input-sky w-full rounded-xl px-4 py-2" required />
-                                <textarea placeholder="Description" rows={3} value={crud.formData.description || ''} onChange={(e) => crud.setFormData({...crud.formData, description: e.target.value})} className="input-sky w-full rounded-xl px-4 py-2"></textarea>
-                                <input type="text" placeholder="Image URL (or leave empty for fallback)" value={crud.formData.image_url || ''} onChange={(e) => crud.setFormData({...crud.formData, image_url: e.target.value})} className="input-sky w-full rounded-xl px-4 py-2" />
-                                <input type="number" placeholder="Order Index" value={crud.formData.order_index || 0} onChange={(e) => crud.setFormData({...crud.formData, order_index: parseInt(e.target.value) || 0})} className="input-sky w-full rounded-xl px-4 py-2" />
-                                <label className="flex items-center gap-2 text-dark/70 text-sm">
-                                    <input type="checkbox" checked={crud.formData.is_published !== false} onChange={(e) => crud.setFormData({...crud.formData, is_published: e.target.checked})} className="rounded border-sky bg-white/5 text-sky" /> Published
+                                <input type="text" placeholder="Name *" value={crud.formData.name || ''} onChange={(e) => crud.setFormData({...crud.formData, name: e.target.value})} className="input-sky" required />
+                                <textarea placeholder="Description" rows={3} value={crud.formData.description || ''} onChange={(e) => crud.setFormData({...crud.formData, description: e.target.value})} className="input-sky"></textarea>
+                                <input type="text" placeholder="Image URL" value={crud.formData.image_url || ''} onChange={(e) => crud.setFormData({...crud.formData, image_url: e.target.value})} className="input-sky" />
+                                <input type="number" placeholder="Order Index" value={crud.formData.order_index || 0} onChange={(e) => crud.setFormData({...crud.formData, order_index: parseInt(e.target.value) || 0})} className="input-sky" />
+                                <label className="flex items-center gap-2 text-white/70 text-sm">
+                                    <input type="checkbox" checked={crud.formData.is_published !== false} onChange={(e) => crud.setFormData({...crud.formData, is_published: e.target.checked})} className="rounded border-white/20 bg-white/5 text-sky" /> Published
                                 </label>
                             </div>
                         </AdminModal>
@@ -2373,35 +2379,35 @@
         // ─── ADMIN SERVICES ─────────────────────────────────────────────
         function AdminServices() {
             const crud = useAdminCrud('support_services', { title: '', icon: '🎓', description: '', is_published: true, order_index: 0 });
-            if (crud.loading) return <AdminSection title="Support Services" onBack={() => window.location.hash = '#/admin/dashboard'}><p className="text-dark/70">Loading...</p></AdminSection>;
+            if (crud.loading) return <AdminSection title="Support Services" onBack={() => window.location.hash = '#/admin/dashboard'}><p className="text-white/70">Loading...</p></AdminSection>;
             return (
                 <AdminSection title="Support Services" onBack={() => window.location.hash = '#/admin/dashboard'}>
-                    <button onClick={crud.openNew} className="btn-primary mb-4">+ Add Service</button>
-                    {crud.error && <p className="text-red-500 mb-4">Error: {crud.error.message}</p>}
+                    <button onClick={crud.openNew} className="btn-primary mb-4 liquid-fill">+ Add Service</button>
+                    {crud.error && <p className="text-red-400 mb-4">Error: {crud.error.message}</p>}
                     <div className="space-y-3">
                         {crud.items.map(s => (
                             <div key={s.id} className="admin-card flex items-center justify-between">
                                 <div>
-                                    <h4 className="text-dark font-semibold">{s.icon || '🎓'} {s.title}</h4>
-                                    <p className="text-xs text-dark/50">{s.description || 'No description'} {s.is_published ? <span className="ml-2 badge badge-green">Published</span> : <span className="ml-2 badge badge-gray">Draft</span>}</p>
+                                    <h4 className="text-white font-semibold">{s.icon || '🎓'} {s.title}</h4>
+                                    <p className="text-xs text-white/50">{s.description || 'No description'} {s.is_published ? <span className="ml-2 badge badge-green">Published</span> : <span className="ml-2 badge badge-gray">Draft</span>}</p>
                                 </div>
                                 <div className="flex gap-2">
-                                    <button onClick={() => crud.openEdit(s)} className="text-sky hover:text-dark text-sm">Edit</button>
-                                    <button onClick={() => crud.handleDelete(s.id)} className="text-red-500 hover:text-red-700 text-sm">Delete</button>
+                                    <button onClick={() => crud.openEdit(s)} className="text-sky hover:text-white text-sm">Edit</button>
+                                    <button onClick={() => crud.handleDelete(s.id)} className="text-red-400 hover:text-red-300 text-sm">Delete</button>
                                 </div>
                             </div>
                         ))}
-                        {crud.items.length === 0 && <p className="text-dark/50">No support services yet.</p>}
+                        {crud.items.length === 0 && <p className="text-white/50">No support services yet.</p>}
                     </div>
                     {crud.showForm && (
                         <AdminModal title={crud.editing ? 'Edit Service' : 'Add Service'} onClose={() => { crud.setShowForm(false); crud.setEditing(null); }} onSave={crud.handleSave} isSubmitting={crud.isSubmitting}>
                             <div className="space-y-3">
-                                <input type="text" placeholder="Service Name *" value={crud.formData.title || ''} onChange={(e) => crud.setFormData({...crud.formData, title: e.target.value})} className="input-sky w-full rounded-xl px-4 py-2" required />
-                                <input type="text" placeholder="Icon (emoji)" value={crud.formData.icon || '🎓'} onChange={(e) => crud.setFormData({...crud.formData, icon: e.target.value})} className="input-sky w-full rounded-xl px-4 py-2" />
-                                <textarea placeholder="Description" rows={3} value={crud.formData.description || ''} onChange={(e) => crud.setFormData({...crud.formData, description: e.target.value})} className="input-sky w-full rounded-xl px-4 py-2"></textarea>
-                                <input type="number" placeholder="Order Index" value={crud.formData.order_index || 0} onChange={(e) => crud.setFormData({...crud.formData, order_index: parseInt(e.target.value) || 0})} className="input-sky w-full rounded-xl px-4 py-2" />
-                                <label className="flex items-center gap-2 text-dark/70 text-sm">
-                                    <input type="checkbox" checked={crud.formData.is_published !== false} onChange={(e) => crud.setFormData({...crud.formData, is_published: e.target.checked})} className="rounded border-sky bg-white/5 text-sky" /> Published
+                                <input type="text" placeholder="Service Name *" value={crud.formData.title || ''} onChange={(e) => crud.setFormData({...crud.formData, title: e.target.value})} className="input-sky" required />
+                                <input type="text" placeholder="Icon (emoji)" value={crud.formData.icon || '🎓'} onChange={(e) => crud.setFormData({...crud.formData, icon: e.target.value})} className="input-sky" />
+                                <textarea placeholder="Description" rows={3} value={crud.formData.description || ''} onChange={(e) => crud.setFormData({...crud.formData, description: e.target.value})} className="input-sky"></textarea>
+                                <input type="number" placeholder="Order Index" value={crud.formData.order_index || 0} onChange={(e) => crud.setFormData({...crud.formData, order_index: parseInt(e.target.value) || 0})} className="input-sky" />
+                                <label className="flex items-center gap-2 text-white/70 text-sm">
+                                    <input type="checkbox" checked={crud.formData.is_published !== false} onChange={(e) => crud.setFormData({...crud.formData, is_published: e.target.checked})} className="rounded border-white/20 bg-white/5 text-sky" /> Published
                                 </label>
                             </div>
                         </AdminModal>
@@ -2413,35 +2419,35 @@
         // ─── ADMIN JOURNEY ─────────────────────────────────────────────
         function AdminJourney() {
             const crud = useAdminCrud('process_steps', { title: '', description: '', step_number: 1, is_published: true, order_index: 0 });
-            if (crud.loading) return <AdminSection title="Journey Steps" onBack={() => window.location.hash = '#/admin/dashboard'}><p className="text-dark/70">Loading...</p></AdminSection>;
+            if (crud.loading) return <AdminSection title="Journey Steps" onBack={() => window.location.hash = '#/admin/dashboard'}><p className="text-white/70">Loading...</p></AdminSection>;
             return (
                 <AdminSection title="Journey Steps" onBack={() => window.location.hash = '#/admin/dashboard'}>
-                    <button onClick={crud.openNew} className="btn-primary mb-4">+ Add Step</button>
-                    {crud.error && <p className="text-red-500 mb-4">Error: {crud.error.message}</p>}
+                    <button onClick={crud.openNew} className="btn-primary mb-4 liquid-fill">+ Add Step</button>
+                    {crud.error && <p className="text-red-400 mb-4">Error: {crud.error.message}</p>}
                     <div className="space-y-3">
                         {crud.items.map(s => (
                             <div key={s.id} className="admin-card flex items-center justify-between">
                                 <div>
-                                    <h4 className="text-dark font-semibold">Step {s.step_number || 0}: {s.title}</h4>
-                                    <p className="text-xs text-dark/50">{s.description || 'No description'} {s.is_published ? <span className="ml-2 badge badge-green">Published</span> : <span className="ml-2 badge badge-gray">Draft</span>}</p>
+                                    <h4 className="text-white font-semibold">Step {s.step_number || 0}: {s.title}</h4>
+                                    <p className="text-xs text-white/50">{s.description || 'No description'} {s.is_published ? <span className="ml-2 badge badge-green">Published</span> : <span className="ml-2 badge badge-gray">Draft</span>}</p>
                                 </div>
                                 <div className="flex gap-2">
-                                    <button onClick={() => crud.openEdit(s)} className="text-sky hover:text-dark text-sm">Edit</button>
-                                    <button onClick={() => crud.handleDelete(s.id)} className="text-red-500 hover:text-red-700 text-sm">Delete</button>
+                                    <button onClick={() => crud.openEdit(s)} className="text-sky hover:text-white text-sm">Edit</button>
+                                    <button onClick={() => crud.handleDelete(s.id)} className="text-red-400 hover:text-red-300 text-sm">Delete</button>
                                 </div>
                             </div>
                         ))}
-                        {crud.items.length === 0 && <p className="text-dark/50">No journey steps yet.</p>}
+                        {crud.items.length === 0 && <p className="text-white/50">No journey steps yet.</p>}
                     </div>
                     {crud.showForm && (
                         <AdminModal title={crud.editing ? 'Edit Step' : 'Add Step'} onClose={() => { crud.setShowForm(false); crud.setEditing(null); }} onSave={crud.handleSave} isSubmitting={crud.isSubmitting}>
                             <div className="space-y-3">
-                                <input type="text" placeholder="Step Title *" value={crud.formData.title || ''} onChange={(e) => crud.setFormData({...crud.formData, title: e.target.value})} className="input-sky w-full rounded-xl px-4 py-2" required />
-                                <textarea placeholder="Description" rows={3} value={crud.formData.description || ''} onChange={(e) => crud.setFormData({...crud.formData, description: e.target.value})} className="input-sky w-full rounded-xl px-4 py-2"></textarea>
-                                <input type="number" placeholder="Step Number" value={crud.formData.step_number || 1} onChange={(e) => crud.setFormData({...crud.formData, step_number: parseInt(e.target.value) || 1})} className="input-sky w-full rounded-xl px-4 py-2" />
-                                <input type="number" placeholder="Order Index" value={crud.formData.order_index || 0} onChange={(e) => crud.setFormData({...crud.formData, order_index: parseInt(e.target.value) || 0})} className="input-sky w-full rounded-xl px-4 py-2" />
-                                <label className="flex items-center gap-2 text-dark/70 text-sm">
-                                    <input type="checkbox" checked={crud.formData.is_published !== false} onChange={(e) => crud.setFormData({...crud.formData, is_published: e.target.checked})} className="rounded border-sky bg-white/5 text-sky" /> Published
+                                <input type="text" placeholder="Step Title *" value={crud.formData.title || ''} onChange={(e) => crud.setFormData({...crud.formData, title: e.target.value})} className="input-sky" required />
+                                <textarea placeholder="Description" rows={3} value={crud.formData.description || ''} onChange={(e) => crud.setFormData({...crud.formData, description: e.target.value})} className="input-sky"></textarea>
+                                <input type="number" placeholder="Step Number" value={crud.formData.step_number || 1} onChange={(e) => crud.setFormData({...crud.formData, step_number: parseInt(e.target.value) || 1})} className="input-sky" />
+                                <input type="number" placeholder="Order Index" value={crud.formData.order_index || 0} onChange={(e) => crud.setFormData({...crud.formData, order_index: parseInt(e.target.value) || 0})} className="input-sky" />
+                                <label className="flex items-center gap-2 text-white/70 text-sm">
+                                    <input type="checkbox" checked={crud.formData.is_published !== false} onChange={(e) => crud.setFormData({...crud.formData, is_published: e.target.checked})} className="rounded border-white/20 bg-white/5 text-sky" /> Published
                                 </label>
                             </div>
                         </AdminModal>
@@ -2453,36 +2459,36 @@
         // ─── ADMIN FAQS ─────────────────────────────────────────────────
         function AdminFaqs() {
             const crud = useAdminCrud('faqs', { question: '', answer: '', is_published: true, order_index: 0 });
-            if (crud.loading) return <AdminSection title="FAQs" onBack={() => window.location.hash = '#/admin/dashboard'}><p className="text-dark/70">Loading...</p></AdminSection>;
+            if (crud.loading) return <AdminSection title="FAQs" onBack={() => window.location.hash = '#/admin/dashboard'}><p className="text-white/70">Loading...</p></AdminSection>;
             return (
                 <AdminSection title="FAQs" onBack={() => window.location.hash = '#/admin/dashboard'}>
-                    <button onClick={crud.openNew} className="btn-primary mb-4">+ Add FAQ</button>
-                    {crud.error && <p className="text-red-500 mb-4">Error: {crud.error.message}</p>}
+                    <button onClick={crud.openNew} className="btn-primary mb-4 liquid-fill">+ Add FAQ</button>
+                    {crud.error && <p className="text-red-400 mb-4">Error: {crud.error.message}</p>}
                     <div className="space-y-3">
                         {crud.items.map(f => (
                             <div key={f.id} className="admin-card">
                                 <div className="flex items-center justify-between">
                                     <div>
-                                        <h4 className="text-dark font-semibold">{f.question}</h4>
-                                        <p className="text-xs text-dark/50 line-clamp-2">{f.answer} {f.is_published ? <span className="ml-2 badge badge-green">Published</span> : <span className="ml-2 badge badge-gray">Draft</span>}</p>
+                                        <h4 className="text-white font-semibold">{f.question}</h4>
+                                        <p className="text-xs text-white/50 line-clamp-2">{f.answer} {f.is_published ? <span className="ml-2 badge badge-green">Published</span> : <span className="ml-2 badge badge-gray">Draft</span>}</p>
                                     </div>
                                     <div className="flex gap-2">
-                                        <button onClick={() => crud.openEdit(f)} className="text-sky hover:text-dark text-sm">Edit</button>
-                                        <button onClick={() => crud.handleDelete(f.id)} className="text-red-500 hover:text-red-700 text-sm">Delete</button>
+                                        <button onClick={() => crud.openEdit(f)} className="text-sky hover:text-white text-sm">Edit</button>
+                                        <button onClick={() => crud.handleDelete(f.id)} className="text-red-400 hover:text-red-300 text-sm">Delete</button>
                                     </div>
                                 </div>
                             </div>
                         ))}
-                        {crud.items.length === 0 && <p className="text-dark/50">No FAQs yet.</p>}
+                        {crud.items.length === 0 && <p className="text-white/50">No FAQs yet.</p>}
                     </div>
                     {crud.showForm && (
                         <AdminModal title={crud.editing ? 'Edit FAQ' : 'Add FAQ'} onClose={() => { crud.setShowForm(false); crud.setEditing(null); }} onSave={crud.handleSave} isSubmitting={crud.isSubmitting}>
                             <div className="space-y-3">
-                                <input type="text" placeholder="Question *" value={crud.formData.question || ''} onChange={(e) => crud.setFormData({...crud.formData, question: e.target.value})} className="input-sky w-full rounded-xl px-4 py-2" required />
-                                <textarea placeholder="Answer *" rows={4} value={crud.formData.answer || ''} onChange={(e) => crud.setFormData({...crud.formData, answer: e.target.value})} className="input-sky w-full rounded-xl px-4 py-2" required></textarea>
-                                <input type="number" placeholder="Order Index" value={crud.formData.order_index || 0} onChange={(e) => crud.setFormData({...crud.formData, order_index: parseInt(e.target.value) || 0})} className="input-sky w-full rounded-xl px-4 py-2" />
-                                <label className="flex items-center gap-2 text-dark/70 text-sm">
-                                    <input type="checkbox" checked={crud.formData.is_published !== false} onChange={(e) => crud.setFormData({...crud.formData, is_published: e.target.checked})} className="rounded border-sky bg-white/5 text-sky" /> Published
+                                <input type="text" placeholder="Question *" value={crud.formData.question || ''} onChange={(e) => crud.setFormData({...crud.formData, question: e.target.value})} className="input-sky" required />
+                                <textarea placeholder="Answer *" rows={4} value={crud.formData.answer || ''} onChange={(e) => crud.setFormData({...crud.formData, answer: e.target.value})} className="input-sky" required></textarea>
+                                <input type="number" placeholder="Order Index" value={crud.formData.order_index || 0} onChange={(e) => crud.setFormData({...crud.formData, order_index: parseInt(e.target.value) || 0})} className="input-sky" />
+                                <label className="flex items-center gap-2 text-white/70 text-sm">
+                                    <input type="checkbox" checked={crud.formData.is_published !== false} onChange={(e) => crud.setFormData({...crud.formData, is_published: e.target.checked})} className="rounded border-white/20 bg-white/5 text-sky" /> Published
                                 </label>
                             </div>
                         </AdminModal>
@@ -2494,36 +2500,36 @@
         // ─── ADMIN TESTIMONIALS ────────────────────────────────────────
         function AdminTestimonials() {
             const crud = useAdminCrud('testimonials', { name: '', quote: '', destination: '', image_url: '', is_published: true, order_index: 0 });
-            if (crud.loading) return <AdminSection title="Testimonials" onBack={() => window.location.hash = '#/admin/dashboard'}><p className="text-dark/70">Loading...</p></AdminSection>;
+            if (crud.loading) return <AdminSection title="Testimonials" onBack={() => window.location.hash = '#/admin/dashboard'}><p className="text-white/70">Loading...</p></AdminSection>;
             return (
                 <AdminSection title="Testimonials" onBack={() => window.location.hash = '#/admin/dashboard'}>
-                    <button onClick={crud.openNew} className="btn-primary mb-4">+ Add Testimonial</button>
-                    {crud.error && <p className="text-red-500 mb-4">Error: {crud.error.message}</p>}
+                    <button onClick={crud.openNew} className="btn-primary mb-4 liquid-fill">+ Add Testimonial</button>
+                    {crud.error && <p className="text-red-400 mb-4">Error: {crud.error.message}</p>}
                     <div className="space-y-3">
                         {crud.items.map(t => (
                             <div key={t.id} className="admin-card flex items-center justify-between">
                                 <div>
-                                    <h4 className="text-dark font-semibold">{t.name || 'Anonymous'}</h4>
-                                    <p className="text-xs text-dark/50 line-clamp-2">"{t.quote}" {t.destination && <span>• {t.destination}</span>} {t.is_published ? <span className="ml-2 badge badge-green">Published</span> : <span className="ml-2 badge badge-gray">Draft</span>}</p>
+                                    <h4 className="text-white font-semibold">{t.name || 'Anonymous'}</h4>
+                                    <p className="text-xs text-white/50 line-clamp-2">"{t.quote}" {t.destination && <span>• {t.destination}</span>} {t.is_published ? <span className="ml-2 badge badge-green">Published</span> : <span className="ml-2 badge badge-gray">Draft</span>}</p>
                                 </div>
                                 <div className="flex gap-2">
-                                    <button onClick={() => crud.openEdit(t)} className="text-sky hover:text-dark text-sm">Edit</button>
-                                    <button onClick={() => crud.handleDelete(t.id)} className="text-red-500 hover:text-red-700 text-sm">Delete</button>
+                                    <button onClick={() => crud.openEdit(t)} className="text-sky hover:text-white text-sm">Edit</button>
+                                    <button onClick={() => crud.handleDelete(t.id)} className="text-red-400 hover:text-red-300 text-sm">Delete</button>
                                 </div>
                             </div>
                         ))}
-                        {crud.items.length === 0 && <p className="text-dark/50">No testimonials yet.</p>}
+                        {crud.items.length === 0 && <p className="text-white/50">No testimonials yet.</p>}
                     </div>
                     {crud.showForm && (
                         <AdminModal title={crud.editing ? 'Edit Testimonial' : 'Add Testimonial'} onClose={() => { crud.setShowForm(false); crud.setEditing(null); }} onSave={crud.handleSave} isSubmitting={crud.isSubmitting}>
                             <div className="space-y-3">
-                                <input type="text" placeholder="Name *" value={crud.formData.name || ''} onChange={(e) => crud.setFormData({...crud.formData, name: e.target.value})} className="input-sky w-full rounded-xl px-4 py-2" required />
-                                <textarea placeholder="Testimonial Quote *" rows={4} value={crud.formData.quote || ''} onChange={(e) => crud.setFormData({...crud.formData, quote: e.target.value})} className="input-sky w-full rounded-xl px-4 py-2" required></textarea>
-                                <input type="text" placeholder="Destination" value={crud.formData.destination || ''} onChange={(e) => crud.setFormData({...crud.formData, destination: e.target.value})} className="input-sky w-full rounded-xl px-4 py-2" />
-                                <input type="text" placeholder="Image URL" value={crud.formData.image_url || ''} onChange={(e) => crud.setFormData({...crud.formData, image_url: e.target.value})} className="input-sky w-full rounded-xl px-4 py-2" />
-                                <input type="number" placeholder="Order Index" value={crud.formData.order_index || 0} onChange={(e) => crud.setFormData({...crud.formData, order_index: parseInt(e.target.value) || 0})} className="input-sky w-full rounded-xl px-4 py-2" />
-                                <label className="flex items-center gap-2 text-dark/70 text-sm">
-                                    <input type="checkbox" checked={crud.formData.is_published !== false} onChange={(e) => crud.setFormData({...crud.formData, is_published: e.target.checked})} className="rounded border-sky bg-white/5 text-sky" /> Published
+                                <input type="text" placeholder="Name *" value={crud.formData.name || ''} onChange={(e) => crud.setFormData({...crud.formData, name: e.target.value})} className="input-sky" required />
+                                <textarea placeholder="Testimonial Quote *" rows={4} value={crud.formData.quote || ''} onChange={(e) => crud.setFormData({...crud.formData, quote: e.target.value})} className="input-sky" required></textarea>
+                                <input type="text" placeholder="Destination" value={crud.formData.destination || ''} onChange={(e) => crud.setFormData({...crud.formData, destination: e.target.value})} className="input-sky" />
+                                <input type="text" placeholder="Image URL" value={crud.formData.image_url || ''} onChange={(e) => crud.setFormData({...crud.formData, image_url: e.target.value})} className="input-sky" />
+                                <input type="number" placeholder="Order Index" value={crud.formData.order_index || 0} onChange={(e) => crud.setFormData({...crud.formData, order_index: parseInt(e.target.value) || 0})} className="input-sky" />
+                                <label className="flex items-center gap-2 text-white/70 text-sm">
+                                    <input type="checkbox" checked={crud.formData.is_published !== false} onChange={(e) => crud.setFormData({...crud.formData, is_published: e.target.checked})} className="rounded border-white/20 bg-white/5 text-sky" /> Published
                                 </label>
                             </div>
                         </AdminModal>
@@ -2540,7 +2546,7 @@
                 if (error) throw error;
                 return data || [];
             }, []);
-            if (loading) return <AdminSection title="Leads" onBack={() => window.location.hash = '#/admin/dashboard'}><p className="text-dark/70">Loading...</p></AdminSection>;
+            if (loading) return <AdminSection title="Leads" onBack={() => window.location.hash = '#/admin/dashboard'}><p className="text-white/70">Loading...</p></AdminSection>;
             return (
                 <AdminSection title="Leads" onBack={() => window.location.hash = '#/admin/dashboard'}>
                     <div className="space-y-3">
@@ -2548,17 +2554,17 @@
                             <div key={lead.id} className="admin-card">
                                 <div className="flex justify-between items-start">
                                     <div>
-                                        <h4 className="text-dark font-semibold">{lead.full_name}</h4>
-                                        <p className="text-xs text-dark/50">{lead.email} {lead.phone && `• ${lead.phone}`}</p>
-                                        <p className="text-xs text-dark/50">{lead.preferred_destination || 'No destination'} {lead.preferred_programme && `• ${lead.preferred_programme}`}</p>
+                                        <h4 className="text-white font-semibold">{lead.full_name}</h4>
+                                        <p className="text-xs text-white/50">{lead.email} {lead.phone && `• ${lead.phone}`}</p>
+                                        <p className="text-xs text-white/50">{lead.preferred_destination || 'No destination'} {lead.preferred_programme && `• ${lead.preferred_programme}`}</p>
                                         {lead.reference && <p className="text-xs text-sky mt-1">Ref: {lead.reference}</p>}
                                     </div>
                                     <span className={`badge ${lead.status === 'new' ? 'badge-sky' : lead.status === 'contacted' ? 'badge-yellow' : 'badge-green'}`}>{lead.status || 'new'}</span>
                                 </div>
-                                {lead.message && <p className="mt-2 text-sm text-dark/70">{lead.message}</p>}
+                                {lead.message && <p className="mt-2 text-sm text-white/70">{lead.message}</p>}
                             </div>
                         ))}
-                        {(!leads || leads.length === 0) && <p className="text-dark/50">No leads yet.</p>}
+                        {(!leads || leads.length === 0) && <p className="text-white/50">No leads yet.</p>}
                     </div>
                 </AdminSection>
             );
@@ -2632,27 +2638,27 @@
                 }
             };
 
-            if (loading) return <AdminSection title="Media" onBack={() => window.location.hash = '#/admin/dashboard'}><p className="text-dark/70">Loading...</p></AdminSection>;
+            if (loading) return <AdminSection title="Media" onBack={() => window.location.hash = '#/admin/dashboard'}><p className="text-white/70">Loading...</p></AdminSection>;
 
             return (
                 <AdminSection title="Media Assets" onBack={() => window.location.hash = '#/admin/dashboard'}>
                     <div className="flex items-center gap-4 mb-4">
-                        <label className="btn-primary cursor-pointer inline-block">
+                        <label className="btn-primary cursor-pointer inline-block liquid-fill">
                             {uploading ? 'Uploading...' : '+ Upload Media'}
                             <input type="file" onChange={handleUpload} className="hidden" disabled={uploading} />
                         </label>
-                        {error && <p className="text-red-500 text-sm">Error: {error.message}</p>}
+                        {error && <p className="text-red-400 text-sm">Error: {error.message}</p>}
                     </div>
                     <div className="grid gap-4 md:grid-cols-3 lg:grid-cols-4">
                         {mediaItems.map(m => (
                             <div key={m.id} className="admin-card">
-                                {m.public_url ? <img src={m.public_url} alt={m.name} className="w-full h-32 object-cover rounded-lg mb-2" /> : <div className="w-full h-32 bg-gray-100 rounded-lg mb-2 flex items-center justify-center text-dark/30">🖼️</div>}
-                                <p className="text-xs text-dark/70 truncate">{m.name}</p>
-                                <p className="text-xs text-dark/30">{(m.size / 1024).toFixed(1)} KB</p>
-                                <button onClick={() => handleDelete(m.id, m.storage_path)} className="text-red-500 hover:text-red-700 text-xs mt-1">Delete</button>
+                                {m.public_url ? <img src={m.public_url} alt={m.name} className="w-full h-32 object-cover rounded-lg mb-2" /> : <div className="w-full h-32 bg-white/5 rounded-lg mb-2 flex items-center justify-center text-white/30">🖼️</div>}
+                                <p className="text-xs text-white/70 truncate">{m.name}</p>
+                                <p className="text-xs text-white/30">{(m.size / 1024).toFixed(1)} KB</p>
+                                <button onClick={() => handleDelete(m.id, m.storage_path)} className="text-red-400 hover:text-red-300 text-xs mt-1">Delete</button>
                             </div>
                         ))}
-                        {mediaItems.length === 0 && <p className="text-dark/50 col-span-full">No media assets uploaded yet.</p>}
+                        {mediaItems.length === 0 && <p className="text-white/50 col-span-full">No media assets uploaded yet.</p>}
                     </div>
                 </AdminSection>
             );
@@ -2693,7 +2699,7 @@
                 }
             };
 
-            if (loading) return <AdminSection title="Settings" onBack={() => window.location.hash = '#/admin/dashboard'}><p className="text-dark/70">Loading...</p></AdminSection>;
+            if (loading) return <AdminSection title="Settings" onBack={() => window.location.hash = '#/admin/dashboard'}><p className="text-white/70">Loading...</p></AdminSection>;
 
             const commonKeys = ['hero_title', 'hero_subtitle', 'motto', 'email', 'whatsapp_india', 'whatsapp_uganda', 'whatsapp_myanmar'];
             const displayKeys = Object.keys(formData).filter(k => commonKeys.includes(k) || !k.startsWith('_')).sort();
@@ -2703,12 +2709,12 @@
                     <div className="max-w-2xl space-y-4">
                         {displayKeys.map(key => (
                             <div key={key}>
-                                <label className="block text-sm text-dark/70 mb-1">{key.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase())}</label>
-                                <input type="text" value={formData[key] || ''} onChange={(e) => setFormData({...formData, [key]: e.target.value})} className="input-sky w-full rounded-xl px-4 py-2" />
+                                <label className="block text-sm text-white/70 mb-1">{key.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase())}</label>
+                                <input type="text" value={formData[key] || ''} onChange={(e) => setFormData({...formData, [key]: e.target.value})} className="input-sky" />
                             </div>
                         ))}
-                        <button onClick={handleSave} disabled={saving} className="btn-primary w-full disabled:opacity-50">{saving ? 'Saving...' : 'Save Settings'}</button>
-                        {error && <p className="text-red-500">Error: {error.message}</p>}
+                        <button onClick={handleSave} disabled={saving} className="btn-primary w-full liquid-fill disabled:opacity-50">{saving ? 'Saving...' : 'Save Settings'}</button>
+                        {error && <p className="text-red-400">Error: {error.message}</p>}
                     </div>
                 </AdminSection>
             );
@@ -2720,12 +2726,12 @@
                 <div className="modal-overlay" role="dialog" aria-modal="true" aria-label={title}>
                     <div className="modal-content">
                         <button className="modal-close" onClick={onClose} aria-label="Close modal">✕</button>
-                        <h3 className="text-xl font-bold text-dark mb-4">{title}</h3>
+                        <h3 className="text-xl font-bold mb-4">{title}</h3>
                         <div className="space-y-4">
                             {children}
                             <div className="flex gap-3 pt-2">
-                                <button onClick={onSave} disabled={isSubmitting} className="flex-1 btn-primary disabled:opacity-50">{isSubmitting ? 'Saving...' : 'Save'}</button>
-                                <button onClick={onClose} className="flex-1 rounded-xl px-6 py-2 border border-dark/20 text-dark/60 hover:text-dark">Cancel</button>
+                                <button onClick={onSave} disabled={isSubmitting} className="flex-1 btn-primary liquid-fill disabled:opacity-50">{isSubmitting ? 'Saving...' : 'Save'}</button>
+                                <button onClick={onClose} className="flex-1 rounded-xl px-6 py-2 border border-white/20 text-white/60 hover:text-white">Cancel</button>
                             </div>
                         </div>
                     </div>
@@ -2738,8 +2744,8 @@
             return (
                 <div>
                     <div className="flex items-center gap-4 mb-6">
-                        <button onClick={onBack} className="text-dark/50 hover:text-dark">← Back</button>
-                        <h1 className="text-2xl font-bold text-dark">{title}</h1>
+                        <button onClick={onBack} className="text-white/50 hover:text-white">← Back</button>
+                        <h1 className="text-2xl font-bold">{title}</h1>
                     </div>
                     {children}
                 </div>
